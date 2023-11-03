@@ -73,6 +73,16 @@ variable "cidr_block_PublicSubnet01" {
   description = "cidr block for PublicSubnet01"
 }
 
+variable "cidr_block_PrivateSubnet01" {
+  type        = string
+  description = "cidr block for PrivateSubnet01"
+}
+
+variable "cidr_block_PrivateSubnet02" {
+  type        = string
+  description = "cidr block for PrivateSubnet02"
+}
+
 variable "az-a" {
   type        = string
   description = "eu-west-1a az"
