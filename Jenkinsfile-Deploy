@@ -7,20 +7,6 @@ pipeline {
         PART_B_DIR = '/home/ubuntu/ProjectC/Part-B'
     }
 
-    //Clean workspace before doing anything
-    options {
-        skipDefaultCheckout true
-    }
-
-    //Check out SCM
-    stages {
-        stage('Checkout SCM') {
-            steps {
-                checkout scm
-            }
-        }
-    }
-
     stages {
         stage('Clone Git Repository') {
             steps {
@@ -34,7 +20,7 @@ pipeline {
             steps{
                 dir("${PART_B_DIR}") { //
                     sh 'terraform init'
-               }
+                    }
             }
         }
 
