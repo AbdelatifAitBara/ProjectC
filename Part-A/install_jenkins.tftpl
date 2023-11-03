@@ -1,0 +1,13 @@
+#!/bin/bash
+sudo apt update
+sudo apt install -y docker.io
+sudo systemctl enable docker
+sudo systemctl start docker
+sudo usermod -aG docker ubuntu
+sudo chmod 666 /var/run/docker.sock
+sudo mkdir -p /home/ubuntu/jenkinsvol
+sudo chown -R ubuntu:ubuntu /home/ubuntu/jenkinsvol
+sudo docker run -d -p 8080:8080 --name jenkins_container -v /home/ubuntu/jenkinsvol:/var/jenkins_home jenkins/jenkins:lts
+
+
+

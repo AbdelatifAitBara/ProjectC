@@ -1,0 +1,95 @@
+#!/bin/bash
+sudo apt update
+
+#!/bin/bash
+
+# Update the package list
+sudo apt update
+
+# Install required packages
+sudo apt install -y curl unzip
+
+# Download the latest version of Vault
+VAULT_VERSION="1.8.2"
+wget "https://releases.hashicorp.com/vault/${VAULT_VERSION}/vault_${VAULT_VERSION}_linux_amd64.zip" -O /tmp/vault.zip
+
+# Unzip the downloaded file
+unzip /tmp/vault.zip -d /tmp
+
+# Move the Vault binary to the appropriate location
+sudo mv /tmp/vault /usr/local/bin
+
+# Set the appropriate permissions
+sudo chmod 755 /usr/local/bin/vault
+
+# Create a system user for Vault
+sudo useradd --system --home /etc/vault.d --shell /bin/false vault
+
+# Create the data and configuration directories
+sudo mkdir -p /etc/vault.d /var/lib/vault/data
+
+# Set ownership and permissions
+sudo chown -R vault:vault /etc/vault.d /var/lib/vault
+
+# Create a basic configuration file
+sudo tee /etc/vault.d/vault.hcl > /dev/null <<EOF
+listener "tcp" {
+  address       = "127.0.0.1:8200"
+  tls_disable   = 1
+}
+
+storage "file" {
+  path  = "/var/lib/vault/data"
+}
+
+api_addr = "http://127.0.0.1:8200"
+disable_mlock = true
+EOF
+
+# Set ownership and permissions for the configuration file
+sudo chown vault:vault /etc/vault.d/vault.hcl
+sudo chmod 640 /etc/vault.d/vault.hcl
+
+# Create a systemd service file for Vault
+sudo tee /etc/systemd/system/vault.service > /dev/null <<EOF
+[Unit]
+Description="HashiCorp Vault - A tool for managing secrets"
+Documentation=https://www.vaultproject.io/docs/
+Requires=network-online.target
+After=network-online.target
+ConditionFileNotEmpty=/etc/vault.d/vault.hcl
+
+[Service]
+User=vault
+Group=vault
+ProtectSystem=full
+ProtectHome=read-only
+PrivateTmp=yes
+PrivateDevices=yes
+SecureBits=keep-caps
+AmbientCapabilities=CAP_IPC_LOCK
+Capabilities=CAP_IPC_LOCK+ep
+CapabilityBoundingSet=CAP_SYSLOG CAP_IPC_LOCK
+NoNewPrivileges=yes
+ExecStart=/usr/local/bin/vault server -config=/etc/vault.d/vault.hcl
+ExecReload=/bin/kill --signal HUP $MAINPID
+KillMode=process
+KillSignal=SIGINT
+Restart=on-failure
+RestartSec=5
+TimeoutStopSec=30
+StartLimitBurst=3
+StartLimitIntervalSec=60
+LimitNOFILE=65536
+
+[Install]
+WantedBy=multi-user.target
+EOF
+
+# Reload systemd and start Vault
+sudo systemctl daemon-reload
+sudo systemctl enable vault
+sudo systemctl start vault
+
+# Display Vault status
+sudo systemctl status vault
