@@ -22,6 +22,11 @@ sg_ansible_descrption = "Abdelatif EC2 02 Security Group"
 sg_vault_name       = "Abdelatif-EC2-03-SG"
 sg_vault_descrption = "Abdelatif EC2 03 Security Group"
 
+# Monitoring
+
+sg_monitoring_name       = "Abdelatif-EC2-04-SG"
+sg_monitoring_descrption = "Abdelatif EC2 04 Security Group"
+
 # Network Defaults Values:
 
 cidr_block_PublicSubnet01  = "10.0.1.0/24"

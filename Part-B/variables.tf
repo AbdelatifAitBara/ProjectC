@@ -66,6 +66,18 @@ variable "sg_vault_descrption" {
   description = "sg for vault"
 }
 
+# Monitoring SG Variables
+
+variable "sg_monitoring_name" {
+  type        = string
+  description = "monitoring sg name"
+}
+
+variable "sg_monitoring_descrption" {
+  type        = string
+  description = "sg for monitoring"
+}
+
 # Network Variables
 
 variable "cidr_block_PublicSubnet01" {
