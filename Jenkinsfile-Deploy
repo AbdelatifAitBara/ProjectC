@@ -4,9 +4,21 @@ pipeline {
     environment {
         PROJECT_DIR = '/home/ubuntu/ProjectC'
         PROJECT_FOLDER = 'ProjectC'
-        INVENTORY_DIR = '/home/ubuntu/ProjectC/Infrastructure/Infra'
-        PLAY_BOOKS_DIR = '/home/ubuntu/ProjectC/Infrastructure/playbooks'
-        INFRA_DIR = '/home/ubuntu/ProjectC/Infrastructure/Infra'
+        PART_B_DIR = '/home/ubuntu/ProjectC/Part-B'
+    }
+
+    //Clean workspace before doing anything
+    options {
+        skipDefaultCheckout true
+    }
+
+    //Check out SCM
+    stages {
+        stage('Checkout SCM') {
+            steps {
+                checkout scm
+            }
+        }
     }
 
     stages {
@@ -14,13 +26,13 @@ pipeline {
             steps {
                 sh "rm -rf ${PROJECT_DIR}"
                 sh "mkdir -p ${PROJECT_DIR}"
-                sh "git -C ${PROJECT_DIR} clone --recursive git@github.com:AbdelatifAitBara/Infrastructure.git"
+                sh "git -C ${PROJECT_DIR} clone --recursive git@github.com:AbdelatifAitBara/ProjectC.git"
             }
         }
 
-        stage('Deploy EC2-03 Instance For Vault') {
+        stage('Deploy The Infrastructure Part-B using Terraform') {
             steps{
-                dir("/home/ubuntu/ProjectC/Infrastructure/Infra") { //
+                dir("${PART_B_DIR}") { //
                     sh 'terraform init'
                }
             }
