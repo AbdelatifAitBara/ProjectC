@@ -10,4 +10,4 @@
 
 - 💥EC2-04 Monitoring = In Progress...
 
-Test Pipeline 💢
+Test Pipeline 💢💢
