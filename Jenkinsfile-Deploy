@@ -18,9 +18,9 @@ pipeline {
 
         stage('Deploy The Infrastructure Part-B using Terraform') {
             steps{
-                dir("${PART_B_DIR}") { //
+                dir("/home/ubuntu/ProjectC/Part-B") { //
                     sh 'terraform init'
-                    }
+                }
             }
         }
 
