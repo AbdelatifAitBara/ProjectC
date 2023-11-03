@@ -1,0 +1,73 @@
+---
+- name: Install Docker And Deploy Jenkins
+  become: true
+  hosts: Jenkins
+
+  tasks:
+    - name: Install dependencies
+      apt:
+        name:
+          - apt-transport-https
+          - ca-certificates
+          - curl
+          - gnupg
+          - lsb-release
+        state: present
+
+    - name: Add Docker GPG key
+      apt_key:
+        url: https://download.docker.com/linux/ubuntu/gpg
+        state: present
+
+    - name: Add Docker repository
+      apt_repository:
+        repo: "deb [arch=amd64] https://download.docker.com/linux/ubuntu {{ ansible_distribution_release }} stable"
+        state: present
+
+    - name: Install Docker and Docker Compose
+      apt:
+        name:
+          - docker-ce
+          - docker-ce-cli
+          - containerd.io
+        state: present
+
+    - name: Start and enable Docker service
+      service:
+        name: docker
+        state: started
+        enabled: true
+
+    - name: Add ubuntu user to docker group
+      user:
+        name: ubuntu
+        groups: docker
+        append: yes
+
+    - name: Change ownership of /var/run/docker.sock
+      file:
+        path: /var/run/docker.sock
+        owner: ubuntu
+        group: docker
+
+    - name: Create jenkinsvol directory
+      file:
+        path: /home/ubuntu/jenkinsvol
+        state: directory
+
+    - name: Change ownership of jenkinsvol directory
+      file:
+        path: /home/ubuntu/jenkinsvol
+        owner: ubuntu
+        group: docker
+
+    - name: Start Jenkins container
+      docker_container:
+        name: jenkins
+        image: jenkins/jenkins:lts
+        ports: 
+          - "8080:8080"
+        restart_policy: unless-stopped
+        state: started
+        volumes:
+          - jenkinsvol:/var/jenkins_home
