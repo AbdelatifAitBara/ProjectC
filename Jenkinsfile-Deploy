@@ -18,10 +18,10 @@ pipeline {
 
         stage('Deploy The Infrastructure Part-B using Terraform') {
             steps{
-                dir("/home/ubuntu/ProjectC/Part-B") { //
-                    ''' 
-                    sh "terraform init"
-                    sh "terraform apply -var-file=${PART_B_DIR}/part-B.tfvars -auto-approve"
+                dir("/home/ubuntu/ProjectC/Part-B") { // Change to your Terraform directory path
+                    sh '''
+                    terraform init
+                    terraform apply -var-file=${PART_B_DIR}/part-B.tfvars -auto-approve"
                     '''
                 }
             }
