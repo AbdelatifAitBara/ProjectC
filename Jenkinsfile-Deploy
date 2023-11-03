@@ -21,7 +21,7 @@ pipeline {
                 dir("/home/ubuntu/ProjectC/Part-B") { // Change to your Terraform directory path
                     sh '''
                     terraform init
-                    terraform apply -var-file=${PART_B_DIR}/part-B.tfvars -auto-approve"
+                    terraform apply -var-file="${PART_B_DIR}/part-B.tfvars" -auto-approve
                     '''
                 }
             }
