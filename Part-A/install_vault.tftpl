@@ -6,9 +6,8 @@ sudo apt update
 # Install required packages
 sudo apt install -y curl unzip
 
-# Download the latest version of Vault
-VAULT_VERSION="1.8.2"
-wget "https://releases.hashicorp.com/vault/${VAULT_VERSION}/vault_${VAULT_VERSION}_linux_amd64.zip" -O /tmp/vault.zip
+# Download the applicable package for your system from the HashiCorp website
+curl -O https://releases.hashicorp.com/vault/1.8.3/vault_1.8.3_linux_amd64.zip
 
 # Unzip the downloaded file
 unzip /tmp/vault.zip -d /tmp
