@@ -2,6 +2,7 @@ pipeline {
     agent { label 'Ansible_Master' }
 
     environment {
+        WORKSPACE = '/home/ubuntu/'
         PROJECT_DIR = '/home/ubuntu/ProjectC'
         PROJECT_FOLDER = 'ProjectC'
         PART_B_DIR = '/home/ubuntu/ProjectC/Part-B'
@@ -11,8 +12,7 @@ pipeline {
         stage('Clone Git Repository') {
             steps {
                 sh "rm -rf ${PROJECT_DIR}"
-                sh "mkdir -p ${PROJECT_DIR}"
-                sh "git -C ${PROJECT_DIR} clone --recursive git@github.com:AbdelatifAitBara/ProjectC.git"
+                sh "git -C ${WORKSPACE} clone --recursive git@github.com:AbdelatifAitBara/ProjectC.git"
             }
         }
 
