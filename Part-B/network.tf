@@ -8,12 +8,15 @@ resource "aws_subnet" "PublicSubnet01" {
   cidr_block              = var.cidr_block_PublicSubnet01
   map_public_ip_on_launch = true
   availability_zone       = var.az-a
+  
 
   tags = {
     Name     = "Abdelatif-PublicSubnet01"
     owner    = local.tags.owner
     ephemere = local.tags.ephemere
     entity   = local.tags.entity
+    Key      = "kubernetes.io/cluster/Abdelatif-K8sCluster"
+    Value    = "owned"
   }
 }
 
@@ -30,6 +33,8 @@ resource "aws_subnet" "PublicSubnet02" {
     owner    = local.tags.owner
     ephemere = local.tags.ephemere
     entity   = local.tags.entity
+    Key      = "kubernetes.io/cluster/Abdelatif-K8sCluster"
+    Value    = "owned"
   }
 }
 

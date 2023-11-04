@@ -29,10 +29,10 @@ sg_monitoring_descrption = "Abdelatif EC2 04 Security Group"
 
 # Network Defaults Values:
 
-cidr_block_PublicSubnet01  = "10.0.1.0/24"
-cidr_block_PublicSubnet02  = "10.0.2.0/24"
-cidr_block_PrivateSubnet01 = "10.0.3.0/24"
-cidr_block_PrivateSubnet02 = "10.0.4.0/24"
+cidr_block_PublicSubnet01  = "10.0.110.0/24"
+cidr_block_PublicSubnet02  = "10.0.111.0/24"
+cidr_block_PrivateSubnet01 = "10.0.112.0/24"
+cidr_block_PrivateSubnet02 = "10.0.113.0/24"
 az-a                       = "eu-west-1a"
 az-b                       = "eu-west-1b"
 ngw-vpc-b                  = "nat-04ab1b64a16ee375a"
