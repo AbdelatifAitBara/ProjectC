@@ -104,3 +104,15 @@ variable "igw_id" {
   type        = string
   description = "igw id"
 }
+
+# EKS Variables
+
+variable "eks-iam-role" {
+  type        = string
+  description = "iam role for eks cluster"
+}
+
+variable "node-iam-role" {
+  type        = string
+  description = "iam role for nodes"
+}
