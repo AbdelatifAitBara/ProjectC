@@ -11,11 +11,11 @@ resource "aws_eks_node_group" "private-nodes" {
   ]
 
   capacity_type  = "ON_DEMAND"
-  instance_types = ["t2.micro"]
+  instance_types = ["t3.small"]
 
   scaling_config {
     desired_size = 2
-    max_size     = 6
+    max_size     = 8
     min_size     = 2
   }
 
@@ -24,7 +24,7 @@ resource "aws_eks_node_group" "private-nodes" {
   }
 
   labels = {
-    role = "Abdelatif Project-C Nodes"
+    role = "abdelatif-private-nodes"
   }
 
   tags = {
