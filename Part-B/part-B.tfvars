@@ -30,12 +30,14 @@ sg_monitoring_descrption = "Abdelatif EC2 04 Security Group"
 # Network Defaults Values:
 
 cidr_block_PublicSubnet01  = "10.0.1.0/24"
-cidr_block_PrivateSubnet01 = "10.0.2.0/24"
-cidr_block_PrivateSubnet02 = "10.0.3.0/24"
+cidr_block_PublicSubnet02  = "10.0.2.0/24"
+cidr_block_PrivateSubnet01 = "10.0.3.0/24"
+cidr_block_PrivateSubnet02 = "10.0.4.0/24"
 az-a                       = "eu-west-1a"
+ngw-vpc-b                  = "nat-032b3de676123d5cb"
 
 
 # EKS Defaults Values:
 
-eks-iam-role = "arn:aws:iam::019050461780:role/eks-iam-role"
+eks-iam-role  = "arn:aws:iam::019050461780:role/eks-iam-role"
 node-iam-role = "arn:aws:iam::019050461780:role/eksworkernodes-iam-role"

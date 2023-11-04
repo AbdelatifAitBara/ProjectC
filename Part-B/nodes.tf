@@ -31,7 +31,7 @@ resource "aws_eks_node_group" "private-nodes" {
     Name     = "Abdelatif-Private-Nodes"
     owner    = local.tags.owner
     ephemere = local.tags.ephemere
-    entity   = local.tags.entity 
+    entity   = local.tags.entity
   }
 
 }

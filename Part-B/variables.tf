@@ -85,6 +85,11 @@ variable "cidr_block_PublicSubnet01" {
   description = "cidr block for PublicSubnet01"
 }
 
+variable "cidr_block_PublicSubnet02" {
+  type        = string
+  description = "cidr block for PublicSubnet02"
+}
+
 variable "cidr_block_PrivateSubnet01" {
   type        = string
   description = "cidr block for PrivateSubnet01"
@@ -103,6 +108,11 @@ variable "az-a" {
 variable "igw_id" {
   type        = string
   description = "igw id"
+}
+
+variable "ngw-vpc-b" {
+  type        = string
+  description = "ngw id of VPC-B"
 }
 
 # EKS Variables

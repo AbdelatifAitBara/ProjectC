@@ -17,6 +17,24 @@ resource "aws_subnet" "PublicSubnet01" {
   }
 }
 
+# Create PublicSubnet02 on eu-west-1b
+
+resource "aws_subnet" "PublicSubnet02" {
+  vpc_id                  = var.vpc_id
+  cidr_block              = var.cidr_block_PublicSubnet02
+  map_public_ip_on_launch = true
+  availability_zone       = var.az-a
+
+  tags = {
+    Name     = "Abdelatif-PublicSubnet01"
+    owner    = local.tags.owner
+    ephemere = local.tags.ephemere
+    entity   = local.tags.entity
+  }
+}
+
+
+
 # Create Route Table on eu-west-1a
 
 resource "aws_route_table" "PublicRouteTable-1A" {
@@ -76,37 +94,6 @@ resource "aws_subnet" "PrivateSubnet02" {
 
 }
 
-# Create EIP on eu-west-1a
-
-resource "aws_eip" "EIP-1A" {
-  domain = "vpc"
-
-  tags = {
-    Name     = "Abdelatif-EIP"
-    owner    = local.tags.owner
-    ephemere = local.tags.ephemere
-    entity   = local.tags.entity
-  }
-}
-
-# Create NGW on eu-west-1a
-
-resource "aws_nat_gateway" "ngw" {
-  connectivity_type = "public"
-  subnet_id         = aws_subnet.PublicSubnet01.id
-
-  # Associate the EIP with the NAT gateway
-  allocation_id = aws_eip.EIP-1A.id
-
-  tags = {
-    Name     = "Abdelatif-NGW"
-    owner    = local.tags.owner
-    ephemere = local.tags.ephemere
-    entity   = local.tags.entity
-  }
-}
-
-
 # Create Route Table on eu-west-1b
 
 resource "aws_route_table" "PrivateRouteTable-1B" {
@@ -114,7 +101,7 @@ resource "aws_route_table" "PrivateRouteTable-1B" {
 
   route {
     cidr_block     = "0.0.0.0/0"
-    nat_gateway_id = aws_nat_gateway.ngw.id
+    nat_gateway_id = var.ngw-vpc-b
   }
 
   tags = {
