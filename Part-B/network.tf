@@ -46,7 +46,7 @@ resource "aws_route_table" "PublicRouteTable-1A" {
   }
 
   tags = {
-    Name     = "Abdelatif-PrivateRouteTable"
+    Name     = "Abdelatif-PublicRouteTable"
     owner    = local.tags.owner
     ephemere = local.tags.ephemere
     entity   = local.tags.entity

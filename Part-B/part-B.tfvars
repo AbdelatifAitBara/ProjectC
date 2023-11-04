@@ -35,7 +35,7 @@ cidr_block_PrivateSubnet01 = "10.0.3.0/24"
 cidr_block_PrivateSubnet02 = "10.0.4.0/24"
 az-a                       = "eu-west-1a"
 az-b                       = "eu-west-1b"
-ngw-vpc-b                  = "nat-032b3de676123d5cb"
+ngw-vpc-b                  = "nat-04ab1b64a16ee375a"
 
 
 # EKS Defaults Values:

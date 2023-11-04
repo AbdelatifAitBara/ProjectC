@@ -24,7 +24,7 @@ resource "aws_eks_node_group" "private-nodes" {
   }
 
   labels = {
-    role = "general"
+    role = "Abdelatif Project-C Nodes"
   }
 
   tags = {
