@@ -105,6 +105,11 @@ variable "az-a" {
   description = "eu-west-1a az"
 }
 
+variable "az-b" {
+  type        = string
+  description = "eu-west-1b az"
+}
+
 variable "igw_id" {
   type        = string
   description = "igw id"
