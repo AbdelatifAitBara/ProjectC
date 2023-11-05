@@ -15,8 +15,6 @@ resource "aws_subnet" "PublicSubnet01" {
     owner    = local.tags.owner
     ephemere = local.tags.ephemere
     entity   = local.tags.entity
-    "kubernetes.io/role/elb"     = 1
-    "kubernetes.io/cluster/${var.eks_cluster_name}" = "shared"
   }
 }
 
@@ -33,8 +31,6 @@ resource "aws_subnet" "PublicSubnet02" {
     owner    = local.tags.owner
     ephemere = local.tags.ephemere
     entity   = local.tags.entity
-    "kubernetes.io/role/elb"     = 1
-    "kubernetes.io/cluster/${var.eks_cluster_name}" = "shared"
   }
 }
 
@@ -85,6 +81,8 @@ resource "aws_subnet" "PrivateSubnet01" {
     owner    = local.tags.owner
     ephemere = local.tags.ephemere
     entity   = local.tags.entity
+    "kubernetes.io/role/elb"     = 1
+    "kubernetes.io/cluster/${var.eks_cluster_name}" = "shared"
   }
 }
 
@@ -102,6 +100,8 @@ resource "aws_subnet" "PrivateSubnet02" {
     owner    = local.tags.owner
     ephemere = local.tags.ephemere
     entity   = local.tags.entity
+    "kubernetes.io/role/elb"     = 1
+    "kubernetes.io/cluster/${var.eks_cluster_name}" = "shared"
   }
 
 }
