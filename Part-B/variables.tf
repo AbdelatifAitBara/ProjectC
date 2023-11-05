@@ -131,3 +131,8 @@ variable "node-iam-role" {
   type        = string
   description = "iam role for nodes"
 }
+
+variable "eks_cluster_name" {
+  type        = string
+  description = "name for eks cluster"
+}

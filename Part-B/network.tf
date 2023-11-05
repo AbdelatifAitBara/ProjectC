@@ -16,7 +16,7 @@ resource "aws_subnet" "PublicSubnet01" {
     ephemere = local.tags.ephemere
     entity   = local.tags.entity
     "kubernetes.io/role/elb"     = 1
-    "kubernetes.io/cluster/Abdelatif-K8sCluster" = "shared"
+    "kubernetes.io/cluster/${var.eks_cluster_name}" = "shared"
   }
 }
 
@@ -34,13 +34,13 @@ resource "aws_subnet" "PublicSubnet02" {
     ephemere = local.tags.ephemere
     entity   = local.tags.entity
     "kubernetes.io/role/elb"     = 1
-    "kubernetes.io/cluster/Abdelatif-K8sCluster" = "shared"
+    "kubernetes.io/cluster/${var.eks_cluster_name}" = "shared"
   }
 }
 
 
 
-# Create Public Route Table on eu-west-1a
+# Create Public Route Table
 
 resource "aws_route_table" "PublicRouteTable-1A" {
   vpc_id = var.vpc_id

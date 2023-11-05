@@ -14,9 +14,9 @@ resource "aws_eks_node_group" "private-nodes" {
   instance_types = ["t3.small"]
 
   scaling_config {
-    desired_size = 1
-    max_size     = 5
-    min_size     = 0
+    desired_size = 3
+    max_size     = 6
+    min_size     = 3
   }
 
   update_config {
@@ -32,6 +32,7 @@ resource "aws_eks_node_group" "private-nodes" {
     owner    = local.tags.owner
     ephemere = local.tags.ephemere
     entity   = local.tags.entity
+    "kubernetes.io/cluster/${var.eks_cluster_name}" = "owned"
   }
 
 }

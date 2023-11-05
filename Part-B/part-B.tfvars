@@ -42,3 +42,4 @@ ngw-vpc-b                  = "nat-04ab1b64a16ee375a"
 
 eks-iam-role  = "arn:aws:iam::019050461780:role/eks-iam-role"
 node-iam-role = "arn:aws:iam::019050461780:role/eksworkernodes-iam-role"
+eks_cluster_name = "Abdelatif-K8sCluster"
