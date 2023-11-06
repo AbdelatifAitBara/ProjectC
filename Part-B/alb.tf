@@ -1,5 +1,3 @@
-# Deploy load balander and tg and tag and listner
-
 resource "aws_lb" "abdelatif-alb" {
 
   name               = "abdelatif-alb"
@@ -18,12 +16,13 @@ resource "aws_lb" "abdelatif-alb" {
 
 resource "aws_lb_target_group" "abdelatif-tg" {
   name     = "abdelatif-tg"
-  port     = 80
+  target_type = "instance"
+  port     = 32720
   protocol = "HTTP"
   vpc_id   = var.vpc_id
 
   health_check {
-    path                = "/"
+    path                = "/healthz"
     protocol            = "HTTP"
     matcher             = "200"
     interval            = 5
