@@ -17,7 +17,7 @@ resource "aws_lb" "abdelatif-alb" {
 }
 
 resource "aws_lb_target_group" "abdelatif-tg" {
-  name     = "abelatif-tg"
+  name     = "abdelatif-tg"
   port     = 80
   protocol = "HTTP"
   vpc_id   = var.vpc_id
@@ -33,7 +33,7 @@ resource "aws_lb_target_group" "abdelatif-tg" {
   }
 
   tags = {
-    Name = "abelatif-tg"
+    Name = "abdelatif-tg"
     owner = local.tags.owner
     ephemere = local.tags.ephemere
     entity = local.tags.entity
