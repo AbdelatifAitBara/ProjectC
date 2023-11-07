@@ -17,7 +17,7 @@ resource "aws_lb" "abdelatif-alb" {
 resource "aws_lb_target_group" "abdelatif-tg" {
   name     = "abdelatif-tg"
   target_type = "instance"
-  port     = 32720
+  port     = 32000
   protocol = "HTTP"
   vpc_id   = var.vpc_id
 
@@ -26,9 +26,9 @@ resource "aws_lb_target_group" "abdelatif-tg" {
     protocol            = "HTTP"
     matcher             = "200"
     interval            = 5
-    timeout             = 2
+    timeout             = 20
     healthy_threshold   = 2
-    unhealthy_threshold = 2
+    unhealthy_threshold = 10
   }
 
   tags = {
