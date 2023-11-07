@@ -25,10 +25,10 @@ resource "aws_lb_target_group" "abdelatif-tg" {
     path                = "/healthz"
     protocol            = "HTTP"
     matcher             = "200"
-    interval            = 5
-    timeout             = 20
+    interval            = 15
+    timeout             = 5
     healthy_threshold   = 2
-    unhealthy_threshold = 10
+    unhealthy_threshold = 3
   }
 
   tags = {
