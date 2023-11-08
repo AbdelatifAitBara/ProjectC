@@ -1,5 +1,5 @@
 resource "aws_eks_cluster" "K8sCluster" {
-  name     = "Abdelatif-K8sCluster"
+  name     = var.eks_cluster_name
   role_arn = var.eks-iam-role
 
   vpc_config {

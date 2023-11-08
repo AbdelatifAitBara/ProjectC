@@ -42,30 +42,6 @@ variable "terraform_role" {
 
 # SG Variabless
 
-# Ansible SG Variables
-
-variable "sg_ansible_name" {
-  type        = string
-  description = "ansible sg name"
-}
-
-variable "sg_ansible_descrption" {
-  type        = string
-  description = "sg for ansible"
-}
-
-# Vault SG Variables
-
-variable "sg_vault_name" {
-  type        = string
-  description = "vault sg name"
-}
-
-variable "sg_vault_descrption" {
-  type        = string
-  description = "sg for vault"
-}
-
 # BM Asg Variables:
 
 variable "sg-bm-name" {
@@ -78,17 +54,6 @@ variable "sg-bm-description" {
   description = "sg for bm"
 }
 
-# Monitoring SG Variables
-
-variable "sg_monitoring_name" {
-  type        = string
-  description = "monitoring sg name"
-}
-
-variable "sg_monitoring_description" {
-  type        = string
-  description = "sg for monitoring"
-}
 
 # Network Variables
 
