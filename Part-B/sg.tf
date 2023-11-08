@@ -25,31 +25,5 @@ resource "aws_security_group" "alb-sg" {
   }
 }
 
-# Create a sg for Building Machine ASG:
 
-
-resource "aws_security_group" "bm-sg" {
-  name        = var.sg-bm-name
-  description = var.sg-bm-description
-  vpc_id      = var.vpc_id
-
-
-  ingress {
-    description = "allow ssh"
-    from_port   = 22
-    to_port     = 22
-    protocol    = "tcp"
-    cidr_blocks = ["0.0.0.0/0"]
-  }
-
-  egress {
-    from_port   = 0
-    to_port     = 0
-    protocol    = "-1"
-    cidr_blocks = ["0.0.0.0/0"]
-  }
-  
-}
-
-
-# Create a sg for Monitoring instance:
+# Create a sg for Building Machine

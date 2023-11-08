@@ -47,17 +47,7 @@ variable "terraform_role" {
 
 # SG Variabless
 
-# BM Asg Variables:
-
-variable "sg-bm-name" {
-  type        = string
-  description = "bm sg name"
-}
-
-variable "sg-bm-description" {
-  type        = string
-  description = "sg for bm"
-}
+# BM Variables:
 
 
 # Network Variables

@@ -12,17 +12,6 @@ terraform_role = "terraform-iam-role"
 
 # SG Default Values:
 
-# BM Asg:
-
-sg-bm-name        = "Abdelatif-BM-ASG-SG"
-sg-bm-description = "Abdelatif BM-Asg Security Group"
-
-
-# Monitoring
-
-sg_monitoring_name        = "Abdelatif-EC2-04-SG"
-sg_monitoring_description = "Abdelatif EC2 04 Security Group"
-
 # Network Defaults Values:
 
 cidr_block_PublicSubnet01  = "10.0.110.0/24"
