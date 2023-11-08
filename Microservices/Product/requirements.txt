@@ -1,7 +1,7 @@
-Flask==2.0.1
-PyMySQL==1.0.2
-Flask-Cors==3.0.10
-PyJWT==2.3.0
+Flask
+PyMySQL
+Flask-Cors
+PyJWT
 requests
 requests_oauthlib
 oauthlib
