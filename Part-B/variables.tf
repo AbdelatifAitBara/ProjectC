@@ -4,6 +4,11 @@ variable "vpc_id" {
   description = "abdelatif vpc id"
 }
 
+variable "igw_id" {
+  type        = string
+  description = "igw id"
+}
+
 
 
 # EC2 Variables
@@ -85,11 +90,6 @@ variable "az-a" {
 variable "az-b" {
   type        = string
   description = "eu-west-1b az"
-}
-
-variable "igw_id" {
-  type        = string
-  description = "igw id"
 }
 
 variable "ngw-vpc-b" {
