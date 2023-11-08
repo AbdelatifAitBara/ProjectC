@@ -28,10 +28,10 @@ resource "aws_eks_node_group" "private-nodes" {
   }
 
   tags = {
-    Name     = "Abdelatif-Private-Nodes"
-    owner    = local.tags.owner
-    ephemere = local.tags.ephemere
-    entity   = local.tags.entity
+    Name                                            = "Abdelatif-Private-Nodes"
+    owner                                           = local.tags.owner
+    ephemere                                        = local.tags.ephemere
+    entity                                          = local.tags.entity
     "kubernetes.io/cluster/${var.eks_cluster_name}" = "owned"
   }
 

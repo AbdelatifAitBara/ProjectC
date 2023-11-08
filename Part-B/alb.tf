@@ -7,19 +7,19 @@ resource "aws_lb" "abdelatif-alb" {
   subnets            = [aws_subnet.PublicSubnet01.id, aws_subnet.PublicSubnet02.id]
 
   tags = {
-    Name = "abdelatif-alb"
-    owner = local.tags.owner
+    Name     = "abdelatif-alb"
+    owner    = local.tags.owner
     ephemere = local.tags.ephemere
-    entity = local.tags.entity
+    entity   = local.tags.entity
   }
 }
 
 resource "aws_lb_target_group" "abdelatif-tg" {
-  name     = "abdelatif-tg"
+  name        = "abdelatif-tg"
   target_type = "instance"
-  port     = 32000
-  protocol = "HTTP"
-  vpc_id   = var.vpc_id
+  port        = 32000
+  protocol    = "HTTP"
+  vpc_id      = var.vpc_id
 
   health_check {
     path                = "/healthz"
@@ -32,11 +32,11 @@ resource "aws_lb_target_group" "abdelatif-tg" {
   }
 
   tags = {
-    Name = "abdelatif-tg"
-    owner = local.tags.owner
+    Name     = "abdelatif-tg"
+    owner    = local.tags.owner
     ephemere = local.tags.ephemere
-    entity = local.tags.entity
-    }
+    entity   = local.tags.entity
+  }
 }
 
 resource "aws_autoscaling_attachment" "asg_attachment" {
@@ -59,10 +59,10 @@ resource "aws_lb_listener" "abdelatif-lb-listener" {
   }
 
   tags = {
-    Name = "abdelatif-lb-listener"
-    owner = local.tags.owner
+    Name     = "abdelatif-lb-listener"
+    owner    = local.tags.owner
     ephemere = local.tags.ephemere
-    entity = local.tags.entity
+    entity   = local.tags.entity
   }
 }
 

@@ -66,6 +66,18 @@ variable "sg_vault_descrption" {
   description = "sg for vault"
 }
 
+# BM Asg Variables:
+
+variable "sg-bm-name" {
+  type        = string
+  description = "bm sg name"
+}
+
+variable "sg-bm-description" {
+  type        = string
+  description = "sg for bm"
+}
+
 # Monitoring SG Variables
 
 variable "sg_monitoring_name" {
@@ -73,7 +85,7 @@ variable "sg_monitoring_name" {
   description = "monitoring sg name"
 }
 
-variable "sg_monitoring_descrption" {
+variable "sg_monitoring_description" {
   type        = string
   description = "sg for monitoring"
 }

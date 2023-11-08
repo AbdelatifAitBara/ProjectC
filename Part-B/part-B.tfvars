@@ -14,18 +14,24 @@ terraform_role = "terraform-iam-role"
 
 # Ansible:
 
-sg_ansible_name       = "Abdelatif-EC2-02-SG"
-sg_ansible_descrption = "Abdelatif EC2 02 Security Group"
+sg_ansible_name        = "Abdelatif-EC2-02-SG"
+sg_ansible_description = "Abdelatif EC2 02 Security Group"
 
 # Vault:
 
-sg_vault_name       = "Abdelatif-EC2-03-SG"
-sg_vault_descrption = "Abdelatif EC2 03 Security Group"
+sg_vault_name        = "Abdelatif-EC2-03-SG"
+sg_vault_description = "Abdelatif EC2 03 Security Group"
+
+# BM Asg:
+
+sg-bm-name        = "Abdelatif-BM-ASG-SG"
+sg-bm-description = "Abdelatif BM-Asg Security Group"
+
 
 # Monitoring
 
-sg_monitoring_name       = "Abdelatif-EC2-04-SG"
-sg_monitoring_descrption = "Abdelatif EC2 04 Security Group"
+sg_monitoring_name        = "Abdelatif-EC2-04-SG"
+sg_monitoring_description = "Abdelatif EC2 04 Security Group"
 
 # Network Defaults Values:
 
@@ -40,6 +46,6 @@ ngw-vpc-b                  = "nat-04ab1b64a16ee375a"
 
 # EKS Defaults Values:
 
-eks-iam-role  = "arn:aws:iam::019050461780:role/eks-iam-role"
-node-iam-role = "arn:aws:iam::019050461780:role/eksworkernodes-iam-role"
+eks-iam-role     = "arn:aws:iam::019050461780:role/eks-iam-role"
+node-iam-role    = "arn:aws:iam::019050461780:role/eksworkernodes-iam-role"
 eks_cluster_name = "Abdelatif-K8sCluster"
