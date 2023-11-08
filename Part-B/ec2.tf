@@ -6,7 +6,7 @@ resource "aws_instance" "abdelatif-bm" {
     instance_type          = var.instance_type
     key_name               = var.ec2_key_name
     vpc_security_group_ids = [aws_security_group.bm-sg.id]
-    subnet_id              = var.PublicSubnet01.id
+    subnet_id              = aws_subnet.PublicSubnet01.id
     user_data              = data.template_file.bm_user_data.rendered
 
     root_block_device {
