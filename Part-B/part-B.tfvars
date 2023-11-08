@@ -12,16 +12,6 @@ terraform_role = "terraform-iam-role"
 
 # SG Default Values:
 
-# Ansible:
-
-sg_ansible_name        = "Abdelatif-EC2-02-SG"
-sg_ansible_description = "Abdelatif EC2 02 Security Group"
-
-# Vault:
-
-sg_vault_name        = "Abdelatif-EC2-03-SG"
-sg_vault_description = "Abdelatif EC2 03 Security Group"
-
 # BM Asg:
 
 sg-bm-name        = "Abdelatif-BM-ASG-SG"
