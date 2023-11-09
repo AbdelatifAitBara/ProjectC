@@ -37,7 +37,7 @@ with pymysql.connect(
         cur.execute("CREATE TABLE IF NOT EXISTS access_tokens_product (id INT(11) NOT NULL AUTO_INCREMENT, token VARCHAR(255) NOT NULL, PRIMARY KEY (id));")
         conn.commit()
 
-@app.route('/product_token', methods=['POST'])
+@app.route('/product//product_token', methods=['POST'])
 def query():
     try:
         data = json.loads(request.data)
@@ -145,7 +145,7 @@ def add_product():
         return jsonify({'message': 'Error adding product.'}), 500
 
 
-@app.route('/get_product/<int:product_id>', methods=['GET'])
+@app.route('/product/get_product/<int:product_id>', methods=['GET'])
 def get_product(product_id):
     token = request.headers.get('Authorization')
     
@@ -176,7 +176,7 @@ def get_product(product_id):
     else:
         return jsonify({'message': 'Error getting product.'}), 500
 
-@app.route('/update_product/<int:product_id>', methods=['PUT'])
+@app.route('/product/update_product/<int:product_id>', methods=['PUT'])
 def update_product(product_id):
     # Get the updated product data from the request
     product_data = request.json
@@ -218,7 +218,7 @@ def update_product(product_id):
     else:
         return jsonify({'message': 'Error updating product.'}), 500
 
-@app.route('/delete_product/<int:product_id>', methods=['DELETE'])
+@app.route('/product/delete_product/<int:product_id>', methods=['DELETE'])
 def delete_product(product_id):
     token = request.headers.get('Authorization')
     
