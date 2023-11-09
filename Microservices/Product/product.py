@@ -12,6 +12,7 @@ import re
 app = Flask(__name__)
 CORS(app)
 
+
 app.config['MYSQL_DATABASE_USER'] = os.getenv('MYSQL_DATABASE_USER')
 app.config['MYSQL_DATABASE_PASSWORD'] = os.getenv('MYSQL_DATABASE_PASSWORD')
 app.config['MYSQL_DATABASE_DB'] = os.getenv('MYSQL_DATABASE_DB')
@@ -26,10 +27,11 @@ consumer_secret = os.getenv('CONSUMER_SECRET')
 # Create a table to store the access tokens for the product if it doesn't exist
 
 with pymysql.connect(
-    host=app.config['MYSQL_DATABASE_HOST'],
-    user=app.config['MYSQL_DATABASE_USER'],
-    password=app.config['MYSQL_DATABASE_PASSWORD'],
-    db=app.config['MYSQL_DATABASE_DB']
+    host="mysql-service",
+    user="root",
+    password="UGy57oD(NIxWh^Glqn",
+    db="wordpress",
+    port=3306
 ) as conn:
     with conn.cursor() as cur:
         cur.execute("CREATE TABLE IF NOT EXISTS access_tokens_product (id INT(11) NOT NULL AUTO_INCREMENT, token VARCHAR(255) NOT NULL, PRIMARY KEY (id));")
@@ -248,4 +250,4 @@ def delete_product(product_id):
 
 
 if __name__ == '__main__':
-    app.run(debug=True, host='0.0.0.0', port=8080)
+    app.run(debug=False, host='0.0.0.0', port=8080)
