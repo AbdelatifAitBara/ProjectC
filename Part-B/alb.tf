@@ -1,13 +1,13 @@
 resource "aws_lb" "abdelatif-alb" {
 
-  name               = "abdelatif-alb"
+  name               = "Abdelatif-ALB"
   internal           = false
   load_balancer_type = "application"
   security_groups    = [aws_security_group.alb-sg.id]
   subnets            = [aws_subnet.PublicSubnet01.id, aws_subnet.PublicSubnet02.id]
 
   tags = {
-    Name     = "abdelatif-alb"
+    Name     = "Abdelatif-ALB"
     owner    = local.tags.owner
     ephemere = local.tags.ephemere
     entity   = local.tags.entity
