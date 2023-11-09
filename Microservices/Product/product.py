@@ -90,7 +90,7 @@ def token_authorized(token):
     except:
         return False
 
-@app.route('/add_product', methods=['POST'])
+@app.route('/product/add_product', methods=['POST'])
 def add_product():
     # Get the product data from the request
     product_data = request.json
