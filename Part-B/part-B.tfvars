@@ -1,5 +1,6 @@
 vpc_id = "vpc-0f0186dfaa776d811"
 igw_id = "igw-05d827b8859292043"
+ngw-vpc-b                  = "nat-0da3f612c02cd4175"
 
 # EC2 Defaults Values:
 
@@ -26,7 +27,7 @@ cidr_block_PrivateSubnet01 = "10.0.112.0/24"
 cidr_block_PrivateSubnet02 = "10.0.113.0/24"
 az-a                       = "eu-west-1a"
 az-b                       = "eu-west-1b"
-ngw-vpc-b                  = "nat-04ab1b64a16ee375a"
+
 
 
 # EKS Defaults Values:
