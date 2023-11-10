@@ -2,7 +2,6 @@
 
 
 pipeline {
-
     agent { label 'Building_Machine' }
 
     environment {
@@ -13,6 +12,7 @@ pipeline {
     }
 
     stages {
+
         stage('Clone Git Repository') {
             steps {
                 sh "rm -rf ${PROJECT_DIR}"
@@ -20,19 +20,12 @@ pipeline {
             }
         }
 
-        stage("Login Docker Image") {
+
+        stage('Login Docker Image') {
             steps {
-                script {
-                vaultServer = Vault.server("10.0.3.159:8200")
-                vaultServer.auth("approle", "my-role-id", "my-role-secret")
-
-                dockerToken = vaultServer.secret("secrets/creds/docker_token").data
-
-                sh "docker login -u abdelatifaitbara --password=${dockerToken}"
-                }
-            }
+                sh "vault read -format=json secrets/creds/docker_token | jq -r '.data.docker_token' | docker login -u abdelatifaitbara --password-stdin"
+            }       
         }
-
 
     }
 
