@@ -25,6 +25,7 @@ pipeline {
             }
         }
 
+
         stage('Vaul Test') {
             steps {
                     withVault([configuration: configuration, vaultSecrets: secrets]) {
