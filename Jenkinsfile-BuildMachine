@@ -20,12 +20,18 @@ pipeline {
             }
         }
 
-        stage('Login Docker Image') {
+        stage('Get Docker Token') {
             steps {
                 script {
-                    dockerToken = sh(returnStdout: true, script: 'vault write -format=json -field=data.docker_token secrets/creds/docker_token').trim()
-                    sh "docker login -u abdelatifaitbara --password ${dockerToken}"
+                dockerToken = sh(returnStdout: true, script: 'vault read -format=json secrets/creds/docker_token | jq -r ".data.docker_token"').trim()
+                env.DOCKER_TOKEN = dockerToken
                 }
+            }
+        }
+
+        stage('Login to Docker') {
+            steps {
+                sh "docker login -u abdelatifaitbara --password $DOCKER_TOKEN" 
             }
         }
     }
