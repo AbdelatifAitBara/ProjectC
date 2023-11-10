@@ -16,11 +16,15 @@ pipeline {
             }
         }
 
-        withCredentials([[$class: 'VaultTokenCredentialBinding', addrVariable: 'VAULT_ADDR', credentialsId: 'Vault_Credentials', tokenVariable: 'VAULT_TOKEN', vaultAddr: '10.0.3.159']]) {
-            sh '''
-            vault read -format=json secrets/creds/docker_token | jq -r '.data.docker_token' | docker login -u abdelatifaitbara --password-stdin
-            '''
+        stage ('Login to Docker Image') {
+            withCredentials([[$class: 'VaultTokenCredentialBinding', addrVariable: 'VAULT_ADDR', credentialsId: 'Vault_Credentials', tokenVariable: 'VAULT_TOKEN', vaultAddr: '10.0.3.159']]) {
+                sh '''
+                vault read -format=json secrets/creds/docker_token | jq -r '.data.docker_token' | docker login -u abdelatifaitbara --password-stdin
+                '''
+            }
+            
         }
+
     }
 
     post {
