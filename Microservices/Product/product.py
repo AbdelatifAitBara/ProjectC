@@ -25,12 +25,13 @@ app.config['MYSQL_DATABASE_PASSWORD'] = os.getenv('DB_PASSWORD')
 app.config['MYSQL_DATABASE_DB'] = os.getenv('DATABASE_NAME')
 app.config['MYSQL_DATABASE_HOST'] = os.getenv('DATABASE_HOST')
 app.config['SECRET_KEY'] = os.getenv('SECRET_KEY')
+app.config['MYSQL_DATABASE_PORT'] = os.getenv('DATABASE_PORT')
 
 API_URL= os.getenv('API_URL')
+
 consumer_key = "ck_176726b97c5f8a71c1b449e69a2bebd5bea873a6"
 consumer_secret = "cs_adad93824b827a5820c077d2658a703be97d7b05"
 
-SECRET_KEY="sk_fYVw52zywDRVAgsC8yUi2TXFRu1MmtPK"
 
 # Create a table to store the access tokens for the product if it doesn't exist
 

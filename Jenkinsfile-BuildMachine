@@ -2,6 +2,13 @@ def secrets = [
   [path: 'secrets/creds/product', engineVersion: 1, secretValues: [
     [envVar: 'DOCKER_TOKEN', vaultKey: 'dockertoken'],
     [envVar: 'DOCKER_USERNAME', vaultKey: 'dockeruser'],
+    [envVar: 'DB_USER', vaultKey: 'dbuser'],
+    [envVar: 'DB_PASSWORD', vaultKey: 'dbpassword']
+    [envVar: 'DB_NAME', vaultKey: 'dbname']
+    [envVar: 'DB_HOST', vaultKey: 'dbhost']
+    [envVar: 'DB_PORT', vaultKey: 'dbport']
+    [envVar: 'PRODUCT_API_URL', vaultKey: 'productapiurl']
+    [envVar: 'SECRET_KEY', vaultKey: 'secretkey']
     ]],
 ]
 def configuration = [vaultUrl: 'http://10.0.3.159:8200',  vaultCredentialId: 'Vault_Credentials', engineVersion: 1]
@@ -13,7 +20,7 @@ pipeline {
     environment {
         WORKSPACE = '/home/ubuntu/'
         PROJECT_DIR = '/home/ubuntu/ProjectC'
-        PROJECT_FOLDER = 'ProjectC'
+        PRODUCT_FOLDER = '/home/ubuntu/ProjectC/Microservices/Product'
         PRODUCT_DOCKER_IMAGE = 'abdelatifaitbara/product'
     }
 
@@ -26,14 +33,22 @@ pipeline {
             }
         }
 
+        stage('Build Docker Image') {
+            steps {
+                sh "cd ${PRODUCT_FOLDER} && docker build -t ${PRODUCT_DOCKER_IMAGE}:latest -e DB_USER=${DB_USER} -e DB_PASSWORD=${DB_PASSWORD} -e DB_NAME=${DB_NAME} -e DB_HOST=${DB_HOST} -e DB_PORT=${DB_PORT} -e PRODUCT_API_URL=${PRODUCT_API_URL} -e SECRET_KEY=${SECRET_KEY} ."
+            }
+        }
 
-        stage('Login to DockerHub') {
+
+        stage('Push Product Image to DockerHub') {
             steps {
                     withVault([configuration: configuration, vaultSecrets: secrets]) {
-                        sh "docker login -u ${DOCKER_USERNAME} -p ${DOCKER_TOKEN}"
+                        sh "docker login -u $DOCKER_USERNAME -p $DOCKER_TOKEN"
+                        sh "docker push docker.io/${PRODUCT_DOCKER_IMAGE}:latest"
                     }
                 }  
             }
+            
     }
 
 
