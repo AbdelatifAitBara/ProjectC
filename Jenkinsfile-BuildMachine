@@ -1,5 +1,9 @@
-@Library('vault-utils')
-import com.electriccloud.vault.*
+def secrets = [
+  [path: ' secrets/creds/database_user', engineVersion: 1, secretValues: [
+    [envVar: 'DB_USERNAME', vaultKey: 'username'],
+    ]],
+]
+def configuration = [vaultUrl: 'http://10.0.3.159:8200',  vaultCredentialId: 'Vault_Credentials', engineVersion: 1]
 
 
 pipeline {
@@ -21,27 +25,13 @@ pipeline {
             }
         }
 
-        stage('Get Secret From Vault') {
-
-            // Import Vault Java driver
-            @Grab('io.hashicorp:vault-java-driver:0.13.3') 
-            import com.hashicorp.vault.api.*
-
-            // Instantiate client and authenticate
-            VaultApi vault = new VaultApi(new HttpClient(), "10.0.3.159:8200")
-            vault.auth().loginByToken("MyVaultToken")
-
-            // Lookup secret
-            String secret = vault.secretsEngine("secret").readSecretVersion("secrets/creds/database_user").getData().get("value")
-
-            // Use secret
-            sh "echo $secret > secret_file"
-
-        }
-
-        stage('Use Secret') {
-            steps {
-                sh "cat secret_file | do_something"  
+        stages{   
+            stage('Vault') {
+                steps {
+                    withVault([configuration: configuration, vaultSecrets: secrets]) {
+                        sh "echo ${env.DB_USERNAME}"
+                    }
+                }  
             }
         }
 
