@@ -25,16 +25,13 @@ pipeline {
             }
         }
 
-        stages{   
-            stage('Vault') {
-                steps {
+        stage('Vaul Test') {
+            steps {
                     withVault([configuration: configuration, vaultSecrets: secrets]) {
                         sh "echo ${env.DB_USERNAME}"
                     }
                 }  
             }
-        }
-
     }
 
 
