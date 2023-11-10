@@ -1,6 +1,6 @@
 def secrets = [
-  [path: ' secrets/creds/database_user', engineVersion: 1, secretValues: [
-    [envVar: 'DB_USERNAME', vaultKey: 'username'],
+  [path: 'secrets/creds/docker_token', engineVersion: 1, secretValues: [
+    [envVar: 'DOCKER_TOKEN', vaultKey: 'docker_token'],
     ]],
 ]
 def configuration = [vaultUrl: 'http://10.0.3.159:8200',  vaultCredentialId: 'Vault_Credentials', engineVersion: 1]
@@ -26,10 +26,10 @@ pipeline {
         }
 
 
-        stage('Vaul Test') {
+        stage('Login to DockerHub') {
             steps {
                     withVault([configuration: configuration, vaultSecrets: secrets]) {
-                        sh "echo ${env.DB_USERNAME}"
+                        sh "docker login -u abdelatifaitbara -p ${DOCKER_TOKEN}"
                     }
                 }  
             }
