@@ -16,16 +16,13 @@ pipeline {
             }
         }
 
-
-        stage ('Build Product Microservice') {
-            steps {
-                dir("/home/ubuntu/ProjectC/Microservices/Product") { // Change to your Terraform directory path
-                    sh '''
-                    docker build -t abdelatifaitbara/product:jenkinsv1 .
-                    '''
-                }
-            }
+        withCredentials([[$class: 'VaultTokenCredentialBinding', addrVariable: 'VAULT_ADDR', credentialsId: 'Vault_Credentials', tokenVariable: 'VAULT_TOKEN', vaultAddr: '10.0.3.159']]) {
+            sh '''
+            vault read -format=json secrets/creds/docker_token | jq -r '.data.docker_token'
+            | docker login -u abdelatifaitbara --password-stdin
+            '''
         }
+
     }
 
     post {

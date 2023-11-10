@@ -8,6 +8,7 @@ sudo chmod 666 /var/run/docker.sock
 ssh-keygen -t ed25519 -C "aitbaraabdelatif@outlook.com"
 ssh-keyscan github.com >> ~/.ssh/known_hosts
 sudo apt install -y openjdk-11-jdk
+sudo apt install jq -y
 
 
 sudo cat <<EOF | sudo tee /etc/hostname

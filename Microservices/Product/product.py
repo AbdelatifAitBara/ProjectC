@@ -13,10 +13,17 @@ app = Flask(__name__)
 CORS(app)
 
 
-app.config['MYSQL_DATABASE_USER'] = os.getenv('MYSQL_DATABASE_USER')
-app.config['MYSQL_DATABASE_PASSWORD'] = os.getenv('MYSQL_DATABASE_PASSWORD')
-app.config['MYSQL_DATABASE_DB'] = os.getenv('MYSQL_DATABASE_DB')
-app.config['MYSQL_DATABASE_HOST'] = os.getenv('MYSQL_DATABASE_HOST')
+#   host="mysql-service",
+#    user="root",
+#    password="UGy57oD(NIxWh^Glqn",
+#    db="wordpress",
+#    port=3306
+
+
+app.config['MYSQL_DATABASE_USER'] = os.getenv('DATABASE_USER')
+app.config['MYSQL_DATABASE_PASSWORD'] = os.getenv('DB_PASSWORD')
+app.config['MYSQL_DATABASE_DB'] = os.getenv('DATABASE_NAME')
+app.config['MYSQL_DATABASE_HOST'] = os.getenv('DATABASE_HOST')
 app.config['SECRET_KEY'] = os.getenv('SECRET_KEY')
 app.config['SECRET_KEY'] = os.getenv('SECRET_KEY')
 
@@ -24,13 +31,15 @@ API_URL="http://lotfi.abdelatif-aitbara.link/wp-json/wc/v3/products"
 consumer_key = "ck_176726b97c5f8a71c1b449e69a2bebd5bea873a6"
 consumer_secret = "cs_adad93824b827a5820c077d2658a703be97d7b05"
 
+SECRET_KEY=sk_fYVw52zywDRVAgsC8yUi2TXFRu1MmtPK
+
 # Create a table to store the access tokens for the product if it doesn't exist
 
 with pymysql.connect(
-    host="mysql-service",
-    user="root",
-    password="UGy57oD(NIxWh^Glqn",
-    db="wordpress",
+    host= app.config['MYSQL_DATABASE_HOST'],
+    user= app.config['MYSQL_DATABASE_USER'],
+    password= app.config['MYSQL_DATABASE_PASSWORD'],
+    db= app.config['MYSQL_DATABASE_DB'],
     port=3306
 ) as conn:
     with conn.cursor() as cur:
