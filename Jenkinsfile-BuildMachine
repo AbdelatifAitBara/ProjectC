@@ -21,18 +21,22 @@ pipeline {
             }
         }
 
-        stage('Get Secret') {
-            steps {
-                script {
-                vault = Vault.vault(this)
+        stage('Get Secret From Vault') {
 
-                // Lookup secret
-                secret = vault.secret('secrets/creds/database_user').data.username
+            // Import Vault Java driver
+            @Grab('io.hashicorp:vault-java-driver:0.13.3') 
+            import com.hashicorp.vault.api.*
 
-                // Use secret value
-                sh "echo $secret > secret_file"
-                }
-            }
+            // Instantiate client and authenticate
+            VaultApi vault = new VaultApi(new HttpClient(), "10.0.3.159:8200")
+            vault.auth().loginByToken("MyVaultToken")
+
+            // Lookup secret
+            String secret = vault.secretsEngine("secret").readSecretVersion("secrets/creds/database_user").getData().get("value")
+
+            // Use secret
+            sh "echo $secret > secret_file"
+
         }
 
         stage('Use Secret') {
