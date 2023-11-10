@@ -20,21 +20,22 @@ pipeline {
             }
         }
 
-        stage('Get Docker Token') {
-            steps {
+        stage ('Get Vault Secrets') {
+            steps  {
                 script {
-                dockerToken = sh(returnStdout: true, script: 'vault read -format=json secrets/creds/docker_token | jq -r ".data.docker_token"').trim()
-                env.DOCKER_TOKEN = dockerToken
+                withCredentials([[$class: 'VaultTokenCredentialBinding', addrVariable: 'VAULT_ADDR', credentialsId: 'Vault_Credentials', tokenVariable: 'VAULT_TOKEN', vaultAddr: '10.0.3.159:8200']]) {
+                    withVault([configuration: configuration, vaultSecrets: secrets]) {
+                        sh """
+                            echo $env.VAULT_ADDR > hcvault-address.txt
+                            echo $env.VAULT_TOKEN > hcvault-token.txt
+                        """.stripIndent()
+                            }
                 }
-            }
-        }
 
-        stage('Login to Docker Hub') {
-            steps {
-                sh "docker login -u abdelatifaitbara --password $DOCKER_TOKEN" 
-            }
+                }
+            }    
+
         }
-    }
 
     post {
         failure {
