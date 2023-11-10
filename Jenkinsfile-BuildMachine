@@ -1,0 +1,46 @@
+pipeline {
+    agent { label 'Building_Machine' }
+
+    environment {
+        WORKSPACE = '/home/ubuntu/'
+        PROJECT_DIR = '/home/ubuntu/ProjectC'
+        PROJECT_FOLDER = 'ProjectC'
+        PRODUCT_DOCKER_IMAGE = 'abdelatifaitbara/product'
+    }
+
+    stages {
+        stage('Clone Git Repository') {
+            steps {
+                sh "rm -rf ${PROJECT_DIR}"
+                sh "git -C ${WORKSPACE} clone -b Dev --recursive git@github.com:AbdelatifAitBara/ProjectC.git"
+            }
+        }
+
+
+        stage ('Build Product Microservice') {
+            steps {
+                dir("/home/ubuntu/ProjectC/Microservices/Product") { // Change to your Terraform directory path
+                    sh '''
+                    docker build -t abdelatifaitbara/product:jenkinsv1 .
+                    '''
+                }
+            }
+        }
+    }
+
+    post {
+        failure {
+            echo "Build failed: ${currentBuild.result}"
+        }
+        success {
+            echo "Build succeeded: ${currentBuild.result}"
+        }
+    }
+}
+
+
+
+
+
+
+

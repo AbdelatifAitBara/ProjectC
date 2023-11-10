@@ -24,9 +24,6 @@ ENV MYSQL_DATABASE_USER=$MYSQL_DATABASE_USER \
     SECRET_KEY=$SECRET_KEY \
     NAME=$NAME
 
-# Use HEALTHCHECK instruction
-HEALTHCHECK --interval=30s --timeout=30s --start-period=5s --retries=3 CMD curl --fail http://192.168.10.10:8080/ || exit 1
-
 # Make port 8080 available to the world outside this container
 EXPOSE 8080
 
