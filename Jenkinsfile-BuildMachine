@@ -1,6 +1,6 @@
 def secrets = [
   [path: 'secrets/creds/product', engineVersion: 1, secretValues: [
-    [envVar: 'DOCKER_TOKEN', vaultKey: 'docker_token'],
+    [envVar: 'DOCKER_TOKEN', vaultKey: 'dockertoken'],
     [envVar: 'DOCKER_USERNAME', vaultKey: 'dockeruser'],
     ]],
 ]
