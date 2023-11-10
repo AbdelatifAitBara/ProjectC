@@ -36,7 +36,7 @@ pipeline {
         stage('Build Docker Image') {
             steps {
                     withVault([configuration: configuration, vaultSecrets: secrets]) {
-                sh "cd ${PRODUCT_FOLDER} && docker build -t ${PRODUCT_DOCKER_IMAGE}:latest -e ${DB_USER}=$DB_USER -e ${DB_PASSWORD}=$DB_PASSWORD -e ${DB_NAME}=$DB_NAME -e ${DB_HOST}=$DB_HOST -e ${DB_PORT}=$DB_PORT -e ${PRODUCT_API_URL}=$PRODUCT_API_URL -e ${SECRET_KEY}=$SECRET_KEY ."
+                        sh "cd ${PRODUCT_FOLDER} && docker build -t ${PRODUCT_DOCKER_IMAGE}:latest -e ${DB_USER}=$DB_USER -e ${DB_PASSWORD}=$DB_PASSWORD -e ${DB_NAME}=$DB_NAME -e ${DB_HOST}=$DB_HOST -e ${DB_PORT}=$DB_PORT -e ${PRODUCT_API_URL}=$PRODUCT_API_URL -e ${SECRET_KEY}=$SECRET_KEY ."
                     }
             }
         }
