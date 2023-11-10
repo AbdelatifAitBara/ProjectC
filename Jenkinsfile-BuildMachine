@@ -29,7 +29,7 @@ pipeline {
             }
         }
 
-        stage('Login to Docker') {
+        stage('Login to Docker Hub') {
             steps {
                 sh "docker login -u abdelatifaitbara --password $DOCKER_TOKEN" 
             }
