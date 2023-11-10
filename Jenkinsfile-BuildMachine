@@ -19,9 +19,9 @@ pipeline {
 
         stage('Login Docker Image') {
             steps {
-                sh '''
-                vault read -format=json secrets/creds/docker_token | jq -r '.data.docker_token' | docker login -u abdelatifaitbara --password-stdin
-                '''
+            
+                sh "vault read -format=json secrets/creds/docker_token | jq -r '.data.docker_token' | docker login -u abdelatifaitbara --password-stdin"
+                
             }
                 
         }
