@@ -3,12 +3,12 @@ def secrets = [
     [envVar: 'DOCKER_TOKEN', vaultKey: 'dockertoken'],
     [envVar: 'DOCKER_USERNAME', vaultKey: 'dockeruser'],
     [envVar: 'DB_USER', vaultKey: 'dbuser'],
-    [envVar: 'DB_PASSWORD', vaultKey: 'dbpassword']
-    [envVar: 'DB_NAME', vaultKey: 'dbname']
-    [envVar: 'DB_HOST', vaultKey: 'dbhost']
-    [envVar: 'DB_PORT', vaultKey: 'dbport']
-    [envVar: 'PRODUCT_API_URL', vaultKey: 'productapiurl']
-    [envVar: 'SECRET_KEY', vaultKey: 'secretkey']
+    [envVar: 'DB_PASSWORD', vaultKey: 'dbpassword'],
+    [envVar: 'DB_NAME', vaultKey: 'dbname'],
+    [envVar: 'DB_HOST', vaultKey: 'dbhost'],
+    [envVar: 'DB_PORT', vaultKey: 'dbport'],
+    [envVar: 'PRODUCT_API_URL', vaultKey: 'productapiurl'],
+    [envVar: 'SECRET_KEY', vaultKey: 'secretkey'],
     ]],
 ]
 def configuration = [vaultUrl: 'http://10.0.3.159:8200',  vaultCredentialId: 'Vault_Credentials', engineVersion: 1]
