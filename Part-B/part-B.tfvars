@@ -1,5 +1,5 @@
-vpc_id = "vpc-03a8dde6447237b08"
-igw_id = "igw-0501e3106a83b2af0"
+vpc_id = "vpc-0f0186dfaa776d811"
+igw_id = "igw-05d827b8859292043"
 
 # EC2 Defaults Values:
 
