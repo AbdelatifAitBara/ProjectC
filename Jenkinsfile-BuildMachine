@@ -1,4 +1,5 @@
-@Library('vault') _
+@Library('vault-utils')
+import com.electriccloud.vault.*
 
 
 pipeline {
@@ -20,22 +21,27 @@ pipeline {
             }
         }
 
-        stage ('Get Vault Secrets') {
-            steps  {
+ 
+        stage('Get Secret') {
+            steps {
                 script {
-                withCredentials([[$class: 'VaultTokenCredentialBinding', addrVariable: 'VAULT_ADDR', credentialsId: 'Vault_Credentials', tokenVariable: 'VAULT_TOKEN', vaultAddr: '10.0.3.159:8200']]) {
-                    withVault([configuration: configuration, vaultSecrets: secrets]) {
-                        sh """
-                            echo $env.VAULT_ADDR > hcvault-address.txt
-                            echo $env.VAULT_TOKEN > hcvault-token.txt
-                        """.stripIndent()
-                            }
-                }
+                vault = Vault.vault(this)
 
-                }
-            }    
+                // Lookup secret
+                secret = vault.secret('secrets/creds/database_user').data.username
 
+                // Use secret value
+                sh "echo $secret > secret_file"
+                }
+            }
         }
+
+        stage('Use Secret') {
+            steps {
+                sh "cat secret_file | do_something"  
+            }
+        }
+
 
     post {
         failure {
