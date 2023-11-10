@@ -90,6 +90,20 @@ variable "sg_vault_descrption" {
   description = "sg for vault"
 }
 
+
+# BM Variables:
+
+variable "bm_sg_name" {
+  type        = string
+  description = "sg name for building machine"
+}
+  
+
+variable "bm_sg_descrption" {
+  type        = string
+  description = "sg description for building machine"
+}
+
 # Network Variables
 
 variable "cidr_block_PublicSubnet01" {
