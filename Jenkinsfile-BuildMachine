@@ -2,10 +2,10 @@ def secrets = [
   [path: 'secrets/creds/product', engineVersion: 1, secretValues: [
     [envVar: 'DOCKER_TOKEN', vaultKey: 'dockertoken'],
     [envVar: 'DOCKER_USERNAME', vaultKey: 'dockeruser'],
-    [envVar: 'DB_USER', vaultKey: 'dbuser'],
-    [envVar: 'DB_PASSWORD', vaultKey: 'dbpassword'],
-    [envVar: 'DB_NAME', vaultKey: 'dbname'],
-    [envVar: 'DB_HOST', vaultKey: 'dbhost'],
+    [envVar: 'MYSQL_DATABASE_USER', vaultKey: 'MYSQL_DATABASE_USER'],
+    [envVar: 'MYSQL_DATABASE_PASSWORD', vaultKey: 'MYSQL_DATABASE_PASSWORD'],
+    [envVar: 'MYSQL_DATABASE_DB', vaultKey: 'MYSQL_DATABASE_DB'],
+    [envVar: 'MYSQL_DATABASE_HOST', vaultKey: 'MYSQL_DATABASE_HOST'],
     [envVar: 'DB_PORT', vaultKey: 'dbport'],
     [envVar: 'PRODUCT_API_URL', vaultKey: 'productapiurl'],
     [envVar: 'SECRET_KEY', vaultKey: 'secretkey'],
@@ -22,7 +22,7 @@ pipeline {
         PROJECT_DIR = '/home/ubuntu/ProjectC'
         PRODUCT_FOLDER = '/home/ubuntu/ProjectC/Microservices/Product'
         PRODUCT_DOCKER_IMAGE = 'abdelatifaitbara/product'
-        TAG = 'lotfi16'
+        TAG = 'lotfi17'
         
     }
 
