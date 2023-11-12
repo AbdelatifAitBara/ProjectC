@@ -22,6 +22,7 @@ pipeline {
         PROJECT_DIR = '/home/ubuntu/ProjectC'
         PRODUCT_FOLDER = '/home/ubuntu/ProjectC/Microservices/Product'
         PRODUCT_DOCKER_IMAGE = 'abdelatifaitbara/product'
+        TAG = 'lotfi2'
     }
 
     stages {
@@ -38,7 +39,7 @@ pipeline {
                     withVault([configuration: configuration, vaultSecrets: secrets]) {
                         sh """
                             cd ${PRODUCT_FOLDER} && \
-                            docker build -t ${PRODUCT_DOCKER_IMAGE}:lotfi1 \
+                            docker build -t ${PRODUCT_DOCKER_IMAGE}:${TAG} \
                             --build-arg DB_USER=${env.DB_USER} \
                             --build-arg DB_PASSWORD=${env.DB_PASSWORD} \
                             --build-arg DB_NAME=${env.DB_NAME} \
@@ -56,7 +57,7 @@ pipeline {
             steps {
                     withVault([configuration: configuration, vaultSecrets: secrets]) {
                         sh "docker login -u $DOCKER_USERNAME -p $DOCKER_TOKEN"
-                        sh "docker push docker.io/${PRODUCT_DOCKER_IMAGE}:latest"
+                        sh "docker push docker.io/${PRODUCT_DOCKER_IMAGE}:${TAG}"   
                     }
                 }  
             }
