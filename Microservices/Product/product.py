@@ -20,6 +20,8 @@ app.config['MYSQL_DATABASE_HOST'] = "mysql-service"
 app.config['SECRET_KEY'] = os.getenv('SECRET_KEY')
 app.config['MYSQL_DATABASE_PORT'] = 3306
 
+print(os.getenv('MYSQL_DATABASE_USER'))
+
 API_URL= os.getenv('PRODUCT_API_URL')
 
 consumer_key = "ck_eee81dfbafac8aca339df4797a2800739d9a272d"

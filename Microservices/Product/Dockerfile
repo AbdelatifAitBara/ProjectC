@@ -14,7 +14,7 @@ RUN pip install --trusted-host pypi.python.org -r requirements.txt
 FROM base AS final
 
 # Define environment variables
-
+USER root
 
 ARG MYSQL_DATABASE_USER MYSQL_DATABASE_USER 
 ARG MYSQL_DATABASE_PASSWORD MYSQL_DATABASE_PASSWORD 
