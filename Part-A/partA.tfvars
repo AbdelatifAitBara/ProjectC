@@ -31,7 +31,7 @@ sg_vault_descrption = "Abdelatif EC2 03 Security Group"
 
 # BM SG Values:
 
-bm_sg_name = "Abdelatif-BM-EC2-04-SG"
+bm_sg_name       = "Abdelatif-BM-EC2-04-SG"
 bm_sg_descrption = "Abdelatif BM EC2 04 Security Group"
 
 # Network Defaults Values:

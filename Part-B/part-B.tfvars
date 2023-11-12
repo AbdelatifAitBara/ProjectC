@@ -1,6 +1,6 @@
-vpc_id = "vpc-0f0186dfaa776d811"
-igw_id = "igw-05d827b8859292043"
-ngw-vpc-b                  = "nat-0da3f612c02cd4175"
+vpc_id    = "vpc-0f0186dfaa776d811"
+igw_id    = "igw-05d827b8859292043"
+ngw-vpc-b = "nat-0da3f612c02cd4175"
 
 # EC2 Defaults Values:
 
@@ -16,7 +16,7 @@ terraform_role = "terraform-iam-role"
 
 # BM SG Values:
 
-bm_sg_name = "Abdelatif-BM-EC2-04-SG"
+bm_sg_name       = "Abdelatif-BM-EC2-04-SG"
 bm_sg_descrption = "Abdelatif BM EC2 04 Security Group"
 
 # Network Defaults Values:
