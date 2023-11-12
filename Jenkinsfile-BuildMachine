@@ -48,7 +48,7 @@ pipeline {
                     --build-arg MYSQL_DATABASE_NAME=${MYSQL_DATABASE_NAME} \
                     --build-arg MYSQL_DATABASE_HOST=${MYSQL_DATABASE_HOST} \
                     --build-arg MYSQL_DATABASE_PORT=${MYSQL_DATABASE_PORT} \
-                    -t myimage .'
+                    -t ${PRODUCT_DOCKER_IMAGE}:${TAG} .'
                 }
             }
         }
