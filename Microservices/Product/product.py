@@ -22,7 +22,7 @@ CORS(app)
 
 app.config['MYSQL_DATABASE_USER'] = "wordpress"
 app.config['MYSQL_DATABASE_PASSWORD'] = "password"
-app.config['MYSQL_DATABASE_DB'] = "mysql-service"
+app.config['MYSQL_DATABASE_DB'] = "wordpress"
 app.config['MYSQL_DATABASE_HOST'] = "mysql-service"
 app.config['SECRET_KEY'] = os.getenv('SECRET_KEY')
 app.config['MYSQL_DATABASE_PORT'] = os.getenv('DATABASE_PORT')
