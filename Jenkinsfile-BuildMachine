@@ -41,8 +41,7 @@ pipeline {
                 steps {
                     withVault([configuration: configuration, vaultSecrets: secrets]) {
                         script {
-                            ${MYSQL_DATABASE_USE} = $MYSQL_DATABASE_USER
-
+                            MYSQL_DATABASE_USER = secrets.envVar{MYSQL_DATABASE_USER}
                         }
                     }
                 }
