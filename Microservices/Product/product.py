@@ -12,14 +12,14 @@ import re
 app = Flask(__name__)
 CORS(app)
 
-app.config['MYSQL_DATABASE_USER'] = os.getenv('DATABASE_USER')
-app.config['MYSQL_DATABASE_PASSWORD'] = os.getenv('DB_PASSWORD')
-app.config['MYSQL_DATABASE_DB'] = os.getenv('DATABASE_NAME')
-app.config['MYSQL_DATABASE_HOST'] = os.getenv('DATABASE_HOST')
+app.config['MYSQL_DATABASE_USER'] = os.getenv('MYSQL_DATABASE_USER')
+app.config['MYSQL_DATABASE_PASSWORD'] = os.getenv('MYSQL_DATABASE_PASSWORD')
+app.config['MYSQL_DATABASE_DB'] = os.getenv('MYSQL_DATABASE_DB')
+app.config['MYSQL_DATABASE_HOST'] = os.getenv('MYSQL_DATABASE_HOST')
 app.config['SECRET_KEY'] = os.getenv('SECRET_KEY')
-app.config['MYSQL_DATABASE_PORT'] = os.getenv('DATABASE_PORT')
+app.config['MYSQL_DATABASE_PORT'] = os.getenv('MYSQL_DATABASE_PORT')
 
-API_URL= os.getenv('API_URL')
+API_URL= os.getenv('PRODUCT_API_URL')
 
 consumer_key = "ck_eee81dfbafac8aca339df4797a2800739d9a272d"
 consumer_secret = "cs_ae13de75f617615dd8e4207d966af78d132acf5c"
