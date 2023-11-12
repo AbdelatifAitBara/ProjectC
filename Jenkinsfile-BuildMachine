@@ -23,7 +23,8 @@ pipeline {
         PROJECT_DIR = '/home/ubuntu/ProjectC'
         PRODUCT_FOLDER = '/home/ubuntu/ProjectC/Microservices/Product'
         PRODUCT_DOCKER_IMAGE = 'abdelatifaitbara/product'
-        TAG = 'ProjectV15'
+        TAG = 'ProjectV16'
+        MYSQL_DATABASE_USER= 'wordpress'
     }
 
     stages {
@@ -36,10 +37,18 @@ pipeline {
         }
 
 
-        stage('Build Product Image') {
+
+        stage("Build Product Image") {
             steps {
-                withVault([configuration: configuration, vaultSecrets: secrets]) {
-                    sh 'cd ${PRODUCT_FOLDER} && docker build --build-arg MYSQL_DATABASE_USER=wordpress -t ${PRODUCT_DOCKER_IMAGE}:${TAG} . '
+                script {
+                    echo "Bulding docker images"
+                    def buildArgs = """\
+                        --build-arg MYSQL_DATABASE_USER=${MYSQL_DATABASE_USER} \
+                        -f Dockerfile \
+                        ."""
+                        docker.build(
+                        "${PRODUCT_DOCKER_IMAGE}:${TAG}",
+                        buildArgs)
                 }
             }
         }
