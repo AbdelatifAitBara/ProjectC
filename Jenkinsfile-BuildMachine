@@ -23,7 +23,7 @@ pipeline {
         PROJECT_DIR = '/home/ubuntu/ProjectC'
         PRODUCT_FOLDER = '/home/ubuntu/ProjectC/Microservices/Product'
         PRODUCT_DOCKER_IMAGE = 'abdelatifaitbara/product'
-        TAG = 'ProjectV2'
+        TAG = 'ProjectV3'
     }
 
     stages {
@@ -35,12 +35,12 @@ pipeline {
             }
         }
 
+        
 
         stage('Build Docker Image') {
-
             steps {
 
-                withVault([configuration: configuration, vaultSecrets: secrets]) {
+                    withVault([configuration: configuration, vaultSecrets: secrets]) {
 
                     environment {
                         MYSQL_DATABASE_USER = credentials('MYSQL_DATABASE_USER') 
@@ -51,14 +51,13 @@ pipeline {
                         PRODUCT_API_URL = credentials('PRODUCT_API_URL')
                     }
 
-                    sh """
-                        cd ${PRODUCT_FOLDER} && \
-                        docker build -t ${PRODUCT_DOCKER_IMAGE}:${TAG} .
-                    """
+                        sh """
+                            cd ${PRODUCT_FOLDER} && \
+                            docker build -t ${PRODUCT_DOCKER_IMAGE}:${TAG} .
+                        """
                 }
 
             }
-
         }
 
 
