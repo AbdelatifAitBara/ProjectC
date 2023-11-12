@@ -41,15 +41,13 @@ pipeline {
         stage("Build Product Image") {
             steps {
                 script {
-                    echo "Building Product Image"
-                    
-                    // Define env vars from Jenkins
-                    def envVars = "MYSQL_DATABASE_USER=${MYSQL_DATABASE_USER}"  
-                    
-                    // Build docker image passing env vars
-                    docker.build("${PRODUCT_DOCKER_IMAGE}:${TAG}", 
-                        "-f ${PRODUCT_FOLDER}/Dockerfile .", 
-                        "--env vars=${envVars}")
+                    echo "Bulding Product Image"
+                    def buildArgs = """\
+                        --build-arg MYSQL_DATABASE_USER=${MYSQL_DATABASE_USER} \
+                        ${PRODUCT_FOLDER}"""
+                        docker.build(
+                        "${PRODUCT_DOCKER_IMAGE}:${TAG}",
+                        buildArgs)
                 }
             }
         }
