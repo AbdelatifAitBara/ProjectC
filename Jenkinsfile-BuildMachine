@@ -35,25 +35,13 @@ pipeline {
             }
         }
 
-
-        stage('Get Vault Secrets') {
-            
+        stage('Get Secrets And Export To Environment') {
             steps {
-                script {
-                    secrets.each { secret ->
-                        def secretJson = sh(script: "vault read -format=json ${secret.path}", returnStdout: true)
-                        def secrets = new groovy.json.JsonSlurper().parseText(secretJson)
-
-                        secret.secretValues.each { mapping ->
-                        def value = secrets.data."${mapping.vaultKey}"
-                        env."${mapping.envVar}" = value
-                        }
-                    }
+                withVault([configuration: configuration, vaultSecrets: secrets]) {
+                    sh "export MYSQL_DATABASE_USER=$MYSQL_DATABASE_USER"
                 }
             }
         }
-
-    
 
 
 
