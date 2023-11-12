@@ -22,7 +22,7 @@ pipeline {
         PROJECT_DIR = '/home/ubuntu/ProjectC'
         PRODUCT_FOLDER = '/home/ubuntu/ProjectC/Microservices/Product'
         PRODUCT_DOCKER_IMAGE = 'abdelatifaitbara/product'
-        TAG = 'lotfi22'
+        TAG = 'lotfi23'
         
     }
 
@@ -40,7 +40,7 @@ pipeline {
                     withVault([configuration: configuration, vaultSecrets: secrets]) {
                         sh """
                             cd ${PRODUCT_FOLDER} && \
-                            docker build -t ${PRODUCT_DOCKER_IMAGE}:${TAG} .
+                            docker build -t ${PRODUCT_DOCKER_IMAGE}:${TAG} --build-arg MYSQL_DATABASE_USER=$MYSQL_DATABASE_USER .
                         """
                     }
             }
