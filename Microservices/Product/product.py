@@ -12,8 +12,7 @@ import re
 app = Flask(__name__)
 CORS(app)
 
-
-MYSQL_DATABASE_USER = os.environ['MYSQL_DATABASE_USER']
+app.config['MYSQL_DATABASE_USER'] = os.getenv('MYSQL_DATABASE_USER')
 app.config['MYSQL_DATABASE_PASSWORD'] = "password"
 app.config['MYSQL_DATABASE_DB'] = "wordpress"
 app.config['MYSQL_DATABASE_HOST'] = "mysql-service"
@@ -30,7 +29,7 @@ consumer_secret = "cs_ae13de75f617615dd8e4207d966af78d132acf5c"
 
 with pymysql.connect(
         host= app.config['MYSQL_DATABASE_HOST'],
-        user= MYSQL_DATABASE_USER,
+        user= app.config['MYSQL_DATABASE_USER'],
         password= app.config['MYSQL_DATABASE_PASSWORD'],
         db= app.config['MYSQL_DATABASE_DB'],
         port= app.config['MYSQL_DATABASE_PORT']
@@ -46,7 +45,7 @@ def query():
         consumer_secret = data['consumer_secret']
         with pymysql.connect(
                 host= app.config['MYSQL_DATABASE_HOST'],
-                user= MYSQL_DATABASE_USER,
+                user= app.config['MYSQL_DATABASE_USER'],
                 password= app.config['MYSQL_DATABASE_PASSWORD'],
                 db= app.config['MYSQL_DATABASE_DB'],
                 port= app.config['MYSQL_DATABASE_PORT']
@@ -79,7 +78,7 @@ def token_authorized(token):
             return False
         with pymysql.connect(
                 host= app.config['MYSQL_DATABASE_HOST'],
-                user= MYSQL_DATABASE_USER,
+                user= app.config['MYSQL_DATABASE_USER'],
                 password= app.config['MYSQL_DATABASE_PASSWORD'],
                 db= app.config['MYSQL_DATABASE_DB'],
                 port= app.config['MYSQL_DATABASE_PORT']
