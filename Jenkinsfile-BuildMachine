@@ -28,7 +28,7 @@ pipeline {
     }
 
     parameters {
-    string(defaultValue: 'wordpress', description: 'MYSQL_DATABASE_USER', name: 'MYSQL_DATABASE_USER') 
+        string(defaultValue: 'wordpress', description: 'MYSQL_DATABASE_USER', name: 'MYSQL_DATABASE_USER') 
     }
 
     stages {
@@ -40,28 +40,12 @@ pipeline {
             }
         }
 
-
-        stage('Build') {
-            agent { 
-            docker {
-                image 'python:3.9-alpine' 
-                args "-e variable1=${params.MYSQL_DATABASE_USER}"
-            }
-            }
-            steps {
-            sh 'docker build -t ${PRODUCT_DOCKER_IMAGE}:${TAG} ${PRODUCT_FOLDER}' 
-            }
-        }
-    
-
-
-
         stage("Build Product Image") {
             steps {
                 script {
                     echo "Bulding Product Image"
                     def buildArgs = """\
-                        --build-arg MYSQL_DATABASE_USER=${MYSQL_DATABASE_USER} \
+                        --build-arg MYSQL_DATABASE_USER=${params.MYSQL_DATABASE_USER} \
                         ${PRODUCT_FOLDER}"""
                         docker.build(
                         "${PRODUCT_DOCKER_IMAGE}:${TAG}",
