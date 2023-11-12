@@ -41,12 +41,8 @@ pipeline {
                 steps {
                     withVault([configuration: configuration, vaultSecrets: secrets]) {
                         script {
-                            MYSQL_DATABASE_USER = secrets.MYSQL_DATABASE_USER
-                            MYSQL_DATABASE_PASSWORD = secrets.MYSQL_DATABASE_PASSWORD
-                            MYSQL_DATABASE_DB = secrets.MYSQL_DATABASE_DB
-                            MYSQL_DATABASE_HOST = secrets.MYSQL_DATABASE_HOST
-                            DB_PORT = secrets.DB_PORT
-                            PRODUCT_API_URL = secrets.PRODUCT_API_URL
+                            ${MYSQL_DATABASE_USE} = $MYSQL_DATABASE_USER
+
                         }
                     }
                 }
@@ -57,7 +53,7 @@ pipeline {
             steps {
                 withVault([configuration: configuration, vaultSecrets: secrets]) {
                     sh "cd ${PRODUCT_FOLDER}"
-                    sh "docker build -t ${PRODUCT_DOCKER_IMAGE}:${TAG} --build-arg MYSQL_DATABASE_USER=$MYSQL_DATABASE_USER ."
+                    sh "docker build -t ${PRODUCT_DOCKER_IMAGE}:${TAG} --build-arg MYSQL_DATABASE_USER=${MYSQL_DATABASE_USER} ."
                 }
             }
         }
