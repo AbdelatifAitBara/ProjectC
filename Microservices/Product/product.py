@@ -12,14 +12,6 @@ import re
 app = Flask(__name__)
 CORS(app)
 
-
-#   host="mysql-service",
-#    user="root",
-#    password="UGy57oD(NIxWh^Glqn",
-#    db="wordpress",
-#    port=3306
-
-
 app.config['MYSQL_DATABASE_USER'] = os.getenv('DATABASE_USER')
 app.config['MYSQL_DATABASE_PASSWORD'] = os.getenv('DB_PASSWORD')
 app.config['MYSQL_DATABASE_DB'] = os.getenv('DATABASE_NAME')
@@ -29,8 +21,8 @@ app.config['MYSQL_DATABASE_PORT'] = os.getenv('DATABASE_PORT')
 
 API_URL= os.getenv('API_URL')
 
-consumer_key = "ck_176726b97c5f8a71c1b449e69a2bebd5bea873a6"
-consumer_secret = "cs_adad93824b827a5820c077d2658a703be97d7b05"
+consumer_key = "ck_6d9ac459c7ebb54b5b9e63aa234340d66613578b"
+consumer_secret = "cs_567c0119772b59cac0b0f08b175ce77dda6e6ef5"
 
 
 # Create a table to store the access tokens for the product if it doesn't exist
@@ -40,7 +32,7 @@ with pymysql.connect(
     user= app.config['MYSQL_DATABASE_USER'],
     password= app.config['MYSQL_DATABASE_PASSWORD'],
     db= app.config['MYSQL_DATABASE_DB'],
-    port=3306
+    port= app.config['MYSQL_DATABASE_PORT']
 ) as conn:
     with conn.cursor() as cur:
         cur.execute("CREATE TABLE IF NOT EXISTS access_tokens_product (id INT(11) NOT NULL AUTO_INCREMENT, token VARCHAR(255) NOT NULL, PRIMARY KEY (id));")
@@ -52,11 +44,11 @@ def query():
         data = json.loads(request.data)
         consumer_secret = data['consumer_secret']
         with pymysql.connect(
-                host="mysql-service",
-                user="root",
-                password="UGy57oD(NIxWh^Glqn",
-                db="wordpress",
-                port=3306
+                host= app.config['MYSQL_DATABASE_HOST'],
+                user= app.config['MYSQL_DATABASE_USER'],
+                password= app.config['MYSQL_DATABASE_PASSWORD'],
+                db= app.config['MYSQL_DATABASE_DB'],
+                port= app.config['MYSQL_DATABASE_PORT']
         ) as conn:
             with conn.cursor() as cur:
                 cur.execute("SELECT COUNT(*) FROM wp_woocommerce_api_keys WHERE consumer_secret=%s", (consumer_secret,))
@@ -85,11 +77,11 @@ def token_authorized(token):
         if datetime.utcnow() > datetime.fromtimestamp(decoded_token['exp']):
             return False
         with pymysql.connect(
-                host="mysql-service",
-                user="root",
-                password="UGy57oD(NIxWh^Glqn",
-                db="wordpress",
-                port=3306
+                host= app.config['MYSQL_DATABASE_HOST'],
+                user= app.config['MYSQL_DATABASE_USER'],
+                password= app.config['MYSQL_DATABASE_PASSWORD'],
+                db= app.config['MYSQL_DATABASE_DB'],
+                port= app.config['MYSQL_DATABASE_PORT']
         ) as conn:
             with conn.cursor() as cur:
                 cur.execute("SELECT COUNT(*) FROM access_tokens_product WHERE token=%s", (token,))
