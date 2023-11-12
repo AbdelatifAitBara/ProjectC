@@ -1,31 +1,37 @@
-# Use a minimal base image
-FROM python:3.9-alpine AS base
+# Base image
+FROM python:3.9-alpine
 
-# Set the working directory to /app
+# Define all build arguments  
+ARG MYSQL_DATABASE_USER
+ARG MYSQL_DATABASE_PASSWORD 
+ARG MYSQL_DATABASE_DB
+ARG MYSQL_DATABASE_HOST
+ARG PRODUCT_API_URL
+ARG CONSUMER_KEY
+ARG CONSUMER_SECRET
+ARG SECRET_KEY
+ARG NAME
+
+# Set working directory
 WORKDIR /app
 
-# Copy the current directory contents into the container at /app
+# Copy files  
 COPY product.py requirements.txt ./
 
-# Install any needed packages specified in requirements.txt
+# Install dependencies
 RUN pip install --trusted-host pypi.python.org -r requirements.txt
 
-# Use a multistage build
-FROM base AS final
-
-# Define environment variables
-ENV MYSQL_DATABASE_USER=$MYSQL_DATABASE_USER \
-    MYSQL_DATABASE_PASSWORD=$MYSQL_DATABASE_PASSWORD \
-    MYSQL_DATABASE_DB=$MYSQL_DATABASE_DB \
-    MYSQL_DATABASE_HOST=$MYSQL_DATABASE_HOST \
-    PRODUCT_API_URL=$PRODUCT_API_URL \
-    CONSUMER_KEY=$CONSUMER_KEY \
-    CONSUMER_SECRET=$CONSUMER_SECRET \
-    SECRET_KEY=$SECRET_KEY \
-    NAME=$NAME
-
-# Make port 8080 available to the world outside this container
+# Expose port
 EXPOSE 8080
 
-# Run the command to start the product.py script
-CMD ["python", "product.py"]
+# Command uses build arguments directly
+CMD python product.py \
+  --mysql_user=$MYSQL_DATABASE_USER \
+  --mysql_password=$MYSQL_DATABASE_PASSWORD \
+  --mysql_db=$MYSQL_DATABASE_DB \
+  --mysql_host=$MYSQL_DATABASE_HOST \
+  --product_api_url=$PRODUCT_API_URL \
+  --consumer_key=$CONSUMER_KEY \
+  --consumer_secret=$CONSUMER_SECRET \
+  --secret_key=$SECRET_KEY \
+  --name=$NAME
