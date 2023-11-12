@@ -12,7 +12,7 @@ import re
 app = Flask(__name__)
 CORS(app)
 
-app.config['MYSQL_DATABASE_USER'] = "root"
+app.config['MYSQL_DATABASE_USER'] = "wordpress"
 app.config['MYSQL_DATABASE_PASSWORD'] = "password"
 app.config['MYSQL_DATABASE_DB'] = "wordpress"
 app.config['MYSQL_DATABASE_HOST'] = "mysql-service"
