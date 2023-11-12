@@ -30,13 +30,4 @@ ARG MYSQL_DATABASE_USER=$MYSQL_DATABASE_USER \
 EXPOSE 8080
 
 # Run the command to start the product.py script
-CMD python product.py \
-    --mysql_database_user $MYSQL_DATABASE_USER \
-    --mysql_database_password $MYSQL_DATABASE_PASSWORD \
-    --mysql_database_db $MYSQL_DATABASE_DB \
-    --mysql_database_host $MYSQL_DATABASE_HOST \
-    --product_api_url $PRODUCT_API_URL \
-    --consumer_key $CONSUMER_KEY \
-    --consumer_secret $CONSUMER_SECRET \
-    --secret_key $SECRET_KEY \
-    --name $NAME
+CMD ["python", "product.py"]
