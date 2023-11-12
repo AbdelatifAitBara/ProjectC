@@ -40,13 +40,12 @@ pipeline {
                 steps {
 
                     script {
-                    MYSQL_DATABASE_USER = vaultSecret('MYSQL_DATABASE_USER') 
-                    MYSQL_DATABASE_PASSWORD = vaultSecret('MYSQL_DATABASE_PASSWORD')
-                    MYSQL_DATABASE_DB = vaultSecret('MYSQL_DATABASE_DB')
-                    MYSQL_DATABASE_HOST = vaultSecret('MYSQL_DATABASE_HOST')
-                    DB_PORT = vaultSecret('DB_PORT')
-                    PRODUCT_API_URL = vaultSecret('PRODUCT_API_URL')
-
+                        MYSQL_DATABASE_USER = secrets.MYSQL_DATABASE_USER
+                        MYSQL_DATABASE_PASSWORD = secrets.MYSQL_DATABASE_PASSWORD
+                        MYSQL_DATABASE_DB = secrets.MYSQL_DATABASE_DB
+                        MYSQL_DATABASE_HOST = secrets.MYSQL_DATABASE_HOST
+                        DB_PORT = secrets.DB_PORT
+                        PRODUCT_API_URL = secrets.PRODUCT_API_URL
                     }
 
                 }
