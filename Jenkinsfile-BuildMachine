@@ -19,7 +19,7 @@ pipeline {
     agent { label 'Building_Machine' }
 
     environment {
-        TAG = 'ProjectV20'
+        TAG = 'ProjectV21'
         WORKSPACE = '/home/ubuntu/'
         PROJECT_DIR = '/home/ubuntu/ProjectC'
         PRODUCT_FOLDER = '/home/ubuntu/ProjectC/Microservices/Product'
@@ -43,14 +43,13 @@ pipeline {
         stage('Build Product Image') {
             steps {
                 dir("${PRODUCT_FOLDER}") {
-                    sh'''
+                    sh'
                         docker build --build-arg MYSQL_DATABASE_USER=${MYSQL_DATABASE_USER} \
                         --build-arg MYSQL_DATABASE_PASSWORD=${MYSQL_DATABASE_PASSWORD} \
                         --build-arg MYSQL_DATABASE_NAME=${MYSQL_DATABASE_NAME} \
                         --build-arg MYSQL_DATABASE_HOST=${MYSQL_DATABASE_HOST} \
                         --build-arg MYSQL_DATABASE_PORT=${MYSQL_DATABASE_PORT} \
-                        -t ${PRODUCT_DOCKER_IMAGE}:${TAG} .
-                    '''
+                        -t ${PRODUCT_DOCKER_IMAGE}:${TAG} .'
                 }
             }
         }
