@@ -44,7 +44,7 @@ pipeline {
                     echo "Bulding docker images"
                     def buildArgs = """\
                         --build-arg MYSQL_DATABASE_USER=${MYSQL_DATABASE_USER} \
-                        -f Dockerfile \
+                        -f Dockerfile ${PRODUCT_FOLDER} \
                         ."""
                         docker.build(
                         "${PRODUCT_DOCKER_IMAGE}:${TAG}",
