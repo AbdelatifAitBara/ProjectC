@@ -53,15 +53,18 @@ pipeline {
             }
 
             stage('Build Docker Image') {
+
                 steps {
-                    sh "docker build -t ${PRODUCT_DOCKER_IMAGE}:${TAG}  --build-arg MYSQL_DATABASE_USER=${MYSQL_DATABASE_USER} \
+                    sh '''
+                    cd ${PRODUCT_FOLDER}
+                    docker build -t ${PRODUCT_DOCKER_IMAGE}:${TAG} --build-arg MYSQL_DATABASE_USER=${MYSQL_DATABASE_USER} \
                     --build-arg MYSQL_DATABASE_PASSWORD=${MYSQL_DATABASE_PASSWORD} \
                     --build-arg MYSQL_DATABASE_DB=${MYSQL_DATABASE_DB} \
                     --build-arg MYSQL_DATABASE_HOST=${MYSQL_DATABASE_HOST} \
                     --build-arg DB_PORT=${DB_PORT} \
                     --build-arg PRODUCT_API_URL=${PRODUCT_API_URL} \
-                    --build-arg SECRET_KEY=${SECRET_KEY} \
-                    . "
+                    --build-arg SECRET_KEY=${SECRET_KEY} .
+                    '''
                 }
             }
 
