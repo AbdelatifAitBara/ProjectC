@@ -19,7 +19,7 @@ pipeline {
     agent { label 'Building_Machine' }
 
     environment {
-        TAG = 'ProjectV25'
+        TAG = 'ProjectV27'
         WORKSPACE = '/home/ubuntu/'
         PROJECT_DIR = '/home/ubuntu/ProjectC'
         PRODUCT_FOLDER = '/home/ubuntu/ProjectC/Microservices/Product'
@@ -43,7 +43,7 @@ pipeline {
         stage('Build Product Image') {
             steps {
                 dir("${PRODUCT_FOLDER}") {
-                    sh 'docker build -t ${PRODUCT_DOCKER_IMAGE}:${TAG} --build-arg MYSQL_DATABASE_USER=wordpress .'
+                    sh 'docker build --build-arg MYSQL_DATABASE_USER=wordpress -t ${PRODUCT_DOCKER_IMAGE}:${TAG} .'
                 }
             }
         }
