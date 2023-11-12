@@ -28,11 +28,11 @@ consumer_secret = "cs_567c0119772b59cac0b0f08b175ce77dda6e6ef5"
 # Create a table to store the access tokens for the product if it doesn't exist
 
 with pymysql.connect(
-    host= app.config['MYSQL_DATABASE_HOST'],
-    user= app.config['MYSQL_DATABASE_USER'],
-    password= app.config['MYSQL_DATABASE_PASSWORD'],
-    db= app.config['MYSQL_DATABASE_DB'],
-    port= app.config['MYSQL_DATABASE_PORT']
+        host= app.config['MYSQL_DATABASE_HOST'],
+        user= app.config['MYSQL_DATABASE_USER'],
+        password= app.config['MYSQL_DATABASE_PASSWORD'],
+        db= app.config['MYSQL_DATABASE_DB'],
+        port= app.config['MYSQL_DATABASE_PORT']
 ) as conn:
     with conn.cursor() as cur:
         cur.execute("CREATE TABLE IF NOT EXISTS access_tokens_product (id INT(11) NOT NULL AUTO_INCREMENT, token VARCHAR(255) NOT NULL, PRIMARY KEY (id));")
