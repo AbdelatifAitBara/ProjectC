@@ -27,6 +27,10 @@ pipeline {
         MYSQL_DATABASE_USER= 'wordpress'
     }
 
+    parameters {
+    string(defaultValue: 'wordpress', description: 'MYSQL_DATABASE_USER', name: 'MYSQL_DATABASE_USER') 
+    }
+
     stages {
 
         stage('Clone Git Repository') {
@@ -35,6 +39,20 @@ pipeline {
                 sh "git -C ${WORKSPACE} clone -b Dev --recursive git@github.com:AbdelatifAitBara/ProjectC.git"
             }
         }
+
+
+        stage('Build') {
+            agent { 
+            docker {
+                image 'docker:latest' 
+                args "-e variable1=${params.MYSQL_DATABASE_USER}"
+            }
+            }
+            steps {
+            sh 'docker build -t ${PRODUCT_DOCKER_IMAGE}:${TAG} ${PRODUCT_FOLDER}' 
+            }
+        }
+    
 
 
 
