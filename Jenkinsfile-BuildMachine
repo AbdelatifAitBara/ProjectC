@@ -28,7 +28,7 @@ pipeline {
     }
 
     parameters {
-        string(defaultValue: 'wordpress', description: 'MYSQL_DATABASE_USER', name: 'MYSQL_DATABASE_USER') 
+        string(defaultValue: 'wordpress', name: 'MYSQL_DATABASE_PASSWORD')
     }
 
     stages {
@@ -42,14 +42,17 @@ pipeline {
 
         stage("Build Product Image") {
             steps {
-                script {
-                    echo "Bulding Product Image"
-                    def buildArgs = """\
-                        --build-arg MYSQL_DATABASE_USER=${params.MYSQL_DATABASE_USER} \
-                        ${PRODUCT_FOLDER}"""
-                        docker.build(
-                        "${PRODUCT_DOCKER_IMAGE}:${TAG}",
-                        buildArgs)
+                withVault([configuration: configuration, vaultSecrets: secrets]) {
+                    script {
+                        echo "Bulding Product Image"
+                        def buildArgs = """\
+                            --build-arg MYSQL_DATABASE_USER=$MYSQL_DATABASE_USER \
+                            ${PRODUCT_FOLDER}"""
+                            docker.build(
+                            "${PRODUCT_DOCKER_IMAGE}:${TAG}",
+                            buildArgs)
+                    }
+                    
                 }
             }
         }
