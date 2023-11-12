@@ -23,7 +23,7 @@ pipeline {
         PROJECT_DIR = '/home/ubuntu/ProjectC'
         PRODUCT_FOLDER = '/home/ubuntu/ProjectC/Microservices/Product'
         PRODUCT_DOCKER_IMAGE = 'abdelatifaitbara/product'
-        TAG = 'ProjectV3'
+        TAG = 'ProjectV4'
     }
 
     stages {
@@ -56,7 +56,7 @@ pipeline {
 
                 steps {
                     sh '''
-                    cd ${PRODUCT_FOLDER}
+                    cd ${PRODUCT_FOLDER} && \
                     docker build -t ${PRODUCT_DOCKER_IMAGE}:${TAG} --build-arg MYSQL_DATABASE_USER=${MYSQL_DATABASE_USER} \
                     --build-arg MYSQL_DATABASE_PASSWORD=${MYSQL_DATABASE_PASSWORD} \
                     --build-arg MYSQL_DATABASE_DB=${MYSQL_DATABASE_DB} \
