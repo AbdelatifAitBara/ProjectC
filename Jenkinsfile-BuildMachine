@@ -36,7 +36,6 @@ pipeline {
         stage('Build Docker Image') {
             steps {
                     withVault([configuration: configuration, vaultSecrets: secrets]) {
-                            script {
                                 sh """
                                     cd ${PRODUCT_FOLDER} && \
                                     docker build -t ${PRODUCT_DOCKER_IMAGE}:latest \
@@ -48,7 +47,6 @@ pipeline {
                                     --build-arg SECRET_KEY=${env.SECRET_KEY} \
                                     --build-arg PRODUCT_API_URL=${env.PRODUCT_API_URL} .
                                 """
-                                }
                     }   
                 }
 
