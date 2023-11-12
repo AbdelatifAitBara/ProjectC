@@ -6,11 +6,12 @@ def secrets = [
     [envVar: 'MYSQL_DATABASE_PASSWORD', vaultKey: 'MYSQL_DATABASE_PASSWORD'],
     [envVar: 'MYSQL_DATABASE_DB', vaultKey: 'MYSQL_DATABASE_DB'],
     [envVar: 'MYSQL_DATABASE_HOST', vaultKey: 'MYSQL_DATABASE_HOST'],
-    [envVar: 'DB_PORT', vaultKey: 'dbport'],
+    [envVar: 'DB_PORT', vaultKey: 'dbport'], 
     [envVar: 'PRODUCT_API_URL', vaultKey: 'productapiurl'],
-    [envVar: 'SECRET_KEY', vaultKey: 'secretkey'],
-    ]],
+    [envVar: 'SECRET_KEY', vaultKey: 'secretkey']
+  ]]
 ]
+
 def configuration = [vaultUrl: 'http://10.0.3.159:8200',  vaultCredentialId: 'Vault_Credentials', engineVersion: 1]
 
 
@@ -22,7 +23,7 @@ pipeline {
         PROJECT_DIR = '/home/ubuntu/ProjectC'
         PRODUCT_FOLDER = '/home/ubuntu/ProjectC/Microservices/Product'
         PRODUCT_DOCKER_IMAGE = 'abdelatifaitbara/product'
-        TAG = 'ProjectV1'
+        TAG = 'ProjectV2'
     }
 
     stages {
@@ -34,16 +35,30 @@ pipeline {
             }
         }
 
+
         stage('Build Docker Image') {
+
             steps {
-                    withVault([configuration: configuration, vaultSecrets: secrets]) {
-                        sh """
-                            cd ${PRODUCT_FOLDER} && \
-                            docker build --build-arg MYSQL_DATABASE_USER=$MYSQL_DATABASE_USER --build-arg MYSQL_DATABASE_PASSWORD=$MYSQL_DATABASE_PASSWORD --build-arg MYSQL_DATABASE_DB=$MYSQL_DATABASE_DB --build-arg MYSQL_DATABASE_HOST=$MYSQL_DATABASE_HOST --build-arg DB_PORT=$DB_PORT --build-arg SECRET_KEY=$SECRET_KEY --build-arg PRODUCT_API_URL=$PRODUCT_API_URL -t ${PRODUCT_DOCKER_IMAGE}:${TAG} .
-                            
-                        """
+
+                withVault([configuration: configuration, vaultSecrets: secrets]) {
+
+                    environment {
+                        MYSQL_DATABASE_USER = credentials('MYSQL_DATABASE_USER') 
+                        MYSQL_DATABASE_PASSWORD = credentials('MYSQL_DATABASE_PASSWORD')
+                        MYSQL_DATABASE_DB = credentials('MYSQL_DATABASE_DB')
+                        MYSQL_DATABASE_HOST = credentials('MYSQL_DATABASE_HOST')
+                        DB_PORT = credentials('DB_PORT')
+                        PRODUCT_API_URL = credentials('PRODUCT_API_URL')
                     }
+
+                    sh """
+                        cd ${PRODUCT_FOLDER} && \
+                        docker build -t ${PRODUCT_DOCKER_IMAGE}:${TAG} .
+                    """
+                }
+
             }
+
         }
 
 
