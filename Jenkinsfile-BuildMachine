@@ -19,16 +19,15 @@ pipeline {
     agent { label 'Building_Machine' }
 
     environment {
-        TAG = 'ProjectV22'
+        TAG = 'ProjectV23'
         WORKSPACE = '/home/ubuntu/'
         PROJECT_DIR = '/home/ubuntu/ProjectC'
         PRODUCT_FOLDER = '/home/ubuntu/ProjectC/Microservices/Product'
         PRODUCT_DOCKER_IMAGE = 'abdelatifaitbara/product'
-        MYSQL_DATABASE_USER = 'wordpress'
-        MYSQL_DATABASE_PASSWORD = 'password'
-        MYSQL_DATABASE_NAME = 'wordpress'
-        MYSQL_DATABASE_HOST = 'mysql-service'
-        MYSQL_DATABASE_PORT = '3306'
+        MYSQL_DATABASE_USER = "${env.MYSQL_DATABASE_USER}"
+        MYSQL_DATABASE_PASSWORD = "${env.MYSQL_DATABASE_PASSWORD}"
+        MYSQL_DATABASE_DB = "${env.MYSQL_DATABASE_DB}"
+        MYSQL_DATABASE_HOST = "${env.MYSQL_DATABASE_HOST}"
     }
 
     stages {
@@ -40,15 +39,11 @@ pipeline {
             }
         }
 
+
         stage('Build Product Image') {
             steps {
                 dir("${PRODUCT_FOLDER}") {
-                    sh 'docker build --build-arg MYSQL_DATABASE_USER=${MYSQL_DATABASE_USER} \
-                    --build-arg MYSQL_DATABASE_PASSWORD=${MYSQL_DATABASE_PASSWORD} \
-                    --build-arg MYSQL_DATABASE_NAME=${MYSQL_DATABASE_NAME} \
-                    --build-arg MYSQL_DATABASE_HOST=${MYSQL_DATABASE_HOST} \
-                    --build-arg MYSQL_DATABASE_PORT=${MYSQL_DATABASE_PORT} \
-                    -t ${PRODUCT_DOCKER_IMAGE}:${TAG} .'
+                    sh 'docker build -t ${PRODUCT_DOCKER_IMAGE}:${TAG} --build-arg MYSQL_DATABASE_USER=${MYSQL_DATABASE_USER} .'
                 }
             }
         }
