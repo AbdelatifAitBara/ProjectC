@@ -38,7 +38,7 @@ pipeline {
         stage('Get Secrets And Export To Environment') {
             steps {
                 withVault([configuration: configuration, vaultSecrets: secrets]) {
-                    sh "export MYSQL_DATABASE_USER=$MYSQL_DATABASE_USER"
+                    sh 'export MYSQL_DATABASE_USER=$MYSQL_DATABASE_USER'
                 }
             }
         }
