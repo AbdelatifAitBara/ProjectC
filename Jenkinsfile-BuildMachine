@@ -48,7 +48,7 @@ pipeline {
         stage('Build Product Image') {
             steps {
                 withVault([configuration: configuration, vaultSecrets: secrets]) {
-                    sh 'cd ${PRODUCT_FOLDER} && docker build --build-arg MYSQL_DATABASE_USER=$MYSQL_DATABASE_USER -t ${PRODUCT_DOCKER_IMAGE}:${TAG} . '
+                    sh 'cd ${PRODUCT_FOLDER} && docker build --build-arg MYSQL_DATABASE_USER=$env.MYSQL_DATABASE_USER -t ${PRODUCT_DOCKER_IMAGE}:${TAG} . '
                 }
             }
         }
