@@ -23,6 +23,7 @@ pipeline {
         PRODUCT_FOLDER = '/home/ubuntu/ProjectC/Microservices/Product'
         PRODUCT_DOCKER_IMAGE = 'abdelatifaitbara/product'
         TAG = 'lotfi14'
+        
     }
 
     stages {
@@ -34,13 +35,19 @@ pipeline {
             }
         }
 
+        stage('Print Environment Variables From Vault') {
+            steps {
+                sh "echo '$DB_USER'"
+            }
+        }
+
         stage('Build Docker Image') {
             steps {
                     withVault([configuration: configuration, vaultSecrets: secrets]) {
                         sh """
                             cd ${PRODUCT_FOLDER} && \
                             docker build -t ${PRODUCT_DOCKER_IMAGE}:${TAG} \
-                            --build-arg ${DB_USER}=$DB_USER \
+                            --build-arg DB_USER=$DB_USER \
                             --build-arg DB_PASSWORD=$DB_PASSWORD \
                             --build-arg DB_NAME=$DB_NAME \
                             --build-arg DB_HOST=$DB_HOST \
