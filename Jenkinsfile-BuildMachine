@@ -35,24 +35,33 @@ pipeline {
             }
         }
 
-            
-        stage('Get Secrets') {
 
-                steps {
-                    withVault([configuration: configuration, vaultSecrets: secrets]) {
-                        script {
-                            MYSQL_DATABASE_USER = secrets.envVar{MYSQL_DATABASE_USER}
+        stage('Get Vault Secrets') {
+            
+            steps {
+                script {
+                    secrets.each { secret ->
+                        def secretJson = sh(script: "vault read -format=json ${secret.path}", returnStdout: true)
+                        def secrets = new groovy.json.JsonSlurper().parseText(secretJson)
+
+                        secret.secretValues.each { mapping ->
+                        def value = secrets.data."${mapping.vaultKey}"
+                        env."${mapping.envVar}" = value
                         }
                     }
                 }
-
+            }
         }
+
+    
+
+
 
         stage('Build Product Image') {
             steps {
                 withVault([configuration: configuration, vaultSecrets: secrets]) {
                     sh "cd ${PRODUCT_FOLDER}"
-                    sh "docker build -t ${PRODUCT_DOCKER_IMAGE}:${TAG} --build-arg MYSQL_DATABASE_USER=${MYSQL_DATABASE_USER} ."
+                    sh "docker build -t ${PRODUCT_DOCKER_IMAGE}:${TAG} --build-arg MYSQL_DATABASE_USER=$env.MYSQL_DATABASE_USER ."
                 }
             }
         }
