@@ -35,30 +35,36 @@ pipeline {
             }
         }
 
-        
+            stage('Get Secrets') {
 
-        stage('Build Docker Image') {
-            steps {
+                steps {
 
-                    withVault([configuration: configuration, vaultSecrets: secrets]) {
+                    script {
+                    MYSQL_DATABASE_USER = vaultSecret('MYSQL_DATABASE_USER') 
+                    MYSQL_DATABASE_PASSWORD = vaultSecret('MYSQL_DATABASE_PASSWORD')
+                    MYSQL_DATABASE_DB = vaultSecret('MYSQL_DATABASE_DB')
+                    MYSQL_DATABASE_HOST = vaultSecret('MYSQL_DATABASE_HOST')
+                    DB_PORT = vaultSecret('DB_PORT')
+                    PRODUCT_API_URL = vaultSecret('PRODUCT_API_URL')
 
-                    environment {
-                        MYSQL_DATABASE_USER = credentials('MYSQL_DATABASE_USER') 
-                        MYSQL_DATABASE_PASSWORD = credentials('MYSQL_DATABASE_PASSWORD')
-                        MYSQL_DATABASE_DB = credentials('MYSQL_DATABASE_DB')
-                        MYSQL_DATABASE_HOST = credentials('MYSQL_DATABASE_HOST')
-                        DB_PORT = credentials('DB_PORT')
-                        PRODUCT_API_URL = credentials('PRODUCT_API_URL')
                     }
 
-                        sh """
-                            cd ${PRODUCT_FOLDER} && \
-                            docker build -t ${PRODUCT_DOCKER_IMAGE}:${TAG} .
-                        """
                 }
 
             }
-        }
+
+            stage('Build Docker Image') {
+                steps {
+                    sh "docker build -t ${PRODUCT_DOCKER_IMAGE}:${TAG}  --build-arg MYSQL_DATABASE_USER=${MYSQL_DATABASE_USER} \
+                    --build-arg MYSQL_DATABASE_PASSWORD=${MYSQL_DATABASE_PASSWORD} \
+                    --build-arg MYSQL_DATABASE_DB=${MYSQL_DATABASE_DB} \
+                    --build-arg MYSQL_DATABASE_HOST=${MYSQL_DATABASE_HOST} \
+                    --build-arg DB_PORT=${DB_PORT} \
+                    --build-arg PRODUCT_API_URL=${PRODUCT_API_URL} \
+                    --build-arg SECRET_KEY=${SECRET_KEY} \
+                    . "
+                }
+            }
 
 
         stage('Push Product Image to DockerHub') {
