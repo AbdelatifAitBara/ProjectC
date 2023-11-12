@@ -13,17 +13,10 @@ app = Flask(__name__)
 CORS(app)
 
 
-#   host="mysql-service",
-#    user="root",
-#    password="UGy57oD(NIxWh^Glqn",
-#    db="wordpress",
-#    port=3306
-
-
-app.config['MYSQL_DATABASE_USER'] = "wordpress"
-app.config['MYSQL_DATABASE_PASSWORD'] = "password"
-app.config['MYSQL_DATABASE_DB'] = "wordpress"
-app.config['MYSQL_DATABASE_HOST'] = "mysql-service"
+app.config['MYSQL_DATABASE_USER'] = os.getenv('MYSQL_DATABASE_USER')
+app.config['MYSQL_DATABASE_PASSWORD'] = os.getenv('MYSQL_DATABASE_PASSWORD')
+app.config['MYSQL_DATABASE_DB'] = os.getenv('MYSQL_DATABASE_DB')
+app.config['MYSQL_DATABASE_HOST'] = os.getenv('MYSQL_DATABASE_HOST')
 app.config['SECRET_KEY'] = os.getenv('SECRET_KEY')
 app.config['MYSQL_DATABASE_PORT'] = os.getenv('DATABASE_PORT')
 
@@ -52,10 +45,10 @@ def query():
         data = json.loads(request.data)
         consumer_secret = data['consumer_secret']
         with pymysql.connect(
-                host="mysql-service",
-                user="root",
-                password="UGy57oD(NIxWh^Glqn",
-                db="wordpress",
+                host= app.config['MYSQL_DATABASE_HOST'],
+                user= app.config['MYSQL_DATABASE_USER'],
+                password= app.config['MYSQL_DATABASE_PASSWORD'],
+                db= app.config['MYSQL_DATABASE_DB'],
                 port=3306
         ) as conn:
             with conn.cursor() as cur:
@@ -85,10 +78,10 @@ def token_authorized(token):
         if datetime.utcnow() > datetime.fromtimestamp(decoded_token['exp']):
             return False
         with pymysql.connect(
-                host="mysql-service",
-                user="root",
-                password="UGy57oD(NIxWh^Glqn",
-                db="wordpress",
+                host= app.config['MYSQL_DATABASE_HOST'],
+                user= app.config['MYSQL_DATABASE_USER'],
+                password= app.config['MYSQL_DATABASE_PASSWORD'],
+                db= app.config['MYSQL_DATABASE_DB'],
                 port=3306
         ) as conn:
             with conn.cursor() as cur:

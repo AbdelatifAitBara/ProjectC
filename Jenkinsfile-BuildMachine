@@ -22,7 +22,7 @@ pipeline {
         PROJECT_DIR = '/home/ubuntu/ProjectC'
         PRODUCT_FOLDER = '/home/ubuntu/ProjectC/Microservices/Product'
         PRODUCT_DOCKER_IMAGE = 'abdelatifaitbara/product'
-        TAG = 'lotfi32'
+        TAG = 'ProjectV1'
     }
 
     stages {
@@ -39,7 +39,7 @@ pipeline {
                     withVault([configuration: configuration, vaultSecrets: secrets]) {
                         sh """
                             cd ${PRODUCT_FOLDER} && \
-                            docker build --build-arg MYSQL_DATABASE_USER=${secrets.MYSQL_DATABASE_USER} -t ${PRODUCT_DOCKER_IMAGE}:${TAG} .
+                            docker build --build-arg MYSQL_DATABASE_USER=$MYSQL_DATABASE_USER --build-arg MYSQL_DATABASE_PASSWORD=$MYSQL_DATABASE_PASSWORD --build-arg MYSQL_DATABASE_DB=$MYSQL_DATABASE_DB --build-arg MYSQL_DATABASE_HOST=$MYSQL_DATABASE_HOST --build-arg DB_PORT=$DB_PORT --build-arg SECRET_KEY=$SECRET_KEY --build-arg PRODUCT_API_URL=$PRODUCT_API_URL -t ${PRODUCT_DOCKER_IMAGE}:${TAG} .
                             
                         """
                     }
