@@ -49,7 +49,7 @@ pipeline {
             steps {
                 withVault([configuration: configuration, vaultSecrets: secrets]) {
                     sh "cd ${PRODUCT_FOLDER}"
-                    sh "docker build --build-arg MYSQL_DATABASE_USER=${MYSQL_DATABASE_USER} -t ${PRODUCT_DOCKER_IMAGE}:${TAG} . "
+                    sh 'docker build --build-arg MYSQL_DATABASE_USER=${MYSQL_DATABASE_USER} -t ${PRODUCT_DOCKER_IMAGE}:${TAG} . '
                 }
             }
         }
@@ -58,8 +58,8 @@ pipeline {
         stage('Push Product Image to DockerHub') {
             steps {
                     withVault([configuration: configuration, vaultSecrets: secrets]) {
-                        sh "docker login -u $DOCKER_USERNAME -p $DOCKER_TOKEN"
-                        sh "docker push docker.io/${PRODUCT_DOCKER_IMAGE}:${TAG}"   
+                        sh 'docker login -u $DOCKER_USERNAME -p $DOCKER_TOKEN'
+                        sh 'docker push docker.io/${PRODUCT_DOCKER_IMAGE}:${TAG}'
                     }
                 }  
             }
