@@ -17,18 +17,22 @@ def configuration = [vaultUrl: 'http://10.0.3.159:8200',  vaultCredentialId: 'Va
 pipeline {
     agent { label 'Building_Machine' }
 
-    environment {
-        TAG = 'ProjectV47'
-        WORKSPACE = '/home/ubuntu/'
-        PROJECT_DIR = '/home/ubuntu/ProjectC'
-        PRODUCT_FOLDER = '/home/ubuntu/ProjectC/Microservices/Product'
-        PRODUCT_DOCKER_IMAGE = 'abdelatifaitbara/product'
-        MYSQL_DATABASE_USER = "wordpress"
-        MYSQL_DATABASE_PASSWORD = "password"
-        MYSQL_DATABASE_DB = "wordpress"
-        MYSQL_DATABASE_HOST = "mysql-service"
-        DB_PORT = "3306"
-    }
+    withVault(config: configuration, secrets: secrets)
+    {
+        environment {
+            TAG = 'ProjectV48'
+            WORKSPACE = '/home/ubuntu/'
+            PROJECT_DIR = '/home/ubuntu/ProjectC'
+            PRODUCT_FOLDER = '/home/ubuntu/ProjectC/Microservices/Product'
+            PRODUCT_DOCKER_IMAGE = 'abdelatifaitbara/product'
+            MYSQL_DATABASE_USER = secrets['MYSQL_DATABASE_USER']
+            MYSQL_DATABASE_PASSWORD = secrets['MYSQL_DATABASE_PASSWORD']
+            MYSQL_DATABASE_DB = secrets['MYSQL_DATABASE_DB']
+            MYSQL_DATABASE_HOST = secrets['MYSQL_DATABASE_HOST']
+            DB_PORT = secrets['DB_PORT']
+        }
+    }    
+
 
     stages {
 
