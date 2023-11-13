@@ -18,15 +18,12 @@ app.config['MYSQL_DATABASE_PASSWORD'] = os.getenv('MYSQL_DATABASE_PASSWORD')
 app.config['MYSQL_DATABASE_DB'] = os.getenv('MYSQL_DATABASE_DB')
 app.config['MYSQL_DATABASE_HOST'] = os.getenv('MYSQL_DATABASE_HOST')
 app.config['MYSQL_DATABASE_PORT'] = 3306
-
+app.config['SECRET_KEY'] = "sk_fYVw52zywDRVAgsC8yUi2TXFRu1MmtPK"
 
 API_URL= os.getenv('PRODUCT_API_URL')
 
 consumer_key = "ck_6c2e8e73b638f39c4e5f0f9799d2508696955662"
 consumer_secret = "cs_10568bd16b4e343b7743f0704e9bcedd1f94808e"
-
-
-SECRET_KEY="sk_fYVw52zywDRVAgsC8yUi2TXFRu1MmtPK"
 
 
 
