@@ -19,8 +19,6 @@ app.config['MYSQL_DATABASE_DB'] = os.getenv('MYSQL_DATABASE_DB')
 app.config['MYSQL_DATABASE_HOST'] = os.getenv('MYSQL_DATABASE_HOST')
 app.config['MYSQL_DATABASE_PORT'] = 3306
 
-print(app.config) 
-print(os.getenv('MYSQL_DATABASE_USER'))
 
 API_URL= os.getenv('PRODUCT_API_URL')
 
