@@ -24,7 +24,10 @@ API_URL= os.getenv('PRODUCT_API_URL')
 
 consumer_key = "ck_6c2e8e73b638f39c4e5f0f9799d2508696955662"
 consumer_secret = "cs_10568bd16b4e343b7743f0704e9bcedd1f94808e"
-SECRET_KEY="S3cr3tK3y8hfoIZNZOfiu2"
+
+
+SECRET_KEY="sk_fYVw52zywDRVAgsC8yUi2TXFRu1MmtPK"
+
 
 
 # Create a table to store the access tokens for the product if it doesn't exist

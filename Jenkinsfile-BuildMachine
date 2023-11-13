@@ -21,7 +21,7 @@ pipeline {
 
 
     environment {
-        TAG = 'prod02'
+        TAG = 'prod03'
         WORKSPACE = '/home/ubuntu/'
         PROJECT_DIR = '/home/ubuntu/ProjectC'
         PRODUCT_FOLDER = '/home/ubuntu/ProjectC/Microservices/Product'
