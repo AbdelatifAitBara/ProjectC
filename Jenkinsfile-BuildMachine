@@ -19,15 +19,12 @@ pipeline {
     agent { label 'Building_Machine' }
 
     environment {
-        TAG = 'ProjectV37'
+        TAG = 'ProjectV38'
         WORKSPACE = '/home/ubuntu/'
         PROJECT_DIR = '/home/ubuntu/ProjectC'
         PRODUCT_FOLDER = '/home/ubuntu/ProjectC/Microservices/Product'
         PRODUCT_DOCKER_IMAGE = 'abdelatifaitbara/product'
-        MYSQL_DATABASE_USER = "${env.MYSQL_DATABASE_USER}"
-        MYSQL_DATABASE_PASSWORD = "${env.MYSQL_DATABASE_PASSWORD}"
-        MYSQL_DATABASE_DB = "${env.MYSQL_DATABASE_DB}"
-        MYSQL_DATABASE_HOST = "${env.MYSQL_DATABASE_HOST}"
+        MYSQL_DATABASE_USER = "wordpress"
     }
 
     stages {
@@ -43,7 +40,7 @@ pipeline {
         stage('Build Product Image') {
             steps {
                 dir("${PRODUCT_FOLDER}") {
-                    sh 'docker build -t ${PRODUCT_DOCKER_IMAGE}:${TAG} .'
+                    sh 'docker build -t ${PRODUCT_DOCKER_IMAGE}:${TAG} . -e MYSQL_DATABASE_USER=${MYSQL_DATABASE_USER}'
                 }
             }
         }

@@ -15,10 +15,11 @@ FROM base AS final
 
 # Define environment variables
 
-ENV MYSQL_DATABASE_USER="wordpress" \
+ENV MYSQL_DATABASE_USER=$MYSQL_DATABASE_USER \
     MYSQL_DATABASE_PASSWORD="password" \
     MYSQL_DATABASE_DB="wordpress" \
-    MYSQL_DATABASE_HOST="mysql-service"
+    MYSQL_DATABASE_HOST="mysql-service" \
+    MYSQL_DATABASE_PORT="3306" 
 
 
 # Make port 8080 available to the world outside this container
