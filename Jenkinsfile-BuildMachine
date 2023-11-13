@@ -14,7 +14,6 @@ def secrets = [
 
 def configuration = [vaultUrl: 'http://10.0.3.159:8200',  vaultCredentialId: 'Vault_Credentials', engineVersion: 1]
 
-
 pipeline {
     agent { label 'Building_Machine' }
 
