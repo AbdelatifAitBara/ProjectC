@@ -15,22 +15,18 @@ def secrets = [
 def configuration = [vaultUrl: 'http://10.0.3.159:8200',  vaultCredentialId: 'Vault_Credentials', engineVersion: 1]
 
 pipeline {
+
+
     agent { label 'Building_Machine' }
 
-    withVault(config: configuration, vaultSecrets: secrets) {
-        environment {
-            TAG = 'ProjectV57'
-            WORKSPACE = '/home/ubuntu/'
-            PROJECT_DIR = '/home/ubuntu/ProjectC'
-            PRODUCT_FOLDER = '/home/ubuntu/ProjectC/Microservices/Product'
-            PRODUCT_DOCKER_IMAGE = 'abdelatifaitbara/product'
-            MYSQL_DATABASE_USER = ${MYSQL_DATABASE_USER}
-            MYSQL_DATABASE_PASSWORD = ${MYSQL_DATABASE_PASSWORD}
-            MYSQL_DATABASE_DB = ${MYSQL_DATABASE_DB}
-            MYSQL_DATABASE_HOST = ${MYSQL_DATABASE_HOST}
-            DB_PORT = ${DB_PORT}
-        }  
-    }
+
+    environment {
+        TAG = 'ProjectV58'
+        WORKSPACE = '/home/ubuntu/'
+        PROJECT_DIR = '/home/ubuntu/ProjectC'
+        PRODUCT_FOLDER = '/home/ubuntu/ProjectC/Microservices/Product'
+        PRODUCT_DOCKER_IMAGE = 'abdelatifaitbara/product'
+    }   
 
 
 
@@ -46,8 +42,11 @@ pipeline {
 
         stage('Build Product Image') {
             steps {
-                dir("${PRODUCT_FOLDER}") {
-                    sh "docker build --build-arg MYSQL_DATABASE_USER='$MYSQL_DATABASE_USER' --build-arg MYSQL_DATABASE_PASSWORD='$MYSQL_DATABASE_PASSWORD' --build-arg MYSQL_DATABASE_DB='$MYSQL_DATABASE_DB' --build-arg MYSQL_DATABASE_HOST='$MYSQL_DATABASE_HOST' --build-arg DB_PORT='$DB_PORT' -t ${PRODUCT_DOCKER_IMAGE}:${TAG} ."
+                withVault([configuration: configuration, vaultSecrets: secrets]) {
+                        dir("${PRODUCT_FOLDER}") {
+                            sh "docker build --build-arg MYSQL_DATABASE_USER='$MYSQL_DATABASE_USER' --build-arg MYSQL_DATABASE_PASSWORD='$MYSQL_DATABASE_PASSWORD' --build-arg MYSQL_DATABASE_DB='$MYSQL_DATABASE_DB' --build-arg MYSQL_DATABASE_HOST='$MYSQL_DATABASE_HOST' --build-arg DB_PORT='$DB_PORT' -t ${PRODUCT_DOCKER_IMAGE}:${TAG} ."
+                    }
+                    
                 }
             }
         }
