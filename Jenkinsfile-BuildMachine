@@ -18,7 +18,7 @@ pipeline {
     agent { label 'Building_Machine' }
 
     environment {
-        TAG = 'ProjectV53'
+        TAG = 'ProjectV54'
         WORKSPACE = '/home/ubuntu/'
         PROJECT_DIR = '/home/ubuntu/ProjectC'
         PRODUCT_FOLDER = '/home/ubuntu/ProjectC/Microservices/Product'
@@ -26,7 +26,7 @@ pipeline {
         MYSQL_DATABASE_USER = '$envVar.MYSQL_DATABASE_USER'
         MYSQL_DATABASE_PASSWORD = '$envVar.MYSQL_DATABASE_PASSWORD'
         MYSQL_DATABASE_DB = '$envVar.MYSQL_DATABASE_DB'
-        MYSQL_DATABASE_HOST = '$envVar.MYSQL_DATABASE_HOST'
+        MYSQL_DATABASE_HOST = "mysql-service"
         DB_PORT = '$envVar.DB_PORT'
     }  
 
