@@ -40,7 +40,7 @@ pipeline {
         stage('Build Product Image') {
             steps {
                 dir("${PRODUCT_FOLDER}") {
-                    sh 'docker build --build-arg MYSQL_DATABASE_USER='${MYSQL_DATABASE_USER}' -t ${PRODUCT_DOCKER_IMAGE}:${TAG} .'
+                    sh "docker build --build-arg MYSQL_DATABASE_USER='${MYSQL_DATABASE_USER}' -t ${PRODUCT_DOCKER_IMAGE}:${TAG} ."
                 }
             }
         }
