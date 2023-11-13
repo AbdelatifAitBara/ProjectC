@@ -22,6 +22,10 @@ ENV MYSQL_DATABASE_USER=$MYSQL_DATABASE_USER \
     MYSQL_DATABASE_PORT="3306" 
 
 
+ARG MYSQL_DATABASE_USER
+
+
+
 # Make port 8080 available to the world outside this container
 EXPOSE 8080
 
