@@ -40,7 +40,7 @@ with pymysql.connect(
         cur.execute("CREATE TABLE IF NOT EXISTS access_tokens_product (id INT(11) NOT NULL AUTO_INCREMENT, token VARCHAR(255) NOT NULL, PRIMARY KEY (id));")
         conn.commit()
 
-@app.route('/product//product_token', methods=['POST'])
+@app.route('/product/product_token', methods=['POST'])
 def query():
     try:
         data = json.loads(request.data)
