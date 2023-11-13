@@ -19,7 +19,7 @@ pipeline {
     agent { label 'Building_Machine' }
 
     environment {
-        TAG = 'ProjectV38'
+        TAG = 'ProjectV39'
         WORKSPACE = '/home/ubuntu/'
         PROJECT_DIR = '/home/ubuntu/ProjectC'
         PRODUCT_FOLDER = '/home/ubuntu/ProjectC/Microservices/Product'
@@ -40,7 +40,7 @@ pipeline {
         stage('Build Product Image') {
             steps {
                 dir("${PRODUCT_FOLDER}") {
-                    sh 'docker build --build-arg MYSQL_DATABASE_USER=${MYSQL_DATABASE_USER} -t ${PRODUCT_DOCKER_IMAGE}:${TAG} .'
+                    sh 'docker build -t ${PRODUCT_DOCKER_IMAGE}:${TAG} .'
                 }
             }
         }
