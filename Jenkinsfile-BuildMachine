@@ -25,11 +25,11 @@ pipeline {
             PROJECT_DIR = '/home/ubuntu/ProjectC'
             PRODUCT_FOLDER = '/home/ubuntu/ProjectC/Microservices/Product'
             PRODUCT_DOCKER_IMAGE = 'abdelatifaitbara/product'
-            MYSQL_DATABASE_USER: envVar.MYSQL_DATABASE_USER,
-            MYSQL_DATABASE_PASSWORD: envVar.MYSQL_DATABASE_PASSWORD,
-            MYSQL_DATABASE_DB: envVar.MYSQL_DATABASE_DB,
-            MYSQL_DATABASE_HOST: envVar.MYSQL_DATABASE_HOST,
-            DB_PORT: envVar.DB_PORT
+            MYSQL_DATABASE_USER= envVar.MYSQL_DATABASE_USER,
+            MYSQL_DATABASE_PASSWORD= envVar.MYSQL_DATABASE_PASSWORD,
+            MYSQL_DATABASE_DB= envVar.MYSQL_DATABASE_DB,
+            MYSQL_DATABASE_HOST= envVar.MYSQL_DATABASE_HOST,
+            DB_PORT= envVar.DB_PORT
         }
     }    
 
