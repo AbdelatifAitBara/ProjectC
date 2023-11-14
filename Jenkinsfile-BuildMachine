@@ -24,9 +24,9 @@ pipeline {
 
 
     environment {
-        CUSTOMER_TAG = 'alpha'
-        PRODUCT_TAG = 'alpha'
-        ORDER_TAG = 'alpha'
+        CUSTOMER_TAG = 'alpha1'
+        PRODUCT_TAG = 'alpha1'
+        ORDER_TAG = 'alpha1'
         WORKSPACE = '/home/ubuntu/'
         PROJECT_DIR = '/home/ubuntu/ProjectC'
         PRODUCT_FOLDER = '/home/ubuntu/ProjectC/Microservices/Product'
