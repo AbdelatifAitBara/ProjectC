@@ -88,7 +88,7 @@ pipeline {
         stage('Delete All Images') {
 
             steps {
-                sh 'docker rmi -f $(docker images -a -q)'
+                sh 'docker image prune -a -f'
             }
         } 
 
