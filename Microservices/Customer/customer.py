@@ -37,7 +37,7 @@ with pymysql.connect(
         cur.execute("CREATE TABLE IF NOT EXISTS access_tokens_customer (id INT(11) NOT NULL AUTO_INCREMENT, token VARCHAR(255) NOT NULL, PRIMARY KEY (id));")
         conn.commit()
 
-@app.route('/customer_token', methods=['POST'])
+@app.route('/customer/customer_token', methods=['POST'])
 def customer_query():
     try:
         data = json.loads(request.data)
@@ -94,7 +94,7 @@ def customer_token_authorized(token):
 # Define a function to add a customer
 
 
-@app.route('/add_customer', methods=['POST'])
+@app.route('/customer/add_customer', methods=['POST'])
 def add_customer():
     customer_data = request.json
 
@@ -130,7 +130,7 @@ def add_customer():
 # Define a function to delete a customer
 
 
-@app.route('/delete_user/<int:user_id>', methods=['DELETE'])
+@app.route('/customer/delete_user/<int:user_id>', methods=['DELETE'])
 def delete_user(user_id):
     token = request.headers.get('Authorization')
     
@@ -162,7 +162,7 @@ def delete_user(user_id):
 
 # Define a function to update a customer
 
-@app.route('/update_user/<int:user_id>', methods=['PUT'])
+@app.route('/customer/update_user/<int:user_id>', methods=['PUT'])
 def update_user(user_id):
     user_data = request.json
     
@@ -195,7 +195,7 @@ def update_user(user_id):
     
 # Define a function to get a customer
 
-@app.route('/get_user/<int:user_id>', methods=['GET'])
+@app.route('/customer/get_user/<int:user_id>', methods=['GET'])
 def get_user(user_id):
     token = request.headers.get('Authorization')
     
@@ -228,7 +228,7 @@ def get_user(user_id):
     
 # Define a function to get all customers
 
-@app.route('/get_users', methods=['GET'])
+@app.route('/customer/get_users', methods=['GET'])
 def get_users():
     token = request.headers.get('Authorization')
     
