@@ -1,4 +1,7 @@
 Flask
 PyMySQL
+Flask-Cors
 PyJWT
+requests
 requests_oauthlib
+oauthlib
