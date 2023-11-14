@@ -24,9 +24,9 @@ pipeline {
 
 
     environment {
-        CUSTOMER_TAG = 'wp'
-        PRODUCT_TAG = 'wp'
-        ORDER_TAG = 'wp'
+        CUSTOMER_TAG = 'alpha'
+        PRODUCT_TAG = 'alpha'
+        ORDER_TAG = 'alpha'
         WORKSPACE = '/home/ubuntu/'
         PROJECT_DIR = '/home/ubuntu/ProjectC'
         PRODUCT_FOLDER = '/home/ubuntu/ProjectC/Microservices/Product'
