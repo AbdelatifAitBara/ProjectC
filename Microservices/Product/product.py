@@ -17,13 +17,13 @@ app.config['MYSQL_DATABASE_USER'] = os.getenv('MYSQL_DATABASE_USER')
 app.config['MYSQL_DATABASE_PASSWORD'] = os.getenv('MYSQL_DATABASE_PASSWORD')
 app.config['MYSQL_DATABASE_DB'] = os.getenv('MYSQL_DATABASE_DB')
 app.config['MYSQL_DATABASE_HOST'] = os.getenv('MYSQL_DATABASE_HOST')
-app.config['MYSQL_DATABASE_PORT'] = 3306
-app.config['SECRET_KEY'] = "sk_fYVw52zywDRVAgsC8yUi2TXFRu1MmtPK"
+app.config['MYSQL_DATABASE_PORT'] = os.getenv('DB_PORT')
+app.config['SECRET_KEY'] = os.getenv('SECRET_KEY')
+consumer_secret = os.getenv('CONSUMER_SECRET')
+consumer_key = os.getenv('CONSUMER_KEY')
+
 
 API_URL= os.getenv('PRODUCT_API_URL')
-
-consumer_key = "ck_6c2e8e73b638f39c4e5f0f9799d2508696955662"
-consumer_secret = "cs_10568bd16b4e343b7743f0704e9bcedd1f94808e"
 
 
 
@@ -34,7 +34,7 @@ with pymysql.connect(
     user= app.config['MYSQL_DATABASE_USER'],
     password= app.config['MYSQL_DATABASE_PASSWORD'],
     db= app.config['MYSQL_DATABASE_DB'],
-    port=3306
+    port= app.config['MYSQL_DATABASE_PORT']
 ) as conn:
     with conn.cursor() as cur:
         cur.execute("CREATE TABLE IF NOT EXISTS access_tokens_product (id INT(11) NOT NULL AUTO_INCREMENT, token VARCHAR(255) NOT NULL, PRIMARY KEY (id));")
@@ -50,7 +50,7 @@ def query():
                 user= app.config['MYSQL_DATABASE_USER'],
                 password= app.config['MYSQL_DATABASE_PASSWORD'],
                 db= app.config['MYSQL_DATABASE_DB'],
-                port=3306
+                port= app.config['MYSQL_DATABASE_PORT']
         ) as conn:
             with conn.cursor() as cur:
                 cur.execute("SELECT COUNT(*) FROM wp_woocommerce_api_keys WHERE consumer_secret=%s", (consumer_secret,))
@@ -83,7 +83,7 @@ def token_authorized(token):
                 user= app.config['MYSQL_DATABASE_USER'],
                 password= app.config['MYSQL_DATABASE_PASSWORD'],
                 db= app.config['MYSQL_DATABASE_DB'],
-                port=3306
+                port= app.config['MYSQL_DATABASE_PORT']
         ) as conn:
             with conn.cursor() as cur:
                 cur.execute("SELECT COUNT(*) FROM access_tokens_product WHERE token=%s", (token,))

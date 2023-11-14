@@ -8,7 +8,9 @@ def secrets = [
         [envVar: 'MYSQL_DATABASE_HOST', vaultKey: 'MYSQL_DATABASE_HOST'],
         [envVar: 'DB_PORT', vaultKey: 'dbport'], 
         [envVar: 'PRODUCT_API_URL', vaultKey: 'productapiurl'],
-        [envVar: 'SECRET_KEY', vaultKey: 'secretkey']
+        [envVar: 'SECRET_KEY', vaultKey: 'secretkey'],
+        [envVar: 'CONSUMER_KEY', vaultKey: 'consumerkey'],
+        [envVar: 'CONSUMER_SECRET', vaultKey: 'consumersecret'],
     ]]
 ]
 
@@ -21,7 +23,7 @@ pipeline {
 
 
     environment {
-        TAG = 'prod05'
+        TAG = 'Beta1'
         WORKSPACE = '/home/ubuntu/'
         PROJECT_DIR = '/home/ubuntu/ProjectC'
         PRODUCT_FOLDER = '/home/ubuntu/ProjectC/Microservices/Product'
@@ -44,7 +46,7 @@ pipeline {
             steps {
                 withVault([configuration: configuration, vaultSecrets: secrets]) {
                         dir("${PRODUCT_FOLDER}") {
-                            sh "docker build --build-arg MYSQL_DATABASE_USER='$MYSQL_DATABASE_USER' --build-arg MYSQL_DATABASE_PASSWORD='$MYSQL_DATABASE_PASSWORD' --build-arg MYSQL_DATABASE_DB='$MYSQL_DATABASE_DB' --build-arg MYSQL_DATABASE_HOST='$MYSQL_DATABASE_HOST' --build-arg DB_PORT='$DB_PORT' --build-arg PRODUCT_API_URL='$PRODUCT_API_URL' -t ${PRODUCT_DOCKER_IMAGE}:${TAG} ."
+                            sh "docker build --build-arg MYSQL_DATABASE_USER='$MYSQL_DATABASE_USER' --build-arg MYSQL_DATABASE_PASSWORD='$MYSQL_DATABASE_PASSWORD' --build-arg MYSQL_DATABASE_DB='$MYSQL_DATABASE_DB' --build-arg MYSQL_DATABASE_HOST='$MYSQL_DATABASE_HOST' --build-arg DB_PORT='$DB_PORT' --build-arg PRODUCT_API_URL='$PRODUCT_API_URL' --build-arg SECRET_KEY='$SECRET_KEY' --build-arg CONSUMER_KEY='$CONSUMER_KEY' --build-arg CONSUMER_SECRET='$CONSUMER_SECRET' -t ${PRODUCT_DOCKER_IMAGE}:${TAG} ."
                     }
                     
                 }
