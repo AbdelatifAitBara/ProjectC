@@ -24,7 +24,7 @@ pipeline {
 
 
     environment {
-        CUSTOMER_TAG = 'Beta1'
+        CUSTOMER_TAG = 'Beta2'
         PRODUCT_TAG = 'Beta3'
         ORDER_TAG = 'Beta2'
         WORKSPACE = '/home/ubuntu/'
