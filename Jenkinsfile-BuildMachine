@@ -8,6 +8,7 @@ def secrets = [
         [envVar: 'MYSQL_DATABASE_HOST', vaultKey: 'MYSQL_DATABASE_HOST'],
         [envVar: 'PRODUCT_API_URL', vaultKey: 'productapiurl'],
         [envVar: 'ORDER_API_URL', vaultKey: 'orderapiurl'],
+        [envVar: 'CUSTOMER_API_URL', vaultKey: 'customerapiurl'],
         [envVar: 'SECRET_KEY', vaultKey: 'secretkey'],
         [envVar: 'CONSUMER_KEY', vaultKey: 'consumerkey'],
         [envVar: 'CONSUMER_SECRET', vaultKey: 'consumersecret']
@@ -23,6 +24,7 @@ pipeline {
 
 
     environment {
+        CUSTOMER_TAG = 'Beta1'
         PRODUCT_TAG = 'Beta3'
         ORDER_TAG = 'Beta2'
         WORKSPACE = '/home/ubuntu/'
@@ -30,6 +32,7 @@ pipeline {
         PRODUCT_FOLDER = '/home/ubuntu/ProjectC/Microservices/Product'
         PRODUCT_DOCKER_IMAGE = 'abdelatifaitbara/product'
         ORDER_DOCKER_IMAGE = 'abdelatifaitbara/order'
+        CUSTOMER_DOCKER_IMAGE = 'abdelatifaitbara/customer'
     }   
 
 
@@ -84,6 +87,27 @@ pipeline {
                 }
             }
         }
+
+        stage('Build Customer Image') {
+            steps {
+                withVault([configuration: configuration, vaultSecrets: secrets]) {
+                    dir("${PROJECT_DIR}/Microservices/Customer") {
+                        sh "docker build --build-arg MYSQL_DATABASE_USER='$MYSQL_DATABASE_USER' --build-arg MYSQL_DATABASE_PASSWORD='$MYSQL_DATABASE_PASSWORD' --build-arg MYSQL_DATABASE_DB='$MYSQL_DATABASE_DB' --build-arg MYSQL_DATABASE_HOST='$MYSQL_DATABASE_HOST' --build-arg ORDER_API_URL='$CUSTOMER_API_URL' --build-arg SECRET_KEY='$SECRET_KEY' --build-arg CONSUMER_KEY='$CONSUMER_KEY' --build-arg CONSUMER_SECRET='$CONSUMER_SECRET' -t ${CUSTOMER_DOCKER_IMAGE}:${CUSTOMER_TAG} ."
+                    }
+                }
+            }
+        }
+
+        stage('Push Customer Image to DockerHub') {
+            steps {
+                withVault([configuration: configuration, vaultSecrets: secrets]) {
+                    sh 'docker login -u $DOCKER_USERNAME -p $DOCKER_TOKEN'
+                    sh 'docker push docker.io/${CUSTOMER_DOCKER_IMAGE}:${CUSTOMER_TAG}'
+                }
+            }
+        }
+
+        
 
         stage('Delete All Images') {
 
