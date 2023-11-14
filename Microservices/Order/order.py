@@ -37,7 +37,7 @@ with pymysql.connect(
         conn.commit()
 
 
-@app.route('/order_token', methods=['POST'])
+@app.route('/order/order_token', methods=['POST'])
 def query():
     try:
         data = json.loads(request.data)
@@ -90,7 +90,7 @@ def token_authorized(token):
     except:
         return False
 
-@app.route('/add_order', methods=['POST'])
+@app.route('/order/add_order', methods=['POST'])
 def add_order():
     # Get the order data from the request
     order_data = request.json
@@ -131,7 +131,7 @@ def add_order():
         return jsonify({'message': 'Error adding order.'}), 500
 
 
-@app.route('/get_order/<int:order_id>', methods=['GET'])
+@app.route('/order/get_order/<int:order_id>', methods=['GET'])
 def get_order(order_id):
     token = request.headers.get('Authorization')
     
@@ -163,7 +163,7 @@ def get_order(order_id):
         return jsonify({'message': 'Error getting order.'}), 500
 
 
-@app.route('/update_order/<int:order_id>', methods=['PUT'])
+@app.route('/order/update_order/<int:order_id>', methods=['PUT'])
 def update_order(order_id):
     # Get the updated order data from the request
     order_data = request.json
@@ -197,7 +197,7 @@ def update_order(order_id):
         return jsonify({'message': 'Error updating order.'}), 500
 
 
-@app.route('/delete_order/<int:order_id>', methods=['DELETE'])
+@app.route('/order/delete_order/<int:order_id>', methods=['DELETE'])
 def delete_order(order_id):
     token = request.headers.get('Authorization')
     
