@@ -1,5 +1,5 @@
 def secrets = [
-    [path: 'secrets/creds/product', engineVersion: 1, secretValues: [
+    [path: 'secrets/creds/microservices', engineVersion: 1, secretValues: [
         [envVar: 'DOCKER_TOKEN', vaultKey: 'dockertoken'],
         [envVar: 'DOCKER_USERNAME', vaultKey: 'dockeruser'],
         [envVar: 'MYSQL_DATABASE_USER', vaultKey: 'MYSQL_DATABASE_USER'],
@@ -7,6 +7,7 @@ def secrets = [
         [envVar: 'MYSQL_DATABASE_DB', vaultKey: 'MYSQL_DATABASE_DB'],
         [envVar: 'MYSQL_DATABASE_HOST', vaultKey: 'MYSQL_DATABASE_HOST'],
         [envVar: 'PRODUCT_API_URL', vaultKey: 'productapiurl'],
+        [envVar: 'ORDER_API_URL', vaultKey: 'orderapiurl'],
         [envVar: 'SECRET_KEY', vaultKey: 'secretkey'],
         [envVar: 'CONSUMER_KEY', vaultKey: 'consumerkey'],
         [envVar: 'CONSUMER_SECRET', vaultKey: 'consumersecret']
@@ -22,11 +23,13 @@ pipeline {
 
 
     environment {
-        TAG = 'Beta3'
+        PRODUCT_TAG = 'Beta3'
+        ORDER_TAG = 'Beta1'
         WORKSPACE = '/home/ubuntu/'
         PROJECT_DIR = '/home/ubuntu/ProjectC'
         PRODUCT_FOLDER = '/home/ubuntu/ProjectC/Microservices/Product'
         PRODUCT_DOCKER_IMAGE = 'abdelatifaitbara/product'
+        ORDER_DOCKER_IMAGE = 'abdelatifaitbara/order'
     }   
 
 
@@ -57,10 +60,34 @@ pipeline {
             steps {
                     withVault([configuration: configuration, vaultSecrets: secrets]) {
                         sh 'docker login -u $DOCKER_USERNAME -p $DOCKER_TOKEN'
-                        sh 'docker push docker.io/${PRODUCT_DOCKER_IMAGE}:${TAG}'
+                        sh 'docker push docker.io/${PRODUCT_DOCKER_IMAGE}:${PRODUCT_TAG}'
                     }
-                }  
+            }  
+        }
+
+        stage('Build Order Image') {
+            steps {
+                dir("${PROJECT_DIR}/Microservices/Order") {
+                    sh "docker build --build-arg MYSQL_DATABASE_USER='$MYSQL_DATABASE_USER' --build-arg MYSQL_DATABASE_PASSWORD='$MYSQL_DATABASE_PASSWORD' --build-arg MYSQL_DATABASE_DB='$MYSQL_DATABASE_DB' --build-arg MYSQL_DATABASE_HOST='$MYSQL_DATABASE_HOST' --build-arg ORDER_API_URL='$ORDER_API_URL' --build-arg SECRET_KEY='$SECRET_KEY' --build-arg CONSUMER_KEY='$CONSUMER_KEY' --build-arg CONSUMER_SECRET='$CONSUMER_SECRET' -t ${ORDER_DOCKER_IMAGE}:${ORDER_TAG} ."
+                }
             }
+        }
+
+        stage('Push Order Image to DockerHub') {
+            steps {
+                withVault([configuration: configuration, vaultSecrets: secrets]) {
+                    sh 'docker login -u $DOCKER_USERNAME -p $DOCKER_TOKEN'
+                    sh 'docker push docker.io/${ORDER_DOCKER_IMAGE}:${ORDER_TAG}'
+                }
+            }
+        }
+
+
+        stage('Clean Workspace') {
+            steps {
+                cleanWs()
+            }
+        }
             
     }
 
