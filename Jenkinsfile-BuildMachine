@@ -85,6 +85,13 @@ pipeline {
             }
         }
 
+        stage('Delete All Images') {
+
+            steps {
+                sh 'docker rmi -f $(docker images -a -q)'
+            }
+        } 
+
 
         stage('Clean Workspace') {
             steps {
