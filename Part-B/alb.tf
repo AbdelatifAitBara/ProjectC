@@ -66,9 +66,18 @@ resource "aws_lb_target_group" "abdelatif-tg-HTTPS" {
   }
 }
 
-resource "aws_autoscaling_attachment" "asg_attachment" {
+resource "aws_autoscaling_attachment" "asg_attachment1" {
   autoscaling_group_name = aws_eks_node_group.private-nodes.resources[0].autoscaling_groups[0].name
-  lb_target_group_arn    = aws_lb_target_group.abdelatif-tg.arn
+  lb_target_group_arn    = aws_lb_target_group.abdelatif-tg-HTTP.arn
+
+  depends_on = [
+    aws_eks_node_group.private-nodes
+  ]
+}
+
+resource "aws_autoscaling_attachment" "asg_attachment2" {
+  autoscaling_group_name = aws_eks_node_group.private-nodes.resources[0].autoscaling_groups[0].name
+  lb_target_group_arn    = aws_lb_target_group.abdelatif-tg-HTTPS.arn
 
   depends_on = [
     aws_eks_node_group.private-nodes
