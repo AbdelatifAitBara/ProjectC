@@ -14,8 +14,8 @@ resource "aws_lb" "abdelatif-alb" {
   }
 }
 
-resource "aws_lb_target_group" "abdelatif-tg" {
-  name        = "abdelatif-tg"
+resource "aws_lb_target_group" "abdelatif-tg-HTTP" {
+  name        = "Abdelatif-TG-HTTP"
   target_type = "instance"
   port        = 32000
   protocol    = "HTTP"
@@ -32,7 +32,34 @@ resource "aws_lb_target_group" "abdelatif-tg" {
   }
 
   tags = {
-    Name     = "abdelatif-tg"
+    Name     = "Abdelatif-TG-HTTP"
+    owner    = local.tags.owner
+    ephemere = local.tags.ephemere
+    entity   = local.tags.entity
+  }
+}
+
+# Add the same TG but on HTTPS:
+
+resource "aws_lb_target_group" "abdelatif-tg-HTTPS" {
+  name        = "Abdelatif-TG-HTTPS"
+  target_type = "instance"
+  port        = 32001
+  protocol    = "HTTPS"
+  vpc_id      = var.vpc_id
+
+  health_check {
+    path                = "/healthz"
+    protocol            = "HTTPS"
+    matcher             = "200"
+    interval            = 15
+    timeout             = 5
+    healthy_threshold   = 2
+    unhealthy_threshold = 3
+  }
+
+  tags = {
+    Name     = "Abdelatif-TG-HTTPS"
     owner    = local.tags.owner
     ephemere = local.tags.ephemere
     entity   = local.tags.entity
