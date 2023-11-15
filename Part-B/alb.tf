@@ -84,21 +84,38 @@ resource "aws_autoscaling_attachment" "asg_attachment2" {
   ]
 }
 
-resource "aws_lb_listener" "abdelatif-lb-listener" {
+resource "aws_lb_listener" "abdelatif-lb-listener-http" {
   load_balancer_arn = aws_lb.abdelatif-alb.arn
   port              = "80"
   protocol          = "HTTP"
 
   default_action {
     type             = "forward"
-    target_group_arn = aws_lb_target_group.abdelatif-tg.arn
+    target_group_arn = aws_lb_target_group.abdelatif-tg-HTTP.arn
   }
 
   tags = {
-    Name     = "abdelatif-lb-listener"
+    Name     = "abdelatif-lb-listener-http"
     owner    = local.tags.owner
     ephemere = local.tags.ephemere
     entity   = local.tags.entity
   }
 }
 
+resource "aws_lb_listener" "abdelatif-lb-listener-https" {
+  load_balancer_arn = aws_lb.abdelatif-alb.arn
+  port              = "443"
+  protocol          = "HTTPS"
+
+  default_action {
+    type             = "forward"
+    target_group_arn = aws_lb_target_group.abdelatif-tg-HTTPS.arn
+  }
+
+  tags = {
+    Name     = "abdelatif-lb-listener-https"
+    owner    = local.tags.owner
+    ephemere = local.tags.ephemere
+    entity   = local.tags.entity
+  }
+}
