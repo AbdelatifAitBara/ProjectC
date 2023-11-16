@@ -83,7 +83,7 @@ pipeline {
             steps {
                 withVault([configuration: configuration, vaultSecrets: secrets]) {
                     dir("${PROJECT_DIR}/Microservices/Customer") {
-                        sh 'docker build --build-arg MYSQL_DATABASE_USER='$MYSQL_DATABASE_USER' --build-arg MYSQL_DATABASE_PASSWORD='$MYSQL_DATABASE_PASSWORD' --build-arg MYSQL_DATABASE_DB='$MYSQL_DATABASE_DB' --build-arg MYSQL_DATABASE_HOST='$MYSQL_DATABASE_HOST' --build-arg CUSTOMER_API_URL='$CUSTOMER_API_URL' --build-arg SECRET_KEY='$SECRET_KEY' --build-arg CONSUMER_KEY='$CONSUMER_KEY' --build-arg CONSUMER_SECRET='$CONSUMER_SECRET' -t ${CUSTOMER_DOCKER_IMAGE}:${CUSTOMER_TAG} .'
+                        sh 'docker build --build-arg MYSQL_DATABASE_USER=$MYSQL_DATABASE_USER --build-arg MYSQL_DATABASE_PASSWORD=$MYSQL_DATABASE_PASSWORD --build-arg MYSQL_DATABASE_DB=$MYSQL_DATABASE_DB --build-arg MYSQL_DATABASE_HOST=$MYSQL_DATABASE_HOST --build-arg CUSTOMER_API_URL=$CUSTOMER_API_URL --build-arg SECRET_KEY=$SECRET_KEY --build-arg CONSUMER_KEY=$CONSUMER_KEY --build-arg CONSUMER_SECRET=$CONSUMER_SECRET -t ${CUSTOMER_DOCKER_IMAGE}:${CUSTOMER_TAG} .'
                     }
                 }
             }
@@ -103,7 +103,7 @@ pipeline {
             steps {
                 withVault([configuration: configuration, vaultSecrets: secrets]) {
                         dir("${PRODUCT_FOLDER}") {
-                            sh 'docker build --build-arg MYSQL_DATABASE_USER='$MYSQL_DATABASE_USER' --build-arg MYSQL_DATABASE_PASSWORD='$MYSQL_DATABASE_PASSWORD' --build-arg MYSQL_DATABASE_DB='$MYSQL_DATABASE_DB' --build-arg MYSQL_DATABASE_HOST='$MYSQL_DATABASE_HOST' --build-arg PRODUCT_API_URL='$PRODUCT_API_URL' --build-arg SECRET_KEY='$SECRET_KEY' --build-arg CONSUMER_KEY='$CONSUMER_KEY' --build-arg CONSUMER_SECRET='$CONSUMER_SECRET' -t ${PRODUCT_DOCKER_IMAGE}:${PRODUCT_TAG} .'
+                            sh 'docker build --build-arg MYSQL_DATABASE_USER=$MYSQL_DATABASE_USER --build-arg MYSQL_DATABASE_PASSWORD=$MYSQL_DATABASE_PASSWORD --build-arg MYSQL_DATABASE_DB=$MYSQL_DATABASE_DB --build-arg MYSQL_DATABASE_HOST=$MYSQL_DATABASE_HOST --build-arg PRODUCT_API_URL=$PRODUCT_API_URL --build-arg SECRET_KEY=$SECRET_KEY --build-arg CONSUMER_KEY=$CONSUMER_KE --build-arg CONSUMER_SECRET=$CONSUMER_SECRET -t ${PRODUCT_DOCKER_IMAGE}:${PRODUCT_TAG} .'
                     }
                     
                 }
@@ -124,7 +124,7 @@ pipeline {
             steps {
                 withVault([configuration: configuration, vaultSecrets: secrets]) {
                     dir("${PROJECT_DIR}/Microservices/Order") {
-                        sh 'docker build --build-arg MYSQL_DATABASE_USER='$MYSQL_DATABASE_USER' --build-arg MYSQL_DATABASE_PASSWORD='$MYSQL_DATABASE_PASSWORD' --build-arg MYSQL_DATABASE_DB='$MYSQL_DATABASE_DB' --build-arg MYSQL_DATABASE_HOST='$MYSQL_DATABASE_HOST' --build-arg ORDER_API_URL='$ORDER_API_URL' --build-arg SECRET_KEY='$SECRET_KEY' --build-arg CONSUMER_KEY='$CONSUMER_KEY' --build-arg CONSUMER_SECRET='$CONSUMER_SECRET' -t ${ORDER_DOCKER_IMAGE}:${ORDER_TAG} .'
+                        sh 'docker build --build-arg MYSQL_DATABASE_USER=$MYSQL_DATABASE_USER --build-arg MYSQL_DATABASE_PASSWORD=$MYSQL_DATABASE_PASSWORD --build-arg MYSQL_DATABASE_DB=$MYSQL_DATABASE_DB --build-arg MYSQL_DATABASE_HOST=$MYSQL_DATABASE_HOST --build-arg ORDER_API_URL=$ORDER_API_URL --build-arg SECRET_KEY=$SECRET_KEY --build-arg CONSUMER_KEY=$CONSUMER_KEY --build-arg CONSUMER_SECRET=$CONSUMER_SECRET -t ${ORDER_DOCKER_IMAGE}:${ORDER_TAG} .'
                     }
                 }
 
