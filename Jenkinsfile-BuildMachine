@@ -69,7 +69,7 @@ pipeline {
                         snykTokenId: 'Snyk_TOKEN',
                         failOnIssues: false,
                         monitorProjectOnBuild: false,
-                        additionalArguments: '--iac --severity-threshold critical --report -d'
+                        additionalArguments: '--iac --severity-threshold=critical --report -d'
                     )
                     if (snykScanResults == '1') {
                         error('Snyk Scan Found Vulnerabilities')
