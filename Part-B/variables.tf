@@ -4,6 +4,11 @@ variable "vpc_id" {
   description = "abdelatif vpc id"
 }
 
+variable "igw_id" {
+  type        = string
+  description = "igw id"
+}
+
 
 
 # EC2 Variables
@@ -42,28 +47,17 @@ variable "terraform_role" {
 
 # SG Variabless
 
-# Ansible SG Variables
+# BM Variables:
 
-variable "sg_ansible_name" {
+variable "bm_sg_name" {
   type        = string
-  description = "ansible sg name"
+  description = "sg name for building machine"
 }
 
-variable "sg_ansible_descrption" {
-  type        = string
-  description = "sg for ansible"
-}
 
-# Vault SG Variables
-
-variable "sg_vault_name" {
+variable "bm_sg_descrption" {
   type        = string
-  description = "vault sg name"
-}
-
-variable "sg_vault_descrption" {
-  type        = string
-  description = "sg for vault"
+  description = "sg description for building machine"
 }
 
 # Network Variables
@@ -73,12 +67,49 @@ variable "cidr_block_PublicSubnet01" {
   description = "cidr block for PublicSubnet01"
 }
 
+variable "cidr_block_PublicSubnet02" {
+  type        = string
+  description = "cidr block for PublicSubnet02"
+}
+
+variable "cidr_block_PrivateSubnet01" {
+  type        = string
+  description = "cidr block for PrivateSubnet01"
+}
+
+variable "cidr_block_PrivateSubnet02" {
+  type        = string
+  description = "cidr block for PrivateSubnet02"
+}
+
 variable "az-a" {
   type        = string
   description = "eu-west-1a az"
 }
 
-variable "igw_id" {
+variable "az-b" {
   type        = string
-  description = "igw id"
+  description = "eu-west-1b az"
+}
+
+variable "ngw-vpc-b" {
+  type        = string
+  description = "ngw id of VPC-B"
+}
+
+# EKS Variables
+
+variable "eks-iam-role" {
+  type        = string
+  description = "iam role for eks cluster"
+}
+
+variable "node-iam-role" {
+  type        = string
+  description = "iam role for nodes"
+}
+
+variable "eks_cluster_name" {
+  type        = string
+  description = "name for eks cluster"
 }

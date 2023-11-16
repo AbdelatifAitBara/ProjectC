@@ -1,0 +1,147 @@
+def secrets = [
+    [path: 'secrets/creds/microservices', engineVersion: 1, secretValues: [
+        [envVar: 'DOCKER_TOKEN', vaultKey: 'dockertoken'],
+        [envVar: 'DOCKER_USERNAME', vaultKey: 'dockeruser'],
+        [envVar: 'MYSQL_DATABASE_USER', vaultKey: 'MYSQL_DATABASE_USER'],
+        [envVar: 'MYSQL_DATABASE_PASSWORD', vaultKey: 'MYSQL_DATABASE_PASSWORD'],
+        [envVar: 'MYSQL_DATABASE_DB', vaultKey: 'MYSQL_DATABASE_DB'],
+        [envVar: 'MYSQL_DATABASE_HOST', vaultKey: 'MYSQL_DATABASE_HOST'],
+        [envVar: 'PRODUCT_API_URL', vaultKey: 'productapiurl'],
+        [envVar: 'ORDER_API_URL', vaultKey: 'orderapiurl'],
+        [envVar: 'CUSTOMER_API_URL', vaultKey: 'customerapiurl'],
+        [envVar: 'SECRET_KEY', vaultKey: 'secretkey'],
+        [envVar: 'CONSUMER_KEY', vaultKey: 'consumerkey'],
+        [envVar: 'CONSUMER_SECRET', vaultKey: 'consumersecret']
+    ]]
+]
+
+def configuration = [vaultUrl: 'http://10.0.3.159:8200',  vaultCredentialId: 'Vault_Credentials', engineVersion: 1]
+
+pipeline {
+
+
+    agent { label 'Building_Machine' }
+
+
+    environment {
+        CUSTOMER_TAG = 'alpha5'
+        PRODUCT_TAG = 'alpha5'
+        ORDER_TAG = 'alpha5'
+        WORKSPACE = '/home/ubuntu/'
+        PROJECT_DIR = '/home/ubuntu/ProjectC'
+        PRODUCT_FOLDER = '/home/ubuntu/ProjectC/Microservices/Product'
+        PRODUCT_DOCKER_IMAGE = 'abdelatifaitbara/product'
+        ORDER_DOCKER_IMAGE = 'abdelatifaitbara/order'
+        CUSTOMER_DOCKER_IMAGE = 'abdelatifaitbara/customer'
+    }   
+
+
+
+    stages {
+
+        stage('Clone Git Repository') {
+            steps {
+                sh "rm -rf ${PROJECT_DIR}"
+                sh "git -C ${WORKSPACE} clone -b Dev --recursive git@github.com:AbdelatifAitBara/ProjectC.git"
+            }
+        }
+
+
+        stage('Snyk Scan') {
+            steps {
+                snykSecurity projectName: 'AbdelatifAitBara/ProjectC', snykInstallation: 'snyk@latest', snykTokenId: 'Snyk_TOKEN', targetFile: 'requirements.txt'
+            }
+        }
+
+        stage('Build Customer Image') {
+            steps {
+                withVault([configuration: configuration, vaultSecrets: secrets]) {
+                    dir("${PROJECT_DIR}/Microservices/Customer") {
+                        sh "docker build --build-arg MYSQL_DATABASE_USER='$MYSQL_DATABASE_USER' --build-arg MYSQL_DATABASE_PASSWORD='$MYSQL_DATABASE_PASSWORD' --build-arg MYSQL_DATABASE_DB='$MYSQL_DATABASE_DB' --build-arg MYSQL_DATABASE_HOST='$MYSQL_DATABASE_HOST' --build-arg CUSTOMER_API_URL='$CUSTOMER_API_URL' --build-arg SECRET_KEY='$SECRET_KEY' --build-arg CONSUMER_KEY='$CONSUMER_KEY' --build-arg CONSUMER_SECRET='$CONSUMER_SECRET' -t ${CUSTOMER_DOCKER_IMAGE}:${CUSTOMER_TAG} ."
+                    }
+                }
+            }
+        }
+
+        stage('Push Customer Image to DockerHub') {
+            steps {
+                withVault([configuration: configuration, vaultSecrets: secrets]) {
+                    sh 'docker login -u $DOCKER_USERNAME -p $DOCKER_TOKEN'
+                    sh 'docker push docker.io/${CUSTOMER_DOCKER_IMAGE}:${CUSTOMER_TAG}'
+                }
+            }
+        }
+
+
+        stage('Build Product Image') {
+            steps {
+                withVault([configuration: configuration, vaultSecrets: secrets]) {
+                        dir("${PRODUCT_FOLDER}") {
+                            sh "docker build --build-arg MYSQL_DATABASE_USER='$MYSQL_DATABASE_USER' --build-arg MYSQL_DATABASE_PASSWORD='$MYSQL_DATABASE_PASSWORD' --build-arg MYSQL_DATABASE_DB='$MYSQL_DATABASE_DB' --build-arg MYSQL_DATABASE_HOST='$MYSQL_DATABASE_HOST' --build-arg PRODUCT_API_URL='$PRODUCT_API_URL' --build-arg SECRET_KEY='$SECRET_KEY' --build-arg CONSUMER_KEY='$CONSUMER_KEY' --build-arg CONSUMER_SECRET='$CONSUMER_SECRET' -t ${PRODUCT_DOCKER_IMAGE}:${PRODUCT_TAG} ."
+                    }
+                    
+                }
+            }
+        }
+
+
+        stage('Push Product Image to DockerHub') {
+            steps {
+                    withVault([configuration: configuration, vaultSecrets: secrets]) {
+                        sh 'docker login -u $DOCKER_USERNAME -p $DOCKER_TOKEN'
+                        sh 'docker push docker.io/${PRODUCT_DOCKER_IMAGE}:${PRODUCT_TAG}'
+                    }
+            }  
+        }
+
+        stage('Build Order Image') {
+            steps {
+                withVault([configuration: configuration, vaultSecrets: secrets]) {
+                    dir("${PROJECT_DIR}/Microservices/Order") {
+                        sh "docker build --build-arg MYSQL_DATABASE_USER='$MYSQL_DATABASE_USER' --build-arg MYSQL_DATABASE_PASSWORD='$MYSQL_DATABASE_PASSWORD' --build-arg MYSQL_DATABASE_DB='$MYSQL_DATABASE_DB' --build-arg MYSQL_DATABASE_HOST='$MYSQL_DATABASE_HOST' --build-arg ORDER_API_URL='$ORDER_API_URL' --build-arg SECRET_KEY='$SECRET_KEY' --build-arg CONSUMER_KEY='$CONSUMER_KEY' --build-arg CONSUMER_SECRET='$CONSUMER_SECRET' -t ${ORDER_DOCKER_IMAGE}:${ORDER_TAG} ."
+                    }
+                }
+
+            }
+        }
+
+        stage('Push Order Image to DockerHub') {
+            steps {
+                withVault([configuration: configuration, vaultSecrets: secrets]) {
+                    sh 'docker login -u $DOCKER_USERNAME -p $DOCKER_TOKEN'
+                    sh 'docker push docker.io/${ORDER_DOCKER_IMAGE}:${ORDER_TAG}'
+                }
+            }
+        }
+
+
+
+        
+
+        stage('Delete All Images') {
+
+            steps {
+                sh 'docker image prune -a -f'
+            }
+        } 
+
+
+        stage('Clean Workspace') {
+            steps {
+                cleanWs()
+            }
+        }
+            
+    }
+
+
+    post {
+        failure {
+            echo "Build failed: ${currentBuild.result}"
+        }
+        success {
+            echo "Build succeeded: ${currentBuild.result}"
+        }
+    }
+
+}

@@ -1,0 +1,41 @@
+pipeline {
+    agent { label 'Ansible_Master' }
+
+    environment {
+        WORKSPACE = '/home/ubuntu/'
+        PROJECT_DIR = '/home/ubuntu/ProjectC'
+        PROJECT_FOLDER = 'ProjectC'
+        PART_B_DIR = '/home/ubuntu/ProjectC/Part-B'
+    }
+
+    stages {
+        stage('Clone Git Repository') {
+            steps {
+                sh "rm -rf ${PROJECT_DIR}"
+                sh "git -C ${WORKSPACE} clone -b Dev --recursive git@github.com:AbdelatifAitBara/ProjectC.git"
+            }
+        }
+
+        stage('Deploy The Infrastructure Part-B using Terraform') {
+            steps{
+                dir("/home/ubuntu/ProjectC/Part-B") { // Change to your Terraform directory path
+                    sh '''
+                    terraform init
+                    terraform apply -var-file="${PART_B_DIR}/part-B.tfvars" -auto-approve
+                    '''
+                }
+            }
+        }
+
+
+    }
+
+    post {
+        failure {
+            echo "Build failed: ${currentBuild.result}"
+        }
+        success {
+            echo "Build succeeded: ${currentBuild.result}"
+        }
+    }
+}

@@ -13,3 +13,7 @@ data "template_file" "install_ansible" {
 data "template_file" "install_vault" {
   template = file("./install_vault.tftpl")
 }
+
+data "template_file" "bm_user_data" {
+  template = file("./bm_user_data.tftpl")
+}
