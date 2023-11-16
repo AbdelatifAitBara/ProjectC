@@ -78,6 +78,9 @@ pipeline {
                         if (snykResult.status != 0) {
                             error('Snyk Scan Found Vulnerabilities')
                         }
+                        else {
+                            echo 'Snyk Scan Passed'
+                        }
                     }
                 }
         }
