@@ -51,7 +51,6 @@ pipeline {
             steps {
                 echo 'Code Scanning...'
                 snykSecurity(
-                severity: 'high',
                 snykInstallation: 'snyk@latest',
                 snykTokenId: 'Snyk_TOKEN',
                 failOnIssues: 'false',
@@ -65,12 +64,11 @@ pipeline {
             steps {
                 echo 'IaC Scanning...'
                 snykSecurity(
-                severity: 'high',
                 snykInstallation: 'snyk@latest',
                 snykTokenId: 'Snyk_TOKEN',
                 failOnIssues: 'false',
                 monitorProjectOnBuild: 'false',
-                additionalArguments: '--iac --report -d'
+                additionalArguments: '--iac --threshold="high" --report -d'
                 )
             }
         }
