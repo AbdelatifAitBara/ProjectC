@@ -70,12 +70,12 @@ pipeline {
                             snykTokenId: 'Snyk_TOKEN', 
                             failOnIssues: 'false',
                             monitorProjectOnBuild: 'false',
-                            additionalArguments: '--iac --severity-threshold critical --report -d'  
+                            additionalArguments: '--iac --severity-threshold=critical --report -d'  
                             )
                         } catch (Exception e) {
                             echo 'Snyk IaC Scan Failed' 
                         }
-                        if (snykResult.status == 1) {
+                        if (snykResult.status != 0) {
                             error('Snyk Scan Found Vulnerabilities')
                         }
                     }
