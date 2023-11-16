@@ -39,12 +39,6 @@ pipeline {
 
     stages {
 
-        stage('Clean Workspace') {
-            steps {
-                cleanWs()
-            }
-        }
-
         stage('Clone Git Repository') {
             steps {
                 sh "rm -rf ${PROJECT_DIR}"
@@ -162,7 +156,13 @@ pipeline {
             steps {
                 sh 'docker image prune -a -f'
             }
-        } 
+        }
+
+        stage('Clean Workspace') {
+            steps {
+                cleanWs()
+            }
+        }
 
 
 
