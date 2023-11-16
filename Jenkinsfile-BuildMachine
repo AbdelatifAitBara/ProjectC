@@ -55,7 +55,7 @@ pipeline {
                 failOnIssues: 'false',
                 monitorProjectOnBuild: 'false',
                 targetFile: 'AbdelatifAitBara/ProjectC/Microservices/Product/Dockerfile',
-                additionalArguments: '--docker --report -d'
+                additionalArguments: '--code --report -d'
                 )
             }
         }
