@@ -46,10 +46,9 @@ pipeline {
             }
         }
 
-
         stage('Snyk Scan') {
             steps {
-                snykSecurity projectName: 'AbdelatifAitBara/ProjectC', snykInstallation: 'snyk@latest', snykTokenId: 'Snyk_TOKEN'
+                snykSecurity projectName: 'AbdelatifAitBara/ProjectC', snykInstallation: 'snyk@latest', snykTokenId: 'Snyk_TOKEN, --all-projects'
             }
         }
 
