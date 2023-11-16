@@ -46,6 +46,25 @@ pipeline {
             }
         }
 
+        stage('Configure Snyk') {
+            steps {
+                script {
+                    snykConfig = [
+                        project: 'AbdelatifAitBara/ProjectC',
+                        severity: 'high'
+                    ]
+                }
+            }
+        }
+
+        stage('Snyk Scan') {
+            steps {
+                script {
+                    snykScan(snykConfig)
+                }
+            }
+        }
+
         stage('Build Customer Image') {
             steps {
                 withVault([configuration: configuration, vaultSecrets: secrets]) {
