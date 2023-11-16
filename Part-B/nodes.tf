@@ -10,9 +10,6 @@ resource "aws_eks_node_group" "private-nodes" {
     aws_subnet.PrivateSubnet02.id
   ]
 
-  remote_access {
-    source_security_group_ids = [aws_security_group.node_group_sg.id]
-  }
 
   capacity_type  = "ON_DEMAND"
   instance_types = ["t3.small"]

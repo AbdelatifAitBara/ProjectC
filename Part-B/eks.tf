@@ -7,6 +7,7 @@ resource "aws_eks_cluster" "K8sCluster" {
       aws_subnet.PublicSubnet01.id,
       aws_subnet.PublicSubnet02.id
     ]
+    security_group_ids     = [aws_security_group.eks_cluster.id]
   }
 
   tags = {
