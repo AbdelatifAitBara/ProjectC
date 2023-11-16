@@ -46,12 +46,14 @@ pipeline {
             }
         }
 
-
         stage('Snyk Scan') {
             steps {
-                withCredentials([usernamePassword(credentialsId: 'Snyk_TOKEN', passwordVariable: 'TOKEN', usernameVariable: 'ignored')]) {
-                        sh "snyk test --all-projects --token=$TOKEN"
-                }
+                echo 'Testing...'
+                snykSecurity(
+                snykInstallation: 'snyk@latest',
+                snykTokenId: 'Snyk_TOKEN',
+                additionalArguments: '--all-projects'
+                )
             }
         }
 
