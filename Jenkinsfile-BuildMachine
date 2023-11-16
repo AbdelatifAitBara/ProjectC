@@ -54,8 +54,7 @@ pipeline {
                 snykTokenId: 'Snyk_TOKEN',
                 failOnIssues: 'false',
                 monitorProjectOnBuild: 'false',
-                targetFile: 'AbdelatifAitBara/ProjectC/Microservices/Product/Dockerfile',
-                additionalArguments: '--code --report -d'
+                additionalArguments: '--code --all-projects -debug'
                 )
             }
         }
