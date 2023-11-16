@@ -63,7 +63,6 @@ pipeline {
         stage('Snyk IaC Scan') {
                 steps {
                     script {
-                        try {
                             echo 'Running Snyk IaC Scan'
                             def snykResult = snykSecurity(
                             severityThreshold: 'critical',
@@ -73,15 +72,6 @@ pipeline {
                             monitorProjectOnBuild: 'false',
                             additionalArguments: '--iac --severity-threshold=critical --report -d'  
                             )
-                        } catch (Exception e) {
-                            echo 'Snyk IaC Scan Failed' 
-                        }
-                        if (snykResult.status != 0) {
-                            error('Snyk Scan Found Vulnerabilities')
-                        }
-                        else {
-                            echo 'Snyk Scan Passed'
-                        }
                     }
                 }
         }
