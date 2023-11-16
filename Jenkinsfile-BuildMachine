@@ -55,7 +55,7 @@ pipeline {
                 snykTokenId: 'Snyk_TOKEN',
                 failOnIssues: 'false',
                 monitorProjectOnBuild: 'false',
-                additionalArguments: '--code --report -d'
+                additionalArguments: '--code -debug'
                 )
             }
         }
