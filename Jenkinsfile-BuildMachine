@@ -72,8 +72,11 @@ pipeline {
                         monitorProjectOnBuild: false,
                         additionalArguments: '--iac --severity-threshold=high --report -d'
                     )
-                    if (snykScanResults == '1') {
-                        error('Snyk Scan Found Vulnerabilities')
+                    if (snykScanResults.exitCode == 0) {
+                        echo 'Snyk IaC Scan Passed'
+                    } else {
+                        echo 'Snyk IaC Scan Failed'
+                        error('Snyk IaC Scan Failed')
                     }
                 }
             }
