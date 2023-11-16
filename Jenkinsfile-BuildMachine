@@ -77,7 +77,7 @@ pipeline {
                     }
 
                     // Check scan output for high issues
-                    def output = sh script: "snyk iac test --severity=high --report", returnStdout: true
+                    def output = sh script: "--iac --severity=high --report", returnStdout: true
                     if(output.contains('High')) {
                     error "High severity issues found!"
                     }
