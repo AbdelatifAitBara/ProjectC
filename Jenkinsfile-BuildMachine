@@ -71,6 +71,7 @@ pipeline {
                 additionalArguments: '--dockerfile --report -d'
                 )
             }
+        }
 
         stage('Snyk IaC Scan') {
             steps {
