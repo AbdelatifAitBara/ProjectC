@@ -46,19 +46,6 @@ pipeline {
             }
         }
 
-        stage('Snyk Scan') {
-            steps {
-                echo 'Testing...'
-                snykSecurity(
-                snykInstallation: 'snyk@latest',
-                snykTokenId: 'Snyk_TOKEN',
-                failOnIssues: 'false',
-                monitorProjectOnBuild: 'true',
-                additionalArguments: '--all-projects --d'
-                )
-            }
-        }
-
         stage('Run Snyk Code Scan') {
             steps {
                 echo 'Code Scanning...'
