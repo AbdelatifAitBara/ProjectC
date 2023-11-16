@@ -63,7 +63,7 @@ pipeline {
         stage('Snyk IaC Scan') {
             steps {
                 echo 'Running Snyk IaC Scan'
-
+                script {
                     try {
                     snykSecurity(
                         snykInstallation: 'snyk@latest', 
@@ -81,6 +81,8 @@ pipeline {
                     if(output.contains('High')) {
                     error "High severity issues found!"
                     }
+                }
+
             }
         }
         
