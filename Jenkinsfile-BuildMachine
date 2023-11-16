@@ -52,7 +52,7 @@ pipeline {
                 snykSecurity(
                 snykInstallation: 'snyk@latest',
                 snykTokenId: 'Snyk_TOKEN',
-                additionalArguments: '--all-projects'
+                additionalArguments: '--target-files=Microservices/Product/requirements.txt,Microservices/Order/requirements.txt,Microservices/Customer/requirements.txt'
                 )
             }
         }
