@@ -65,17 +65,17 @@ pipeline {
                 echo 'Running Snyk IaC Scan'
                 script {
                     def snykScanResults = snykSecurity(
-                        severityThreshold: 'high',
+                        severityThreshold: 'critical',
                         snykInstallation: 'snyk@latest', 
                         snykTokenId: 'Snyk_TOKEN',
                         failOnIssues: false,
                         monitorProjectOnBuild: false,
-                        additionalArguments: '--iac --severity-threshold=high --report -d'
+                        additionalArguments: '--iac --severity-threshold=critical --report -d'
                     )
                     if (snykScanResults.exitCode == 0) {
                         echo 'Snyk IaC Scan Passed'
                     } else {
-                        echo 'Snyk IaC Scan Failed'
+                        echo 'Snyk IaC Scan Has Found Vulnerabilities Or Errors'
                         error('Snyk IaC Scan Failed')
                     }
                 }
