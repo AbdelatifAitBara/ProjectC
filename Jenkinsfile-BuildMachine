@@ -46,20 +46,6 @@ pipeline {
             }
         }
 
-        stage('Snyk Scan Dockerfile') {
-            steps {
-                echo 'Dockerfile Scanning...'
-                snykSecurity(
-                snykInstallation: 'snyk@latest',
-                snykTokenId: 'Snyk_TOKEN',
-                failOnIssues: 'false',
-                monitorProjectOnBuild: 'false',
-                additionalArguments: '--code --all-projects -debug'
-                )
-            }
-        }
-
-
         stage('Snyk Scan Python Code') {
             steps {
                 echo 'Code Scanning...'
@@ -81,7 +67,7 @@ pipeline {
                 snykTokenId: 'Snyk_TOKEN',
                 failOnIssues: false,
                 monitorProjectOnBuild: false,
-                additionalArguments: '--iac --severity-threshold=high --report -d'
+                additionalArguments: '--iac --severity-threshold=low --report -d'
                 )
                 }
         }
