@@ -86,7 +86,6 @@ pipeline {
                     additionalArguments: '--iac --severity-threshold=high --report -d'
                     )
                 }
-            }
         }
         
 
