@@ -52,7 +52,35 @@ pipeline {
                 snykSecurity(
                 snykInstallation: 'snyk@latest',
                 snykTokenId: 'Snyk_TOKEN',
-                additionalArguments: '--target-files=Microservices/Product/requirements.txt,Microservices/Order/requirements.txt,Microservices/Customer/requirements.txt'
+                failedOnIssues: 'false',
+                monitorProjectOnBuild: 'true',
+                additionalArguments: '--all-projects --d'
+                )
+            }
+        }
+
+        stage('Run Snyk Code Scan') {
+            steps {
+                echo 'Code Scanning...'
+                snykSecurity(
+                snykInstallation: 'snyk@latest',
+                snykTokenId: 'Snyk_TOKEN',
+                failedOnIssues: 'false',
+                monitorProjectOnBuild: 'false',
+                additionalArguments: '--code -debug'
+                )
+            }
+        }
+
+        stage('Snyk IaC Scan') {
+            steps {
+                echo 'IaC Scanning...'
+                snykSecurity(
+                snykInstallation: 'snyk@latest',
+                snykTokenId: 'Snyk_TOKEN',
+                failedOnIssues: 'false',
+                monitorProjectOnBuild: 'false',
+                additionalArguments: '--iac --report -d'
                 )
             }
         }
