@@ -24,9 +24,9 @@ pipeline {
 
 
     environment {
-        CUSTOMER_TAG = 'alpha6'
-        PRODUCT_TAG = 'alpha6'
-        ORDER_TAG = 'alpha6'
+        CUSTOMER_TAG = 'alpha7'
+        PRODUCT_TAG = 'alpha7'
+        ORDER_TAG = 'alpha7'
         WORKSPACE = '/home/ubuntu/'
         PROJECT_DIR = '/home/ubuntu/ProjectC'
         PRODUCT_FOLDER = '/home/ubuntu/ProjectC/Microservices/Product'
@@ -38,6 +38,12 @@ pipeline {
 
 
     stages {
+
+        stage('Clean Workspace') {
+            steps {
+                cleanWs()
+            }
+        }
 
         stage('Clone Git Repository') {
             steps {
@@ -159,11 +165,7 @@ pipeline {
         } 
 
 
-        stage('Clean Workspace') {
-            steps {
-                cleanWs()
-            }
-        }
+
             
     }
 

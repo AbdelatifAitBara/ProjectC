@@ -1,0 +1,50 @@
+pipeline {
+    agent {
+        label 'Building_Machine'
+    }
+
+    parameters {
+        string(name: 'IMAGE_TAG', defaultValue: 'latest', description: 'Docker image tag')
+    }
+
+    stage('Clean Workspace') {
+        steps {
+            cleanWs()
+        }
+    }
+
+    stages {
+        stage('Checkout GitOps Repo') {
+        steps {
+            sh "git clone git@github.com:AbdelatifAitBara/ProjectC-GitOps.git"
+        }
+        }
+
+        stage('Replace Image Tag') {
+            steps {
+                sh "sed -i 's/image: .*/image: ${params.IMAGE_TAG}/' deployment.yaml"     
+
+                // Replace tag in any other YAML files
+            }
+        }
+
+        stage('Commit Changes') {
+            steps {
+                sh "git add ."
+                sh "git commit -m 'Updated image tag to ${params.IMAGE_TAG}'"
+            }
+        }
+
+        stage('Push to GitOps Repo') {
+            steps {
+                sh "git push origin main"
+            }
+        }
+    }
+
+    post {
+        success {
+        slackSend(color: '#32CD32', message: "Deployment updated with image ${params.IMAGE_TAG}")
+        }
+    }
+}
