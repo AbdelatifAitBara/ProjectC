@@ -114,7 +114,7 @@ def add_order():
 
     # Send the POST request to add the order
     try:
-        response = oauth.post(API_URL, headers=headers, json=order_data, verify=False)
+        response = oauth.post(API_URL, headers=headers, json=order_data)
         response.raise_for_status()
     except requests.exceptions.HTTPError as e:
         error_message = e.response.json()['message']
@@ -147,7 +147,7 @@ def get_order(order_id):
 
     # Send the GET request to retrieve the order
     try:
-        response = oauth.get(endpoint, headers=headers, verify=False)
+        response = oauth.get(endpoint, headers=headers)
         response.raise_for_status()
     except requests.exceptions.HTTPError as e:
         error_message = e.response.json()['message']
@@ -182,7 +182,7 @@ def update_order(order_id):
 
     # Send the PUT request to update the order
     try:
-        response = oauth.put(endpoint, headers=headers, json=order_data, verify=False)
+        response = oauth.put(endpoint, headers=headers, json=order_data)
         response.raise_for_status()
     except requests.exceptions.HTTPError as e:
         error_message = e.response.json()['message']
@@ -213,7 +213,7 @@ def delete_order(order_id):
 
     # Send the DELETE request to delete the order
     try:
-        response = oauth.delete(endpoint, headers=headers, verify=False)
+        response = oauth.delete(endpoint, headers=headers)
         response.raise_for_status()
     except requests.exceptions.HTTPError as e:
         error_message = e.response.json()['message']
