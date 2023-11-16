@@ -52,7 +52,7 @@ pipeline {
                 snykSecurity(
                 snykInstallation: 'snyk@latest',
                 snykTokenId: 'Snyk_TOKEN',
-                failedOnIssues: 'false',
+                failOnIssues: 'false',
                 monitorProjectOnBuild: 'true',
                 additionalArguments: '--all-projects --d'
                 )
@@ -65,7 +65,7 @@ pipeline {
                 snykSecurity(
                 snykInstallation: 'snyk@latest',
                 snykTokenId: 'Snyk_TOKEN',
-                failedOnIssues: 'false',
+                failOnIssues: 'false',
                 monitorProjectOnBuild: 'false',
                 additionalArguments: '--code -debug'
                 )
@@ -78,7 +78,7 @@ pipeline {
                 snykSecurity(
                 snykInstallation: 'snyk@latest',
                 snykTokenId: 'Snyk_TOKEN',
-                failedOnIssues: 'false',
+                failOnIssues: 'false',
                 monitorProjectOnBuild: 'false',
                 additionalArguments: '--iac --report -d'
                 )
