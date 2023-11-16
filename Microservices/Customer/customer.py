@@ -111,7 +111,7 @@ def add_customer():
 
     # Send the POST request to add the customer
     try:
-        response = oauth.post(API_URL, headers=headers, json=customer_data)
+        response = oauth.post(API_URL, headers=headers, json=customer_data, verify=False)
         response.raise_for_status()
     except requests.exceptions.HTTPError as e:
         error_message = e.response.json()['message']
@@ -145,7 +145,7 @@ def delete_user(user_id):
     
     # Send the DELETE request to remove the user
     try:
-        response = oauth.delete(f"{API_URL}/{user_id}", headers=headers)
+        response = oauth.delete(f"{API_URL}/{user_id}", headers=headers, verify=False)
         response.raise_for_status()
     except requests.exceptions.HTTPError as e:
         error_message = e.response.json()['message']
@@ -179,7 +179,7 @@ def update_user(user_id):
     
     # Send the PUT request to update the user
     try:
-        response = oauth.put(f"{API_URL}/{user_id}", headers=headers, json=user_data)
+        response = oauth.put(f"{API_URL}/{user_id}", headers=headers, json=user_data, verify=False)
         response.raise_for_status()
     except requests.exceptions.HTTPError as e:
         error_message = e.response.json()['message']
@@ -210,7 +210,7 @@ def get_user(user_id):
     
     # Send the GET request to retrieve the user
     try:
-        response = oauth.get(f"{API_URL}/{user_id}", headers=headers)
+        response = oauth.get(f"{API_URL}/{user_id}", headers=headers, verify=False)
         response.raise_for_status()
     except requests.exceptions.HTTPError as e:
         error_message = e.response.json()['message']
@@ -243,7 +243,7 @@ def get_users():
     
     # Send the GET request to retrieve the users
     try:
-        response = oauth.get(API_URL, headers=headers)
+        response = oauth.get(API_URL, headers=headers, verify=False)
         response.raise_for_status()
     except requests.exceptions.HTTPError as e:
         error_message = e.response.json()['message']
