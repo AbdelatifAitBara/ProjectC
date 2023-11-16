@@ -47,7 +47,7 @@ pipeline {
         }
 
 
-        stage('Run Snyk Code Scan Python Code') {
+        stage('Snyk Scan Python Code') {
             steps {
                 echo 'Code Scanning...'
                 snykSecurity(
@@ -55,7 +55,7 @@ pipeline {
                 snykTokenId: 'Snyk_TOKEN',
                 failOnIssues: 'false',
                 monitorProjectOnBuild: 'false',
-                additionalArguments: '--code -debug --report -d'
+                additionalArguments: '--code --report -d'
                 )
             }
         }
