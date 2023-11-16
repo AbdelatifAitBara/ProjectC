@@ -78,7 +78,6 @@ pipeline {
             steps {
                 echo 'Running Snyk IaC Scan'
                 snykSecurity(
-                severityThreshold: 'high',
                 snykInstallation: 'snyk@latest', 
                 snykTokenId: 'Snyk_TOKEN',
                 failOnIssues: false,
