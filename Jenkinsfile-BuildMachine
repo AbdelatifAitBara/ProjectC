@@ -68,7 +68,7 @@ pipeline {
                 snykTokenId: 'Snyk_TOKEN',
                 failOnIssues: 'false',
                 monitorProjectOnBuild: 'false',
-                additionalArguments: '--dockerfile --report -d'
+                additionalArguments: '--dockerfile -debug'
                 )
             }
         }
