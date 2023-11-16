@@ -48,7 +48,9 @@ pipeline {
 
 
         stage('Snyk Scan') {
-            snykSecurity projectName: 'AbdelatifAitBara/ProjectC', snykInstallation: 'snyk@latest', snykTokenId: 'Snyk_TOKEN', targetFile: 'AbdelatifAitBara/ProjectC/Microservices/Product/requirements.txt'
+            steps {
+                snykSecurity projectName: 'AbdelatifAitBara/ProjectC', snykInstallation: 'snyk@latest', snykTokenId: 'Snyk_TOKEN', targetFile: 'AbdelatifAitBara/ProjectC/Microservices/Product/requirements.txt'
+            }
         }
 
         stage('Build Customer Image') {
