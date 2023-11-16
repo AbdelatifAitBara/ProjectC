@@ -66,6 +66,7 @@ pipeline {
                         try {
                             echo 'Running Snyk IaC Scan'
                             def snykResult = snykSecurity(
+                            severityThreshold: 'critical',
                             snykInstallation: 'snyk@latest',
                             snykTokenId: 'Snyk_TOKEN', 
                             failOnIssues: 'false',
