@@ -134,9 +134,22 @@ pipeline {
             }
         }
 
+        stage('Scan Microservices Images Using Trivy') {
+            steps {
+                sh '''
+                    trivy image docker.io/${CUSTOMER_DOCKER_IMAGE}:${CUSTOMER_TAG}
+                    trivy image docker.io/${PRODUCT_DOCKER_IMAGE}:${PRODUCT_TAG}
+                    trivy image docker.io/${ORDER_DOCKER_IMAGE}:${ORDER_TAG}
+                '''
+            }
+        }
 
+        stage('Edit Images TAGS On GitOps Repository') {
+            steps {
+                echo "Edit Images TAGS On GitOps Repository"
+            }
+        }
 
-        
 
         stage('Delete All Images') {
 
