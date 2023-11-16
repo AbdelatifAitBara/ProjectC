@@ -61,19 +61,16 @@ pipeline {
         }
 
         stage('Snyk IaC Scan') {
-                steps {
-                    script {
-                            echo 'Running Snyk IaC Scan'
-                            def snykResult = snykSecurity(
-                            severityThreshold: 'critical',
-                            snykInstallation: 'snyk@latest',
-                            snykTokenId: 'Snyk_TOKEN', 
-                            failOnIssues: 'false',
-                            monitorProjectOnBuild: 'false',
-                            additionalArguments: '--iac --severity-threshold=critical --report -d'  
-                            )
-                    }
-                }
+            steps {
+                echo 'Running Snyk IaC Scan'
+                snykSecurity(
+                snykInstallation: 'snyk@latest', 
+                snykTokenId: 'Snyk_TOKEN',
+                failOnIssues: 'false',
+                monitorProjectOnBuild: 'false',
+                additionalArguments: '--iac --report -d'
+                )
+            }
         }
         
 
