@@ -1,6 +1,6 @@
 resource "aws_route53_record" "alias_route53_record" {
   zone_id = "Z05857851QWH8AHXPR6J6"
-  name    = "wp.abdelatif-aitbara.link"
+  name    = "projetc.abdelatif-aitbara.link"
   type    = "A"
 
   alias {
