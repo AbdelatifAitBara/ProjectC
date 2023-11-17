@@ -15,9 +15,9 @@ pipeline {
 
     stages {
         stage('Checkout GitOps Repo') {
-        steps {
-            sh "git clone git@github.com:AbdelatifAitBara/ProjectC-GitOps.git"
-        }
+            steps {
+                sh "git clone --recursive git@github.com:AbdelatifAitBara/ProjectC-GitOps.git"
+            }
         }
 
         stage('Replace Image Tag') {
