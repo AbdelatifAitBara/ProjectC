@@ -154,16 +154,6 @@ pipeline {
             }
         }
 
-        stage('Trigger GitOps Job') {
-            steps {
-                build job: 'GitOps', parameters: [
-                string(name: 'TOKEN', value: 'GitOps_Job'),
-                string(name: 'COMMIT', value: env.GIT_COMMIT) 
-                ]  
-            }
-        }
-
-
         stage('Delete All Images') {
 
             steps {
@@ -175,6 +165,42 @@ pipeline {
             steps {
                 cleanWs()
             }
+        }
+
+
+        stage('Deploy Microservices Containers') {
+            when {
+                expression { currentBuild.resultIsBetterOrEqualTo('SUCCESS') }
+            }
+            steps {
+                input message: 'Approve deployment?', ok: 'Deploy'
+                sh "docker-compose -f ${DOCKER_COMPOSE_FILE} down"
+                sh "docker-compose -f ${DOCKER_COMPOSE_FILE} up -d"
+            }
+            post {
+                failure {
+                    echo "Deployment skipped due to earlier test failures"
+                }
+            }
+        }
+
+        stage('Trigger GitOps Job') {
+            when {
+                expression { currentBuild.resultIsBetterOrEqualTo('SUCCESS') }
+            }
+            steps {
+                input message: 'Approve deployment to Cluster?', ok: 'Deploy'
+                build job: 'GitOps', parameters: [
+                string(name: 'TOKEN', value: 'GitOps_Job'),
+                string(name: 'COMMIT', value: env.GIT_COMMIT) 
+                ]  
+            }
+            post {
+                failure {
+                    echo "Deployment Skipped"
+                }
+            }
+
         }
     }
 
