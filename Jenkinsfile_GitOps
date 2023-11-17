@@ -43,6 +43,8 @@ pipeline {
             steps {
                 dir("${PROJECT_DIR}") {
                     sh "git add ."
+                    sh "git config --global user.email 'support@abdelatif-aitbara.link'"
+                    sh "git config --global user.name 'AbdelatifAitBara'"
                     sh "git commit -m 'Update Image Tag --global'"
                 }
             }
