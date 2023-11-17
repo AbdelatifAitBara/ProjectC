@@ -136,6 +136,11 @@ variable "bm_sg_descrption" {
   description = "sg description for building machine"
 }
 
+variable "bastion_security_group_id" {
+  type        = string
+  description = "bastion security group id"
+}
+
 
 # EKS Variables
 

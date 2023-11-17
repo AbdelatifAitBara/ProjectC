@@ -38,6 +38,10 @@ bm_sg_name       = "Abdelatif-BM-EC2-04-SG"
 bm_sg_descrption = "Abdelatif BM EC2 04 Security Group"
 
 
+# Basation SG_ID: 
+
+bastion_security_group_id= "sg-01ab84734c68629ae"
+
 # EC2 Defaults Values:
 
 ami            = "ami-0694d931cee176e7d"
