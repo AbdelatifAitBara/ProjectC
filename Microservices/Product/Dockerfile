@@ -47,10 +47,6 @@ ENV MYSQL_DATABASE_USER=$MYSQL_DATABASE_USER \
 # Make port 8080 available to the world outside this container
 EXPOSE 8080
 
-# Use HEALTHCHECK instruction
-HEALTHCHECK --interval=30s --timeout=30s --start-period=5s --retries=3 CMD curl --fail http://localhost:8080/ || exit 1
-
-
 # Switch to the non-root user before running the container
 USER phenix
 

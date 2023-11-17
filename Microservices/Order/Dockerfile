@@ -44,9 +44,6 @@ ENV MYSQL_DATABASE_USER=$MYSQL_DATABASE_USER \
     NAME=$NAME \
     DB_PORT=$DB_PORT
 
-# Use HEALTHCHECK instruction
-HEALTHCHECK --interval=30s --timeout=30s --start-period=5s --retries=3 CMD curl --fail http://localhost:9090 || exit 1
-
 
 # Switch to the non-root user before running the container
 USER phenix
