@@ -167,23 +167,6 @@ pipeline {
             }
         }
 
-
-        stage('Deploy Microservices Containers') {
-            when {
-                expression { currentBuild.resultIsBetterOrEqualTo('SUCCESS') }
-            }
-            steps {
-                input message: 'Approve deployment?', ok: 'Deploy'
-                sh "docker-compose -f ${DOCKER_COMPOSE_FILE} down"
-                sh "docker-compose -f ${DOCKER_COMPOSE_FILE} up -d"
-            }
-            post {
-                failure {
-                    echo "Deployment skipped due to earlier test failures"
-                }
-            }
-        }
-
         stage('Trigger GitOps Job') {
             when {
                 expression { currentBuild.resultIsBetterOrEqualTo('SUCCESS') }
