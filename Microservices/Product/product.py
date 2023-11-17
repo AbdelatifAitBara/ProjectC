@@ -133,7 +133,7 @@ def add_product():
 
     # Send the POST request to add the product
     try:
-        response = oauth.post(API_URL, headers=headers, json=product_data)
+        response = oauth.post(API_URL, headers=headers, json=product_data, verify='./cert.pem')
         response.raise_for_status()
     except requests.exceptions.HTTPError as e:
         error_message = e.response.json()['message']
@@ -166,7 +166,7 @@ def get_product(product_id):
 
     # Send the GET request to retrieve the product
     try:
-        response = oauth.get(endpoint, headers=headers)
+        response = oauth.get(endpoint, headers=headers, verify='./cert.pem')
         response.raise_for_status()
     except requests.exceptions.HTTPError as e:
         error_message = e.response.json()['message']
@@ -209,7 +209,7 @@ def update_product(product_id):
 
     # Send the PUT request to update the product
     try:
-        response = oauth.put(endpoint, headers=headers, json=product_data)
+        response = oauth.put(endpoint, headers=headers, json=product_data, verify='./cert.pem')
         response.raise_for_status()
     except requests.exceptions.HTTPError as e:
         error_message = e.response.json()['message']
@@ -239,7 +239,7 @@ def delete_product(product_id):
 
     # Send the DELETE request to delete the product
     try:
-        response = oauth.delete(endpoint, headers=headers)
+        response = oauth.delete(endpoint, headers=headers, verify='./cert.pem')
         response.raise_for_status()
     except requests.exceptions.HTTPError as e:
         error_message = e.response.json()['message']
