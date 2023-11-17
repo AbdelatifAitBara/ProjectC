@@ -35,7 +35,9 @@ pipeline {
 
         stage('Replace Image Tag') {
             steps {
-                sh "sed -i '' 's@\\/customer:\(.*\)@\\/customer:\"${COMMIT}\"@' ${MICROSERVICES_DIR}/customer.yaml"    
+                script {
+                sh "sed -i 's@\\/customer:\\(.*\\)@\\/customer:\"${env.COMMIT}\"@' ${env.MICROSERVICES_DIR}/customer.yaml"
+                }
             }
         }
 
