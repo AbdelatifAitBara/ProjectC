@@ -137,21 +137,6 @@ variable "bm_sg_descrption" {
 }
 
 
-# SG Variabless
-
-# BM Variables:
-
-variable "bm_sg_name" {
-  type        = string
-  description = "sg name for building machine"
-}
-
-
-variable "bm_sg_descrption" {
-  type        = string
-  description = "sg description for building machine"
-}
-
 # EKS Variables
 
 variable "eks-iam-role" {
