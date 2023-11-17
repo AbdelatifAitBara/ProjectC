@@ -12,7 +12,7 @@ output "ec2_ansible_ip" {
 
 # Build Machine
 
-output "ec2_build_ip" {
+output "ec2_build_machine_ip" {
   value = aws_instance.ec2-bm.public_ip
 }
 
