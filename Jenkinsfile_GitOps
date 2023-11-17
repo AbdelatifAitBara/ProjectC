@@ -41,8 +41,10 @@ pipeline {
 
         stage('Commit Changes') {
             steps {
-                sh "git add ."
-                sh "git commit -m 'Updated Images Tags'"
+                dir("${PROJECT_DIR}") {
+                    sh "git add ."
+                    sh "git commit -m 'Update Image Tag'"
+                }
             }
         }
 
