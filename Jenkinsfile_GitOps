@@ -43,7 +43,7 @@ pipeline {
             steps {
                 dir("${PROJECT_DIR}") {
                     sh "git add ."
-                    sh "git commit -m 'Update Image Tag'"
+                    sh "git commit -m 'Update Image Tag --global'"
                 }
             }
         }
