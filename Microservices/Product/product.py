@@ -126,14 +126,14 @@ def add_product():
             return jsonify({'message': f'{field} contains unacceptable characters'}), 400
         
     # Set up the OAuth1Session for authentication
-    oauth = OAuth1Session(client_key=consumer_key, client_secret=consumer_secret, retries=15)
+    oauth = OAuth1Session(client_key=consumer_key, client_secret=consumer_secret)
 
     # Set up the API endpoint and headers
     headers = {'Content-Type': 'application/json'}
 
     # Send the POST request to add the product
     try:
-        response = oauth.post(API_URL, headers=headers, json=product_data)
+        response = oauth.post(API_URL, headers=headers, json=product_data, verify=False)
         response.raise_for_status()
     except requests.exceptions.HTTPError as e:
         error_message = e.response.json()['message']
@@ -158,7 +158,7 @@ def get_product(product_id):
         return jsonify({'message': 'Authentication failed'}), 401
     
     # Set up the OAuth1Session for authentication
-    oauth = OAuth1Session(client_key=consumer_key, client_secret=consumer_secret, retries=15)
+    oauth = OAuth1Session(client_key=consumer_key, client_secret=consumer_secret)
 
     # Set up the API endpoint and headers
     endpoint = f"{API_URL}/{product_id}"
@@ -166,7 +166,7 @@ def get_product(product_id):
 
     # Send the GET request to retrieve the product
     try:
-        response = oauth.get(endpoint, headers=headers)
+        response = oauth.get(endpoint, headers=headers, verify=False)
         response.raise_for_status()
     except requests.exceptions.HTTPError as e:
         error_message = e.response.json()['message']
@@ -201,7 +201,7 @@ def update_product(product_id):
             return jsonify({'message': 'regular_price must be a valid integer or float'}), 400
     
     # Set up the OAuth1Session for authentication
-    oauth = OAuth1Session(client_key=consumer_key, client_secret=consumer_secret, retries=15)
+    oauth = OAuth1Session(client_key=consumer_key, client_secret=consumer_secret)
 
     # Set up the API endpoint and headers
     endpoint = f"{API_URL}/{product_id}"
@@ -209,7 +209,7 @@ def update_product(product_id):
 
     # Send the PUT request to update the product
     try:
-        response = oauth.put(endpoint, headers=headers, json=product_data)
+        response = oauth.put(endpoint, headers=headers, json=product_data, verify=False)
         response.raise_for_status()
     except requests.exceptions.HTTPError as e:
         error_message = e.response.json()['message']
@@ -231,7 +231,7 @@ def delete_product(product_id):
         return jsonify({'message': 'Authentication failed'}), 401
     
     # Set up the OAuth1Session for authentication
-    oauth = OAuth1Session(client_key=consumer_key, client_secret=consumer_secret, retries=15)
+    oauth = OAuth1Session(client_key=consumer_key, client_secret=consumer_secret)
 
     # Set up the API endpoint and headers
     endpoint = f"{API_URL}/{product_id}"
@@ -239,7 +239,7 @@ def delete_product(product_id):
 
     # Send the DELETE request to delete the product
     try:
-        response = oauth.delete(endpoint, headers=headers)
+        response = oauth.delete(endpoint, headers=headers, verify=False)
         response.raise_for_status()
     except requests.exceptions.HTTPError as e:
         error_message = e.response.json()['message']
