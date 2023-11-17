@@ -35,7 +35,7 @@ pipeline {
 
         stage('Replace Image Tag') {
             steps {
-                sh "sed -i 's/abdelatifaitbara\\/customer:*/abdelatifaitbara\\/customer:${COMMIT}/g' ${MICROSERVICES_DIR}/customer.yaml"
+                sh "sed -i 's/abdelatifaitbara\\/customer:*/abdelatifaitbara\\/customer:${parameters.COMMIT}/g' ${MICROSERVICES_DIR}/customer.yaml"
             }
         }
 
@@ -66,6 +66,5 @@ pipeline {
         success {
             echo "Build succeeded: ${currentBuild.result}"
         }
-    }
     }
 }
