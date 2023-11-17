@@ -11,13 +11,16 @@ pipeline {
         string(name: 'COMMIT', defaultValue: env.GIT_COMMIT, description: 'Docker Image Tag')
     }
 
-    stage('Clean Workspace') {
-        steps {
-            cleanWs()
-        }
-    }
+
 
     stages {
+
+
+        stage('Clean Workspace') {
+            steps {
+                cleanWs()
+            }
+        }
         stage('Checkout GitOps Repo') {
             steps {
                 sh "git clone --recursive git@github.com:AbdelatifAitBara/ProjectC-GitOps.git"
