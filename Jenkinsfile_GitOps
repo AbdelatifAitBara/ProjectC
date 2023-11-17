@@ -60,8 +60,14 @@ pipeline {
     }
 
     post {
+        failure {
+            echo "Build failed: ${currentBuild.result}"
+        }
         success {
-        slackSend(color: '#32CD32', message: "Deployment updated with image ${parameters.COMMIT}")
+            echo "Build succeeded: ${currentBuild.result}"
         }
     }
+
+
+
 }
