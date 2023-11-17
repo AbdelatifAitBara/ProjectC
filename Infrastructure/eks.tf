@@ -7,9 +7,6 @@ resource "aws_eks_cluster" "K8sCluster" {
       aws_subnet.PublicSubnet01.id,
       aws_subnet.PublicSubnet02.id
     ]
-
-    endpoint_private_access = true
-    endpoint_public_access  = false
   }
 
   enabled_cluster_log_types = ["api", "audit", "authenticator", "controllerManager", "scheduler"]
