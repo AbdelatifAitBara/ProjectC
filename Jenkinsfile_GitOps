@@ -3,8 +3,12 @@ pipeline {
         label 'Building_Machine'
     }
 
+    environment {
+        MICROSERVICES_DIR = '/home/ubuntu/ProjectC-GitOps/microservices'
+    }   
+
     parameters {
-        string(name: 'IMAGE_TAG', defaultValue: 'latest', description: 'Docker image tag')
+        string(name: 'COMMIT', defaultValue: env.GIT_COMMIT, description: 'Docker Image Tag')
     }
 
     stage('Clean Workspace') {
@@ -22,16 +26,17 @@ pipeline {
 
         stage('Replace Image Tag') {
             steps {
-                sh "sed -i 's/image: .*/image: ${params.IMAGE_TAG}/' deployment.yaml"     
-
-                // Replace tag in any other YAML files
+                sh "cd ProjectC-GitOps"
+                sh "sed -i 's/customer: .*/customer: ${parameters.COMMIT}/' ${MICROSERVICES_DIR}/product.yaml"
+                sh "sed -i 's/order: .*/order: ${parameters.COMMIT}/' ${MICROSERVICES_DIR}/product.yaml"
+                sh "sed -i 's/product: .*/product: ${parameters.COMMIT}/' ${MICROSERVICES_DIR}/customer.yaml"
             }
         }
 
         stage('Commit Changes') {
             steps {
                 sh "git add ."
-                sh "git commit -m 'Updated image tag to ${params.IMAGE_TAG}'"
+                sh "git commit -m 'Updated Images Tags'"
             }
         }
 
@@ -44,7 +49,7 @@ pipeline {
 
     post {
         success {
-        slackSend(color: '#32CD32', message: "Deployment updated with image ${params.IMAGE_TAG}")
+        slackSend(color: '#32CD32', message: "Deployment updated with image ${parameters.COMMIT}")
         }
     }
 }

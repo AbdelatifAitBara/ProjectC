@@ -154,11 +154,12 @@ pipeline {
             }
         }
 
-        stage('Trigger GitOps Pipeline') {
+        stage('Trigger GitOps Job') {
             steps {
-                build(
-                    job: 'GitOps-Pipeline',
-                )
+                build job: 'GitOps', parameters: [
+                string(name: 'TOKEN', value: 'GitOps_Job'),
+                string(name: 'COMMIT', value: env.GIT_COMMIT) 
+                ]  
             }
         }
 
