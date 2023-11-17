@@ -1,12 +1,15 @@
 #!/bin/bash
 sudo apt update
+sudo apt install -y apt-transport-https ca-certificates curl software-properties-common
+#Install Docker
 sudo apt install -y docker.io
 sudo systemctl enable docker
 sudo systemctl start docker
 sudo usermod -aG docker ubuntu
 sudo chmod 666 /var/run/docker.sock
-ssh-keygen -t ed25519 -C "aitbaraabdelatif@outlook.com"
-ssh-keyscan github.com >> ~/.ssh/known_hosts
+
+#Install Java
+
 sudo apt install -y openjdk-11-jdk
 sudo apt install jq -y
 
@@ -15,7 +18,7 @@ sudo cat <<EOF | sudo tee /etc/hostname
 Building-Machine
 EOF
 
-
+#Install Vault
 wget -O- https://apt.releases.hashicorp.com/gpg | sudo gpg --dearmor -o /usr/share/keyrings/hashicorp-archive-keyring.gpg
 echo "deb [signed-by=/usr/share/keyrings/hashicorp-archive-keyring.gpg] https://apt.releases.hashicorp.com $(lsb_release -cs) main" | sudo tee /etc/apt/sources.list.d/hashicorp.list
 sudo apt update && sudo apt install vault
@@ -28,4 +31,3 @@ wget https://github.com/aquasecurity/trivy/releases/latest/download/trivy_latest
 tar xzf trivy_latest_Linux-64bit.tar.gz
 sudo mv trivy /usr/local/bin/
 sudo snap install trivy
-trivy db update
