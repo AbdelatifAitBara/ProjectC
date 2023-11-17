@@ -101,42 +101,53 @@ def add_product():
     product_data = request.json
 
     token = request.headers.get('Authorization')
-
+    
     if not token_authorized(token):
-        return jsonify({'message': 'Authentication failed'}), 401
-
-    required_fields = ['name', 'regular_price', 'description']
+        return jsonify({'message': 'Authentication failed, your token has expired or is invalid'}), 401
+    
+    # Check if required fields are present and not empty
+    required_fields = ['name', 'regular_price', 'description', 'short_description', 'images']
     for field in required_fields:
         if field not in product_data or not product_data[field]:
-            return jsonify({'message': f'{field} is required'}), 400
-
-    try:  
-        regular_price = float(product_data['regular_price'])  
-    except ValueError:
-        return jsonify({'message': 'regular_price must be valid'}), 400
-
-    s = requests.Session()
+            return jsonify({'message': f'{field} is a required field'}), 400
     
-    max_retries = 5
-    retries = 0
+    # Check if regular_price is a valid float or integer
+    try:
+        regular_price = float(product_data['regular_price'])
+        if not isinstance(regular_price, (int, float)):
+            raise ValueError
+    except ValueError:
+        return jsonify({'message': 'regular_price must be a valid integer or float'}), 400
+    
+    # Check for suspicious characters in input fields
+    suspicious_chars = re.compile(r'[&,@,"\',`_,\\\]\[}{=<>\?!#~-]')
+    for field in product_data:
+        if isinstance(product_data[field], str) and suspicious_chars.search(product_data[field]):
+            return jsonify({'message': f'{field} contains unacceptable characters'}), 400
+        
+    # Set up the OAuth1Session for authentication
+    oauth = OAuth1Session(client_key=consumer_key, client_secret=consumer_secret, retries=15)
 
-    while retries < max_retries:
-        try:
-            response = s.post(API_URL, json=product_data)
-            response.raise_for_status()
-            break
-        except requests.exceptions.ConnectionError:
-            retries += 1
-            continue
+    # Set up the API endpoint and headers
+    headers = {'Content-Type': 'application/json'}
 
-    if retries == max_retries:
-        return jsonify({'message': 'Connection errors exceeded'}), 500
+    # Send the POST request to add the product
+    try:
+        response = oauth.post(API_URL, headers=headers, json=product_data)
+        response.raise_for_status()
+    except requests.exceptions.HTTPError as e:
+        error_message = e.response.json()['message']
+        return jsonify({'message': f'Error adding product: {error_message}'}), e.response.status_code
+    except Exception as e:
+        return jsonify({'message': f'Error adding product: {str(e)}'}), 500
 
+    # Handle the response from the WooCommerce API
     if response.status_code == 201:
+        # Extract the product_id from the response body
         product_id = response.json()['id']
-        return jsonify({'message': 'Product added', 'id': product_id}), 201
-    else: 
-        return jsonify({'message': 'Error adding product'}), 500
+        return jsonify({'message': 'Product added successfully.', 'product_id': product_id}), 201
+    else:
+        return jsonify({'message': 'Error adding product.'}), 500
 
 
 @app.route('/product/get_product/<int:product_id>', methods=['GET'])
@@ -147,7 +158,7 @@ def get_product(product_id):
         return jsonify({'message': 'Authentication failed'}), 401
     
     # Set up the OAuth1Session for authentication
-    oauth = OAuth1Session(client_key=consumer_key, client_secret=consumer_secret)
+    oauth = OAuth1Session(client_key=consumer_key, client_secret=consumer_secret, retries=15)
 
     # Set up the API endpoint and headers
     endpoint = f"{API_URL}/{product_id}"
@@ -190,7 +201,7 @@ def update_product(product_id):
             return jsonify({'message': 'regular_price must be a valid integer or float'}), 400
     
     # Set up the OAuth1Session for authentication
-    oauth = OAuth1Session(client_key=consumer_key, client_secret=consumer_secret)
+    oauth = OAuth1Session(client_key=consumer_key, client_secret=consumer_secret, retries=15)
 
     # Set up the API endpoint and headers
     endpoint = f"{API_URL}/{product_id}"
@@ -220,7 +231,7 @@ def delete_product(product_id):
         return jsonify({'message': 'Authentication failed'}), 401
     
     # Set up the OAuth1Session for authentication
-    oauth = OAuth1Session(client_key=consumer_key, client_secret=consumer_secret)
+    oauth = OAuth1Session(client_key=consumer_key, client_secret=consumer_secret, retries=15)
 
     # Set up the API endpoint and headers
     endpoint = f"{API_URL}/{product_id}"
