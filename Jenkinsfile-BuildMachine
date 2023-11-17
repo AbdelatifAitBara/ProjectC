@@ -78,7 +78,7 @@ pipeline {
         stage('Get Git Commit Short Hash') {
             steps {
                 script {
-                    env.GIT_COMMIT = sh(returnStdout: true, script: 'git --git-dir=${PROJECT_DIR}/.git git rev-parse --short HEAD').trim()
+                    env.GIT_COMMIT = sh(returnStdout: true, script: 'git --git-dir=${PROJECT_DIR}/.git rev-parse --short HEAD').trim()
                 }
             }
         }
