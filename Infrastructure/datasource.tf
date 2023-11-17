@@ -4,7 +4,7 @@ data "aws_instance" "ec2_vault" {
 
 data "aws_instance" "ec2_bastion" {
   filter {
-    name   = "tag:Name"
+    name   = "tags:Name"
     values = ["Abdelatif-EC2-00"]
   }
 
