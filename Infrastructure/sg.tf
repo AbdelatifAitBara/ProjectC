@@ -183,11 +183,11 @@ resource "aws_security_group" "alb-sg" {
 
 
 resource "aws_security_group_rule" "allow_alb_to_eks" {
-  type              = "ingress"
-  from_port         = 32000
-  to_port           = 32001
-  protocol          = "tcp"
+  type                     = "ingress"
+  from_port                = 32000
+  to_port                  = 32001
+  protocol                 = "tcp"
   source_security_group_id = aws_security_group.alb-sg.id
-  security_group_id     = aws_eks_cluster.K8sCluster.vpc_config[0].cluster_security_group_id
+  security_group_id        = aws_eks_cluster.K8sCluster.vpc_config[0].cluster_security_group_id
 }
 
