@@ -29,7 +29,6 @@ pipeline {
 
         stage('Replace Image Tag') {
             steps {
-                sh "cd ProjectC-GitOps"
                 sh "sed -i 's/customer: .*/customer: ${parameters.COMMIT}/' ${MICROSERVICES_DIR}/product.yaml"
                 sh "sed -i 's/order: .*/order: ${parameters.COMMIT}/' ${MICROSERVICES_DIR}/product.yaml"
                 sh "sed -i 's/product: .*/product: ${parameters.COMMIT}/' ${MICROSERVICES_DIR}/customer.yaml"
