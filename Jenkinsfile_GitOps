@@ -29,7 +29,7 @@ pipeline {
         stage('Clone Git Repository') {
             steps {
                 sh "rm -rf ${PROJECT_DIR}"
-                sh "git -C ${WORKSPACE} clone -b Dev --recursive git@github.com:AbdelatifAitBara/ProjectC-GitOps.git"
+                sh "git -C ${WORKSPACE} clone -b main --recursive git@github.com:AbdelatifAitBara/ProjectC-GitOps.git"
             }
         }
 
