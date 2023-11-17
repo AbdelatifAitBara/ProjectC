@@ -4,7 +4,10 @@ pipeline {
     }
 
     environment {
+        WORKSPACE = '/home/ubuntu/'
+        PROJECT_DIR = '/home/ubuntu/ProjectC-GitOps'
         MICROSERVICES_DIR = '/home/ubuntu/ProjectC-GitOps/microservices'
+
     }   
 
     parameters {
@@ -21,9 +24,12 @@ pipeline {
                 cleanWs()
             }
         }
-        stage('Checkout GitOps Repo') {
+
+        
+        stage('Clone Git Repository') {
             steps {
-                sh "git clone --recursive git@github.com:AbdelatifAitBara/ProjectC-GitOps.git"
+                sh "rm -rf ${PROJECT_DIR}"
+                sh "git -C ${WORKSPACE} clone -b Dev --recursive git@github.com:AbdelatifAitBara/ProjectC.git"
             }
         }
 
