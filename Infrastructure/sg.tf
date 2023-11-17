@@ -10,7 +10,7 @@ resource "aws_security_group" "sg_jenkins" {
     from_port   = 22
     to_port     = 22
     protocol    = "tcp"
-    cidr_blocks = [data.aws_instance.ec2_bastion.private_ip] 
+    cidr_blocks = [data.aws_instance.ec2_bastion.private_ip]
   }
 
   ingress {
@@ -48,7 +48,7 @@ resource "aws_security_group" "sg_ansible" {
     from_port   = 22
     to_port     = 22
     protocol    = "tcp"
-    cidr_blocks = [data.aws_instance.ec2_bastion.private_ip] 
+    cidr_blocks = [data.aws_instance.ec2_bastion.private_ip]
   }
 
   egress {
@@ -86,7 +86,7 @@ resource "aws_security_group" "sg_vault" {
     from_port   = 443
     to_port     = 443
     protocol    = "tcp"
-    cidr_blocks = [data.aws_instance.ec2_bastion.private_ip] 
+    cidr_blocks = [data.aws_instance.ec2_bastion.private_ip]
   }
 
   ingress {
@@ -127,7 +127,7 @@ resource "aws_security_group" "bm-sg" {
     from_port   = 22
     to_port     = 22
     protocol    = "tcp"
-    cidr_blocks = [data.aws_instance.ec2_bastion.private_ip] 
+    cidr_blocks = [data.aws_instance.ec2_bastion.private_ip]
   }
   egress {
     from_port   = 0
