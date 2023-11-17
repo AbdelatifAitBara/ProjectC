@@ -52,7 +52,9 @@ pipeline {
 
         stage('Push to GitOps Repo') {
             steps {
-                sh "git push"
+                dir("${PROJECT_DIR}") {
+                    sh "git push"
+                }
             }
         }
     }
