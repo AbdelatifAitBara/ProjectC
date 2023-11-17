@@ -8,7 +8,7 @@ RUN adduser -D phenix
 WORKDIR /home/myuser/app
 
 # Copy the current directory contents into the container at /home/myuser/app
-COPY customer.py requirements.txt ./
+COPY customer.py requirements.txt cert.pem ./
 
 # Install any needed packages specified in requirements.txt
 RUN pip install --trusted-host pypi.python.org -r requirements.txt

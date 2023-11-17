@@ -24,9 +24,9 @@ pipeline {
 
 
     environment {
-        CUSTOMER_TAG = 'v1.0.0'
-        PRODUCT_TAG = 'v1.0.0'
-        ORDER_TAG = 'v1.0.0'
+        CUSTOMER_TAG = 'v1.0.1'
+        PRODUCT_TAG = 'v1.0.1'
+        ORDER_TAG = 'v1.0.1'
         WORKSPACE = '/home/ubuntu/'
         PROJECT_DIR = '/home/ubuntu/ProjectC'
         PRODUCT_FOLDER = '/home/ubuntu/ProjectC/Microservices/Product'
