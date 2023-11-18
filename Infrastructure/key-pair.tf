@@ -39,7 +39,7 @@ resource "aws_s3_bucket_policy" "abdelatif-s3-policy" {
       "Resource": "arn:aws:s3:::abdelatif-s3/Abdelatif-Key.pem",  
       "Condition": {
         "IpAddress": {
-          "aws:SourceIp": "${data.aws_instance.ec2_ansible.private_ip}"
+          "aws:SourceIp": "${format("%s/32", data.aws_instance.ec2_ansible.private_ip)}"
         }
       }
     }
