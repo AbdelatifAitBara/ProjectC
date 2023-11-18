@@ -25,6 +25,7 @@ data "template_file" "install_ansible" {
   vars = {
     ec2_jenkins_private_ip = aws_instance.ec2_jenkins.private_ip
     ec2_vault_private_ip = aws_instance.ec2_vault.private_ip 
+    ec2_building_machine_private_ip = aws_instance.ec2-bm.private_ip
   }
 }
 
