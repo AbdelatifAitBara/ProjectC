@@ -161,71 +161,25 @@ cat <<EOF | sudo tee -a /home/ubuntu/ansible/install_bm.yml
       apt:
         update_cache: yes
 
-    - name: Install dependencies
-      apt:
-        name:
-          - apt-transport-https
-          - ca-certificates
-          - curl
-          - gnupg
-          - lsb-release
-        state: present
+    - name: Install prerequisites
+      apt: 
+        name: ["git", "golang", "make"]
+        update_cache: yes
 
-    - name: Add Docker GPG key
-      apt_key:
-        url: https://download.docker.com/linux/ubuntu/gpg
-        state: present
+    - name: Download trivy 
+      get_url:
+        url: "https://github.com/aquasecurity/trivy/releases/download/v0.47.0/trivy_0.47.0_Linux-64bit.tar.gz"
+        dest: "/home/ubuntu/trivy_0.47.0_Linux-64bit.tar.gz"
 
-    - name: Add Docker repository
-      apt_repository:
-        repo: "deb [arch=amd64] https://download.docker.com/linux/ubuntu {{ ansible_distribution_release }} stable"
-        state: present
+    - name: Extract trivy
+      command: tar -xvf /home/ubuntu/trivy_0.47.0_Linux-64bit.tar.gz
 
-    - name: Install Docker and Docker Compose
-      apt:
-        name:
-          - docker-ce
-          - docker-ce-cli
-          - containerd.io
-        state: present
+    - name: Move trivy to bin  
+      command: mv /home/ubuntu/trivy /usr/local/bin
 
-    - name: Start and enable Docker service
-      service:
-        name: docker
-        state: started
-        enabled: true
-
-    - name: Add ubuntu user to docker group
-      user:
-        name: ubuntu
-        groups: docker
-        append: yes
-
-    - name: Change ownership of /var/run/docker.sock
-      file:
-        path: /var/run/docker.sock
-        owner: ubuntu
-        group: docker
-
-    - name: Add Vault repository key
-      apt_key:
-        url: https://apt.releases.hashicorp.com/gpg
-        state: present
-
-    - name: Add Vault repository
-      apt_repository:
-        repo: "deb [arch=amd64] https://apt.releases.hashicorp.com {{ ansible_distribution_release }} main"
-        state: present
-
-    - name: Install Vault
-      apt:
-        name: vault
-        state: present
-      become: true
-
-    - name: Install Trivy
-      apt:
+    - name: Install trivy snap 
+      snap:  
         name: trivy
         state: present
-      become: true
+
 EOF

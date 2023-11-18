@@ -40,7 +40,7 @@ resource "aws_instance" "ec2_ansible" {
     inline = ["echo 'Wait until SSH is ready'",
     "sleep 120s",
     "sudo chmod 400 /home/ubuntu/ansible/key.pem",
-    "cd /home/ubuntu/ansible && sudo ansible-playbook install_jenkins.yml -i inventory.ini --ssh-common-args='-o StrictHostKeyChecking=no'"
+    "cd /home/ubuntu/ansible && sudo ansible-playbook install_jenkins.yml install_vault.yml install_bm.yml -i inventory.ini --ssh-common-args='-o StrictHostKeyChecking=no'"
     ]
 
 
