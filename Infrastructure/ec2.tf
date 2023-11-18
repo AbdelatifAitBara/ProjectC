@@ -8,19 +8,6 @@ resource "aws_instance" "ec2_jenkins" {
   key_name               = aws_key_pair.Abdelatif-KeyPair-AWS.key_name
 
 
-  connection {
-    type = "ssh"
-    user        = "ubuntu"
-    private_key = "${file(var.private_key_path)}"
-    host = data.aws_instance.ec2_ansible.private_ip
-  }
-
-  provisioner "remote-exec" {
-    inline = [
-      "cd /home/ubuntu/ansible && sudo ansible-playbook install_jenkins.yml -i inventory.ini --ssh-common-args='-o StrictHostKeyChecking=no'"
-    ]
-  }
-
   tags = {
     Name     = "Abdelatif-EC2-01"
     owner    = local.tags.owner
