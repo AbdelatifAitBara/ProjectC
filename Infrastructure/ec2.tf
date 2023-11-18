@@ -15,7 +15,7 @@ resource "aws_instance" "ec2_jenkins" {
     connection {
       type        = "ssh"
       user        = "ubuntu"
-      private_key = file("/home/ubuntu/ProjectC/Infrastructure/Abdelatif-Key.pem")
+      private_key = local_file.Abdealtif-KeyPair-Local.content
       host        = self.public_ip
     }
   }
