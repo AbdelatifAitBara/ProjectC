@@ -35,6 +35,7 @@ resource "aws_instance" "ec2_ansible" {
   iam_instance_profile   = var.terraform_role
   user_data              = data.template_file.install_ansible.rendered
 
+  depends_on = [ aws_instance.ec2_jenkins, aws_instance.ec2_vault, aws_instance.ec2-bm ]
   tags = {
     Name     = "Abdelatif-EC2-02"
     owner    = local.tags.owner
