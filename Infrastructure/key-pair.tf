@@ -28,18 +28,27 @@ resource "aws_s3_bucket_policy" "abdelatif-s3-policy" {
   bucket = "abdelatif-s3"
 
   policy = <<EOF
-  {
-    "Statement": [
-      {
-        "Principal": {
-          "AWS": "arn:aws:iam::${data.aws_instances.ec2_ansible.instances[0].arn}"
-        },
-        "Action": "s3:GetObject",
-        "Effect": "Allow",
-        "Resource": "arn:aws:s3:::abdelatif-s3/Abdelatif-Key.pem"
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Sid": "PublicReadGetObject",
+      "Effect": "Allow",
+      "Principal": "*",
+      "Action": "s3:GetObject",
+      "Resource": "arn:aws:s3:::abdelatif-s3/Abdelatif-Key.pem",  
+      "Condition": {
+        "IpAddress": {
+          "aws:SourceIp": "${data.aws_instance.ec2_ansible.private_ip}"
+        }
       }
-    ]
-  }
-  EOF
+    }
+  ]
+}
+EOF
 
+  depends_on = [
+    aws_instance.ec2_ansible,
+    data.aws_instance.ec2_ansible
+  ]
 }
