@@ -86,11 +86,6 @@ variable "jenkins_type" {
   description = "EC 2 instance for jenkins"
 }
 
-variable "private_key_path" {
-  type        = string
-  description = "private key path"
-}
-
 
 
 

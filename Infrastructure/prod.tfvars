@@ -51,7 +51,6 @@ volume_type    = "gp3"
 volume_size    = 8
 ec2_key_name   = "Abdelatif-KeyPair"
 terraform_role = "terraform-iam-role"
-private_key_path = "/home/ubuntu/ProjectC/Infrastructure/Abdelatif-Key.pem"
 
 
 # EKS Defaults Values:
