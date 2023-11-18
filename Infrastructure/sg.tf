@@ -51,6 +51,15 @@ resource "aws_security_group" "sg_ansible" {
     security_groups = [data.aws_security_group.bastion_sg.id]
   }
 
+  ingress {
+    from_port   = 443
+    to_port     = 443 
+    protocol    = "tcp"
+    description = "HTTPS from self"
+
+    self = true 
+  }
+
   egress {
     from_port   = 0
     to_port     = 0
