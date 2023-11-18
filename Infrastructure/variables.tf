@@ -4,16 +4,48 @@ variable "vpc_id" {
   description = "abdelatif vpc id"
 }
 
-variable "public_subnet_1" {
+variable "igw_id" {
   type        = string
-  description = "public subnet a"
+  description = "igw id"
 }
 
-variable "private_subnet_1" {
+
+# Network Variables
+
+variable "cidr_block_PublicSubnet01" {
   type        = string
-  description = "private subnet 1"
+  description = "cidr block for PublicSubnet01"
 }
 
+variable "cidr_block_PublicSubnet02" {
+  type        = string
+  description = "cidr block for PublicSubnet02"
+}
+
+variable "cidr_block_PrivateSubnet01" {
+  type        = string
+  description = "cidr block for PrivateSubnet01"
+}
+
+variable "cidr_block_PrivateSubnet02" {
+  type        = string
+  description = "cidr block for PrivateSubnet02"
+}
+
+variable "az-a" {
+  type        = string
+  description = "eu-west-1a az"
+}
+
+variable "az-b" {
+  type        = string
+  description = "eu-west-1b az"
+}
+
+variable "ngw-vpc-b" {
+  type        = string
+  description = "ngw id of VPC-B"
+}
 
 
 # EC2 Variables
@@ -47,6 +79,11 @@ variable "ec2_key_name" {
 variable "terraform_role" {
   type        = string
   description = "role for terraform"
+}
+
+variable "jenkins_type" {
+  type        = string
+  description = "EC 2 instance for jenkins"
 }
 
 
@@ -91,7 +128,7 @@ variable "sg_vault_descrption" {
 }
 
 
-# BM Variables:
+# BM SG Variables:
 
 variable "bm_sg_name" {
   type        = string
@@ -104,19 +141,25 @@ variable "bm_sg_descrption" {
   description = "sg description for building machine"
 }
 
-# Network Variables
-
-variable "cidr_block_PublicSubnet01" {
+variable "bastion_security_group_id" {
   type        = string
-  description = "cidr block for PublicSubnet01"
+  description = "bastion security group id"
 }
 
-variable "az-a" {
+
+# EKS Variables
+
+variable "eks-iam-role" {
   type        = string
-  description = "eu-west-1a az"
+  description = "iam role for eks cluster"
 }
 
-variable "igw_id" {
+variable "node-iam-role" {
   type        = string
-  description = "igw id"
+  description = "iam role for nodes"
+}
+
+variable "eks_cluster_name" {
+  type        = string
+  description = "name for eks cluster"
 }

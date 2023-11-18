@@ -1,0 +1,652 @@
+{
+	"info": {
+		"_postman_id": "f7d22dd6-76c4-4ea5-8008-293758ea299a",
+		"name": "Project C Abdelatif",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "31066389"
+	},
+	"item": [
+		{
+			"name": "Customers",
+			"item": [
+				{
+					"name": "GENERATE TOKEN",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"consumer_secret\": \"cs_88fc6a9e9ea0dff1ddc7ae2a1cc16a9ab6a4b995\"\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://projetc.abdelatif-aitbara.link/customer/customer_token",
+							"protocol": "https",
+							"host": [
+								"projetc",
+								"abdelatif-aitbara",
+								"link"
+							],
+							"path": [
+								"customer",
+								"customer_token"
+							]
+						},
+						"description": "This should return a list of items, each in JSON format."
+					},
+					"response": []
+				},
+				{
+					"name": "ADD CUSTOMER",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3MDAyMTI5MTEsImlhdCI6MTcwMDIxMjc5MSwic3ViIjoiY3NfODhmYzZhOWU5ZWEwZGZmMWRkYzdhZTJhMWNjMTZhOWFiNmE0Yjk5NSJ9.3L14gY2jC9YM470lfyQKya3EoxUMFS8mtYxIJt4HcyA",
+								"type": "default"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\": \"abdel21@example.com\",\r\n    \"first_name\": \"Abdel\",\r\n    \"last_name\": \"Phenix\",\r\n    \"username\": \"abdelatif\",\r\n    \"password\":\"password\",\r\n    \"billing\": {\r\n        \"first_name\": \"John\",\r\n        \"last_name\": \"Doe\",\r\n        \"company\": \"\",\r\n        \"address_1\": \"969 Market\",\r\n        \"address_2\": \"\",\r\n        \"city\": \"San Francisco\",\r\n        \"state\": \"CA\",\r\n        \"postcode\": \"94103\",\r\n        \"country\": \"US\",\r\n        \"email\": \"john.doe@example.com\",\r\n        \"phone\": \"(555) 555-5555\"\r\n    },\r\n    \"shipping\": {\r\n        \"first_name\": \"John\",\r\n        \"last_name\": \"Doe\",\r\n        \"company\": \"\",\r\n        \"address_1\": \"969 Market\",\r\n        \"address_2\": \"\",\r\n        \"city\": \"San Francisco\",\r\n        \"state\": \"CA\",\r\n        \"postcode\": \"94103\",\r\n        \"country\": \"US\"\r\n    }\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://projetc.abdelatif-aitbara.link/customer/add_customer",
+							"protocol": "https",
+							"host": [
+								"projetc",
+								"abdelatif-aitbara",
+								"link"
+							],
+							"path": [
+								"customer",
+								"add_customer"
+							]
+						},
+						"description": "This should return a list of items, each in JSON format."
+					},
+					"response": []
+				},
+				{
+					"name": "GET CUSTOMER",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJleHAiOjE2OTQyNjkzNzAsImlhdCI6MTY5NDI2OTI1MCwic3ViIjoiY3NfNjBlYWEzZDIyZDE2MWVmMDc3ZGZmNGFmYWYzZDA0YWQ3YmYzMmUxMiJ9.RbmflhbtdP4UQ8bQltESIY5Pi_1e7trYlymbdhpO5ss",
+								"type": "default"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"name\": \"Product3\",\r\n  \"type\": \"simple\",\r\n  \"regular_price\": \"69\",\r\n  \"short_description\": \"Expérience cinématographique : image 4K Ultra HD aux couleurs éclatantes avec prise en charge des technologies Dolby Vision, HDR et HDR10+.\",\r\n  \"description\": \"Si vous avez un routeur Wi-Fi 6, nous vous recommandons Fire TV Stick 4K Max.Fire TV Stick 4K est compatible avec les TV HD et 4K UHD. Le streaming 4K nécessite une TV 4K UHD et du contenu 4K disponible.L'accès au son Dolby Atmos est disponible sur une sélection de titres Prime Video et Disney+ lorsque vous êtes connecté(e) à un appareil compatible. Les boutons des applications peuvent varier.\",\r\n  \"images\": [\r\n    {\r\n      \"src\": \"https://m.media-amazon.com/images/I/61ixhTXoScL._AC_SX679_.jpg\"\r\n    }\r\n  ]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://projetc.abdelatif-aitbara.link/customer/add_customer",
+							"protocol": "https",
+							"host": [
+								"projetc",
+								"abdelatif-aitbara",
+								"link"
+							],
+							"path": [
+								"customer",
+								"add_customer"
+							]
+						},
+						"description": "This should return a list of items, each in JSON format."
+					},
+					"response": []
+				},
+				{
+					"name": "DELETE CUSTOMER",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3MDAyMTQwMTYsImlhdCI6MTcwMDIxMzg5Niwic3ViIjoiY3NfODhmYzZhOWU5ZWEwZGZmMWRkYzdhZTJhMWNjMTZhOWFiNmE0Yjk5NSJ9.DxkS9OnIHISXP_ChUXWrjK0SLXZL5OqVJtNwZI6w2Pk",
+								"type": "default"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"force\": true,\r\n  \"reassign\": 3\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://projetc.abdelatif-aitbara.link/customer/delete_user/3",
+							"protocol": "https",
+							"host": [
+								"projetc",
+								"abdelatif-aitbara",
+								"link"
+							],
+							"path": [
+								"customer",
+								"delete_user",
+								"3"
+							]
+						},
+						"description": "This should return a list of items, each in JSON format."
+					},
+					"response": []
+				},
+				{
+					"name": "UPDATE CUSTOMER",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3MDAyMTM5MzksImlhdCI6MTcwMDIxMzgxOSwic3ViIjoiY3NfODhmYzZhOWU5ZWEwZGZmMWRkYzdhZTJhMWNjMTZhOWFiNmE0Yjk5NSJ9.AL6Rpk4VEqpOoY-ADEN0y-rhE6wS0Ss27uKU5pPgnoo",
+								"type": "default"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\": \"abdel21@example.com\",\r\n    \"first_name\": \"Abdelatif\",\r\n    \"last_name\": \"Phenix\",\r\n    \"username\": \"abdelatif\",\r\n    \"password\":\"password\",\r\n    \"billing\": {\r\n        \"first_name\": \"John\",\r\n        \"last_name\": \"Doe\",\r\n        \"company\": \"\",\r\n        \"address_1\": \"969 Market\",\r\n        \"address_2\": \"\",\r\n        \"city\": \"San Francisco\",\r\n        \"state\": \"CA\",\r\n        \"postcode\": \"94103\",\r\n        \"country\": \"US\",\r\n        \"email\": \"john.doe@example.com\",\r\n        \"phone\": \"(555) 555-5555\"\r\n    },\r\n    \"shipping\": {\r\n        \"first_name\": \"John\",\r\n        \"last_name\": \"Doe\",\r\n        \"company\": \"\",\r\n        \"address_1\": \"969 Market\",\r\n        \"address_2\": \"\",\r\n        \"city\": \"San Francisco\",\r\n        \"state\": \"CA\",\r\n        \"postcode\": \"94103\",\r\n        \"country\": \"US\"\r\n    }\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://projetc.abdelatif-aitbara.link/customer/update_user/2",
+							"protocol": "https",
+							"host": [
+								"projetc",
+								"abdelatif-aitbara",
+								"link"
+							],
+							"path": [
+								"customer",
+								"update_user",
+								"2"
+							]
+						},
+						"description": "This should return a list of items, each in JSON format."
+					},
+					"response": []
+				},
+				{
+					"name": "GET ALL  CUSTOMERS",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3MDAyMTM5NzksImlhdCI6MTcwMDIxMzg1OSwic3ViIjoiY3NfODhmYzZhOWU5ZWEwZGZmMWRkYzdhZTJhMWNjMTZhOWFiNmE0Yjk5NSJ9.mkPHiwcrfGxje_5M_9-K-U_uqquV4YLfzWmQObHY96M",
+								"type": "default"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"name\": \"Product3\",\r\n  \"type\": \"simple\",\r\n  \"regular_price\": \"69\",\r\n  \"short_description\": \"Expérience cinématographique : image 4K Ultra HD aux couleurs éclatantes avec prise en charge des technologies Dolby Vision, HDR et HDR10+.\",\r\n  \"description\": \"Si vous avez un routeur Wi-Fi 6, nous vous recommandons Fire TV Stick 4K Max.Fire TV Stick 4K est compatible avec les TV HD et 4K UHD. Le streaming 4K nécessite une TV 4K UHD et du contenu 4K disponible.L'accès au son Dolby Atmos est disponible sur une sélection de titres Prime Video et Disney+ lorsque vous êtes connecté(e) à un appareil compatible. Les boutons des applications peuvent varier.\",\r\n  \"images\": [\r\n    {\r\n      \"src\": \"https://m.media-amazon.com/images/I/61ixhTXoScL._AC_SX679_.jpg\"\r\n    }\r\n  ]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://projetc.abdelatif-aitbara.link/customer/get_users",
+							"protocol": "https",
+							"host": [
+								"projetc",
+								"abdelatif-aitbara",
+								"link"
+							],
+							"path": [
+								"customer",
+								"get_users"
+							]
+						},
+						"description": "This should return a list of items, each in JSON format."
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Products",
+			"item": [
+				{
+					"name": "GENERATE TOKEN",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"consumer_secret\": \"cs_88fc6a9e9ea0dff1ddc7ae2a1cc16a9ab6a4b995\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://projetc.abdelatif-aitbara.link/product/product_token",
+							"protocol": "https",
+							"host": [
+								"projetc",
+								"abdelatif-aitbara",
+								"link"
+							],
+							"path": [
+								"product",
+								"product_token"
+							]
+						},
+						"description": "This should return a list of items, each in JSON format."
+					},
+					"response": []
+				},
+				{
+					"name": "ADD PRODUCT",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3MDAyMTI5ODAsImlhdCI6MTcwMDIxMjg2MCwic3ViIjoiY3NfODhmYzZhOWU5ZWEwZGZmMWRkYzdhZTJhMWNjMTZhOWFiNmE0Yjk5NSJ9.EKRAghxQe2pafGQHe6nxFyOpMwkVQQUpY5P4rK7DDNI",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"name\": \"The Legend of Zelda 2 | Tears of the Kingdom\",\r\n  \"type\": \"simple\",\r\n  \"regular_price\": \"69.99\",\r\n  \"short_description\": \"The Legend of Zelda | Tears of the Kingdom\",\r\n  \"description\": \"The Legend of Zelda Tears of the Kingdom The Legend of Zelda Tears of the Kingdom The Legend of Zelda  Tears of the Kingdom\",\r\n  \"images\": [\r\n    {\r\n      \"src\": \"https://m.media-amazon.com/images/W/MEDIAX_792452-T1/images/I/81uIdB9nHdL._AC_SL1500_.jpg\"\r\n    }\r\n  ]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://projetc.abdelatif-aitbara.link/product/add_product",
+							"protocol": "https",
+							"host": [
+								"projetc",
+								"abdelatif-aitbara",
+								"link"
+							],
+							"path": [
+								"product",
+								"add_product"
+							]
+						},
+						"description": "This should return a list of items, each in JSON format."
+					},
+					"response": []
+				},
+				{
+					"name": "GET PRODUCT",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3MDAyMTA1MzMsImlhdCI6MTcwMDIxMDQxMywic3ViIjoiY3NfODhmYzZhOWU5ZWEwZGZmMWRkYzdhZTJhMWNjMTZhOWFiNmE0Yjk5NSJ9.3ULhLmWmiUPsrmxlGDYQ7Gy8pEvylRXEt1n_u80lljE",
+								"type": "default"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://projetc.abdelatif-aitbara.link/product/get_product/29",
+							"protocol": "https",
+							"host": [
+								"projetc",
+								"abdelatif-aitbara",
+								"link"
+							],
+							"path": [
+								"product",
+								"get_product",
+								"29"
+							]
+						},
+						"description": "This should return a list of items, each in JSON format."
+					},
+					"response": []
+				},
+				{
+					"name": "DELETE PRODUCT",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3MDAyMTE4NDcsImlhdCI6MTcwMDIxMTcyNywic3ViIjoiY3NfODhmYzZhOWU5ZWEwZGZmMWRkYzdhZTJhMWNjMTZhOWFiNmE0Yjk5NSJ9.oG4IsHZj9ejRmMPh_tAwsiVurq4HqPTLvSyyf3Vl5lQ",
+								"type": "default"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://projetc.abdelatif-aitbara.link/product/delete_product/34",
+							"protocol": "https",
+							"host": [
+								"projetc",
+								"abdelatif-aitbara",
+								"link"
+							],
+							"path": [
+								"product",
+								"delete_product",
+								"34"
+							]
+						},
+						"description": "This should return a list of items, each in JSON format."
+					},
+					"response": []
+				},
+				{
+					"name": "UPDATE PRODUCT",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3MDAyMTE4NDcsImlhdCI6MTcwMDIxMTcyNywic3ViIjoiY3NfODhmYzZhOWU5ZWEwZGZmMWRkYzdhZTJhMWNjMTZhOWFiNmE0Yjk5NSJ9.oG4IsHZj9ejRmMPh_tAwsiVurq4HqPTLvSyyf3Vl5lQ",
+								"type": "default"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"name\": \"The Legend of Zelda 2 | Tears of the Kingdom LA\",\r\n  \"type\": \"simple\",\r\n  \"regular_price\": \"999.99\",\r\n  \"short_description\": \"The Legend of Zelda | Tears of the Kingdom\",\r\n  \"description\": \"The Legend of Zelda Tears of the Kingdom The Legend of Zelda Tears of the Kingdom The Legend of Zelda  Tears of the Kingdom\",\r\n  \"images\": [\r\n    {\r\n      \"src\": \"https://m.media-amazon.com/images/W/MEDIAX_792452-T1/images/I/81uIdB9nHdL._AC_SL1500_.jpg\"\r\n    }\r\n  ]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://projetc.abdelatif-aitbara.link/product/update_product/34",
+							"protocol": "https",
+							"host": [
+								"projetc",
+								"abdelatif-aitbara",
+								"link"
+							],
+							"path": [
+								"product",
+								"update_product",
+								"34"
+							]
+						},
+						"description": "This should return a list of items, each in JSON format."
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Orders",
+			"item": [
+				{
+					"name": "GENERATE TOKEN",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"consumer_secret\": \"cs_88fc6a9e9ea0dff1ddc7ae2a1cc16a9ab6a4b995\"\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://projetc.abdelatif-aitbara.link/order/order_token",
+							"protocol": "https",
+							"host": [
+								"projetc",
+								"abdelatif-aitbara",
+								"link"
+							],
+							"path": [
+								"order",
+								"order_token"
+							]
+						},
+						"description": "This should return a list of items, each in JSON format."
+					},
+					"response": []
+				},
+				{
+					"name": "ADD ORDER",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3MDAyMTMwNDIsImlhdCI6MTcwMDIxMjkyMiwic3ViIjoiY3NfODhmYzZhOWU5ZWEwZGZmMWRkYzdhZTJhMWNjMTZhOWFiNmE0Yjk5NSJ9.5J1TdDfqjdVHPr7OCbNUvQcpjeZNczkcLky39VnnWc4",
+								"type": "default"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"customer_id\":2, \r\n  \"line_items\": [\r\n    {\r\n      \"product_id\": 37,\r\n      \"quantity\": 5\r\n    }\r\n  ],\r\n  \"billing\": {\r\n    \"first_name\": \"Abdelatif\",\r\n    \"last_name\": \"Ait\",\r\n    \"address_1\": \"123 Main St\",\r\n    \"address_2\": \"\",\r\n    \"city\": \"Anytown\",\r\n    \"state\": \"CA\",\r\n    \"postcode\": \"12345\",\r\n    \"country\": \"US\",\r\n    \"email\": \"john.doe@example.com\",\r\n    \"phone\": \"(555) 555-5555\"\r\n  },\r\n  \"shipping\": {\r\n    \"first_name\": \"Abdelatif\",\r\n    \"last_name\": \"Ait\",\r\n    \"address_1\": \"123 Main St\",\r\n    \"address_2\": \"\",\r\n    \"city\": \"Anytown\",\r\n    \"state\": \"CA\",\r\n    \"postcode\": \"12345\",\r\n    \"country\": \"US\"\r\n  }\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://projetc.abdelatif-aitbara.link/order/add_order",
+							"protocol": "https",
+							"host": [
+								"projetc",
+								"abdelatif-aitbara",
+								"link"
+							],
+							"path": [
+								"order",
+								"add_order"
+							]
+						},
+						"description": "This should return a list of items, each in JSON format."
+					},
+					"response": []
+				},
+				{
+					"name": "UPDATE ORDER",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3MDAyMTQxNDcsImlhdCI6MTcwMDIxNDAyNywic3ViIjoiY3NfODhmYzZhOWU5ZWEwZGZmMWRkYzdhZTJhMWNjMTZhOWFiNmE0Yjk5NSJ9.dBY59bKHYdNavYsEws5n0G4EMcoxDg8KZh9ZT9GgzXk",
+								"type": "default"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"customer_id\":2, \r\n  \"line_items\": [\r\n    {\r\n      \"product_id\": 37,\r\n      \"quantity\": 6\r\n    }\r\n  ],\r\n  \"billing\": {\r\n    \"first_name\": \"Abdelatif\",\r\n    \"last_name\": \"Ait\",\r\n    \"address_1\": \"123 Main St\",\r\n    \"address_2\": \"\",\r\n    \"city\": \"Anytown\",\r\n    \"state\": \"CA\",\r\n    \"postcode\": \"12345\",\r\n    \"country\": \"US\",\r\n    \"email\": \"john.doe@example.com\",\r\n    \"phone\": \"(555) 555-5555\"\r\n  },\r\n  \"shipping\": {\r\n    \"first_name\": \"Abdelatif\",\r\n    \"last_name\": \"Ait\",\r\n    \"address_1\": \"123 Main St\",\r\n    \"address_2\": \"\",\r\n    \"city\": \"Anytown\",\r\n    \"state\": \"CA\",\r\n    \"postcode\": \"12345\",\r\n    \"country\": \"US\"\r\n  }\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://projetc.abdelatif-aitbara.link/order/update_order/38",
+							"protocol": "https",
+							"host": [
+								"projetc",
+								"abdelatif-aitbara",
+								"link"
+							],
+							"path": [
+								"order",
+								"update_order",
+								"38"
+							]
+						},
+						"description": "This should return a list of items, each in JSON format."
+					},
+					"response": []
+				},
+				{
+					"name": "DELETE ORDER",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3MDAyMTQyMTMsImlhdCI6MTcwMDIxNDA5Mywic3ViIjoiY3NfODhmYzZhOWU5ZWEwZGZmMWRkYzdhZTJhMWNjMTZhOWFiNmE0Yjk5NSJ9.UNAp1AvPQsk1Il5zHa7g1WwJhBrph9a_1UFa7d8oY74",
+								"type": "default"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"customer_id\": 1,\r\n  \"line_items\": [\r\n    {\r\n      \"product_id\": 25,\r\n      \"quantity\": 2\r\n    }\r\n  ],\r\n  \"billing\": {\r\n    \"first_name\": \"John\",\r\n    \"last_name\": \"Doe\",\r\n    \"address_1\": \"123 Main St\",\r\n    \"address_2\": \"\",\r\n    \"city\": \"Anytown\",\r\n    \"state\": \"CA\",\r\n    \"postcode\": \"12345\",\r\n    \"country\": \"US\",\r\n    \"email\": \"john.doe@example.com\",\r\n    \"phone\": \"(555) 555-5555\"\r\n  },\r\n  \"shipping\": {\r\n    \"first_name\": \"John\",\r\n    \"last_name\": \"Doe\",\r\n    \"address_1\": \"123 Main St\",\r\n    \"address_2\": \"\",\r\n    \"city\": \"Anytown\",\r\n    \"state\": \"CA\",\r\n    \"postcode\": \"12345\",\r\n    \"country\": \"US\"\r\n  }\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://projetc.abdelatif-aitbara.link/order/delete_order/38",
+							"protocol": "https",
+							"host": [
+								"projetc",
+								"abdelatif-aitbara",
+								"link"
+							],
+							"path": [
+								"order",
+								"delete_order",
+								"38"
+							]
+						},
+						"description": "This should return a list of items, each in JSON format."
+					},
+					"response": []
+				},
+				{
+					"name": "GET ORDER",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3MDAyMTQyMTMsImlhdCI6MTcwMDIxNDA5Mywic3ViIjoiY3NfODhmYzZhOWU5ZWEwZGZmMWRkYzdhZTJhMWNjMTZhOWFiNmE0Yjk5NSJ9.UNAp1AvPQsk1Il5zHa7g1WwJhBrph9a_1UFa7d8oY74",
+								"type": "default"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://projetc.abdelatif-aitbara.link/order/get_order/38",
+							"protocol": "https",
+							"host": [
+								"projetc",
+								"abdelatif-aitbara",
+								"link"
+							],
+							"path": [
+								"order",
+								"get_order",
+								"38"
+							]
+						},
+						"description": "This should return a list of items, each in JSON format."
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}

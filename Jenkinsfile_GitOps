@@ -1,0 +1,77 @@
+pipeline {
+    agent {
+        label 'Building_Machine'
+    }
+
+    environment {
+        WORKSPACE = '/home/ubuntu/'
+        PROJECT_DIR = '/home/ubuntu/ProjectC-GitOps'
+        MICROSERVICES_DIR = '/home/ubuntu/ProjectC-GitOps/microservices'
+
+    }   
+
+    parameters {
+        string(name: 'COMMIT', defaultValue: env.GIT_COMMIT, description: 'Docker Image Tag')
+    }
+
+
+
+    stages {
+
+
+        stage('Clean Workspace') {
+            steps {
+                cleanWs()
+            }
+        }
+
+        
+        stage('Clone Git Repository') {
+            steps {
+                sh "rm -rf ${PROJECT_DIR}"
+                sh "git -C ${WORKSPACE} clone -b main --recursive git@github.com:AbdelatifAitBara/ProjectC-GitOps.git"
+            }
+        }
+
+        stage('Replace Image Tag') {
+            steps {
+                script {
+                    sh "sed -i 's@\\/customer:\\(.*\\)@\\/customer:${env.COMMIT}@' ${env.MICROSERVICES_DIR}/customer.yaml" 
+                    sh "sed -i 's@\\/order:\\(.*\\)@\\/order:${env.COMMIT}@' ${env.MICROSERVICES_DIR}/order.yaml"
+                    sh "sed -i 's@\\/product:\\(.*\\)@\\/product:${env.COMMIT}@' ${env.MICROSERVICES_DIR}/product.yaml"
+                }
+            }
+        }
+
+        stage('Commit Changes') {
+            steps {
+                dir("${MICROSERVICES_DIR}") {
+                    sh "git add ."
+                    sh "git config --global user.email 'support@abdelatif-aitbara.link'"
+                    sh "git config --global user.name 'AbdelatifAitBara'"
+                    sh "git commit -m 'Update Image Tag to ${env.COMMIT}'"
+                }
+            }
+        }
+
+        stage('Push to GitOps Repo') {
+            steps {
+                dir("${PROJECT_DIR}") {
+                    sh "git push"
+                }
+            }
+        }
+    }
+
+    post {
+        failure {
+            echo "Build failed: ${currentBuild.result}"
+        }
+        success {
+            echo "Build succeeded: ${currentBuild.result}"
+        }
+    }
+
+
+
+}

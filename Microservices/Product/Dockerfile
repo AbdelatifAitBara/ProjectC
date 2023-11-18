@@ -8,7 +8,7 @@ RUN adduser -D phenix
 WORKDIR /app
 
 # Copy the current directory contents into the container at /app
-COPY product.py requirements.txt ./
+COPY product.py requirements.txt cert.pem ./
 
 # Install any needed packages specified in requirements.txt
 RUN pip install --trusted-host pypi.python.org -r requirements.txt
@@ -46,10 +46,6 @@ ENV MYSQL_DATABASE_USER=$MYSQL_DATABASE_USER \
 
 # Make port 8080 available to the world outside this container
 EXPOSE 8080
-
-# Use HEALTHCHECK instruction
-HEALTHCHECK --interval=30s --timeout=30s --start-period=5s --retries=3 CMD curl --fail http://localhost:8080/ || exit 1
-
 
 # Switch to the non-root user before running the container
 USER phenix

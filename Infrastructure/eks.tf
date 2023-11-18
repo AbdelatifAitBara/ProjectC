@@ -9,6 +9,8 @@ resource "aws_eks_cluster" "K8sCluster" {
     ]
   }
 
+  enabled_cluster_log_types = ["api", "audit", "authenticator", "controllerManager", "scheduler"]
+
   tags = {
     Name     = "Abdelatif-K8sCluster"
     owner    = local.tags.owner

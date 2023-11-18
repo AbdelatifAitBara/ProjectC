@@ -1,13 +1,11 @@
 ### Infrastructure Test.
 
-- Part-A:
+- Infrastructure:
+
 
 - 💥EC2-01 Jenkins_Master = ✔
 - 💥EC2-02 Ansible_Master = ✔
 - 💥EC2-03 VAULT = ✔
-
-- Part-B: 
-
-- 💥EC2-04 Monitoring = In Progress...
-
-Test Pipeline 💢💢
+- 💥EC2-04 Building Machine = ✔
+- 💥Integrated Ansible With Terraform = ✔
+- 💥Provision All EC2 Using Ansible = ✔

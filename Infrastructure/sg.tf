@@ -1,3 +1,5 @@
+
+
 # Create a sg for Jenkins instance
 
 resource "aws_security_group" "sg_jenkins" {
@@ -6,11 +8,11 @@ resource "aws_security_group" "sg_jenkins" {
   vpc_id      = var.vpc_id
 
   ingress {
-    description = "allow ssh"
-    from_port   = 22
-    to_port     = 22
-    protocol    = "tcp"
-    cidr_blocks = ["0.0.0.0/0"]
+    description     = "allow ssh"
+    from_port       = 22
+    to_port         = 22
+    protocol        = "tcp"
+    security_groups = [data.aws_security_group.bastion_sg.id, aws_security_group.sg_ansible.id]
   }
 
   ingress {
@@ -44,11 +46,20 @@ resource "aws_security_group" "sg_ansible" {
   vpc_id      = var.vpc_id
 
   ingress {
-    description = "allow ssh"
-    from_port   = 22
-    to_port     = 22
+    description     = "allow ssh"
+    from_port       = 22
+    to_port         = 22
+    protocol        = "tcp"
+    security_groups = [data.aws_security_group.bastion_sg.id]
+  }
+
+  ingress {
+    from_port   = 443
+    to_port     = 443 
     protocol    = "tcp"
-    cidr_blocks = ["0.0.0.0/0"]
+    description = "HTTPS from self"
+
+    self = true 
   }
 
   egress {
@@ -78,19 +89,11 @@ resource "aws_security_group" "sg_vault" {
     from_port   = 22
     to_port     = 22
     protocol    = "tcp"
-    cidr_blocks = ["0.0.0.0/0"]
+    security_groups = [data.aws_security_group.bastion_sg.id, aws_security_group.sg_ansible.id]
   }
 
   ingress {
-    description = "allow https"
-    from_port   = 443
-    to_port     = 443
-    protocol    = "tcp"
-    cidr_blocks = ["0.0.0.0/0"]
-  }
-
-  ingress {
-    description = "Vault RPC port"
+    description = "allow 8200"
     from_port   = 8200
     to_port     = 8200
     protocol    = "tcp"
@@ -124,10 +127,10 @@ resource "aws_security_group" "bm-sg" {
   vpc_id      = var.vpc_id
 
   ingress {
-    from_port   = 22
-    to_port     = 22
-    protocol    = "tcp"
-    cidr_blocks = ["0.0.0.0/0"]
+    from_port       = 22
+    to_port         = 22
+    protocol        = "tcp"
+    security_groups = [data.aws_security_group.bastion_sg.id, aws_security_group.sg_ansible.id]
   }
   egress {
     from_port   = 0
@@ -144,3 +147,50 @@ resource "aws_security_group" "bm-sg" {
   }
 
 }
+
+# Create a SG for Load Balancer:
+resource "aws_security_group" "alb-sg" {
+  name        = "Abdelatif-ALB-SG"
+  description = "Abdelatif ALB SG"
+  vpc_id      = var.vpc_id
+
+  ingress {
+    from_port   = 80
+    to_port     = 80
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  ingress {
+    from_port   = 443
+    to_port     = 443
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  egress {
+    from_port   = 0
+    to_port     = 0
+    protocol    = "-1"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+  tags = {
+    Name     = "Abdelatif-alb-sg"
+    owner    = local.tags.owner
+    ephemere = local.tags.ephemere
+    entity   = local.tags.entity
+  }
+}
+
+# Create a SG for EKS:
+
+
+resource "aws_security_group_rule" "allow_alb_to_eks" {
+  type                     = "ingress"
+  from_port                = 32000
+  to_port                  = 32001
+  protocol                 = "tcp"
+  source_security_group_id = aws_security_group.alb-sg.id
+  security_group_id        = aws_eks_cluster.K8sCluster.vpc_config[0].cluster_security_group_id
+}
+

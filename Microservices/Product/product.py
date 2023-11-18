@@ -119,12 +119,6 @@ def add_product():
     except ValueError:
         return jsonify({'message': 'regular_price must be a valid integer or float'}), 400
     
-    # Check for suspicious characters in input fields
-    suspicious_chars = re.compile(r'[&,@,"\',`_,\\\]\[}{=<>\?!#~-]')
-    for field in product_data:
-        if isinstance(product_data[field], str) and suspicious_chars.search(product_data[field]):
-            return jsonify({'message': f'{field} contains unacceptable characters'}), 400
-        
     # Set up the OAuth1Session for authentication
     oauth = OAuth1Session(client_key=consumer_key, client_secret=consumer_secret)
 
@@ -133,7 +127,7 @@ def add_product():
 
     # Send the POST request to add the product
     try:
-        response = oauth.post(API_URL, headers=headers, json=product_data)
+        response = oauth.post(API_URL, headers=headers, json=product_data, verify='./cert.pem')
         response.raise_for_status()
     except requests.exceptions.HTTPError as e:
         error_message = e.response.json()['message']
@@ -166,7 +160,7 @@ def get_product(product_id):
 
     # Send the GET request to retrieve the product
     try:
-        response = oauth.get(endpoint, headers=headers)
+        response = oauth.get(endpoint, headers=headers, verify='./cert.pem')
         response.raise_for_status()
     except requests.exceptions.HTTPError as e:
         error_message = e.response.json()['message']
@@ -209,7 +203,7 @@ def update_product(product_id):
 
     # Send the PUT request to update the product
     try:
-        response = oauth.put(endpoint, headers=headers, json=product_data)
+        response = oauth.put(endpoint, headers=headers, json=product_data, verify='./cert.pem')
         response.raise_for_status()
     except requests.exceptions.HTTPError as e:
         error_message = e.response.json()['message']
@@ -239,7 +233,7 @@ def delete_product(product_id):
 
     # Send the DELETE request to delete the product
     try:
-        response = oauth.delete(endpoint, headers=headers)
+        response = oauth.delete(endpoint, headers=headers, verify='./cert.pem')
         response.raise_for_status()
     except requests.exceptions.HTTPError as e:
         error_message = e.response.json()['message']

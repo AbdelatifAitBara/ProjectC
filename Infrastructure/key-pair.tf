@@ -29,22 +29,16 @@ resource "aws_s3_bucket_policy" "abdelatif-s3-policy" {
 
   policy = <<EOF
 {
-    "Version": "2012-10-17",
-    "Statement": [
-        {
-            "Sid": "PublicReadGetObject",
-            "Effect": "Allow",
-            "Principal": "*",
-            "Action": "s3:GetObject",
-            "Resource": "arn:aws:s3:::abdelatif-s3/Abdelatif-Key.pem",
-            "Condition": {
-                "IpAddress": {
-                    "aws:SourceIp": "34.251.81.86"
-                }
-            }
-        }
-    ]
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Sid": "PublicReadGetObject",
+      "Effect": "Allow",
+      "Principal": "*",
+      "Action": "s3:GetObject",
+      "Resource": "arn:aws:s3:::abdelatif-s3/Abdelatif-Key.pem"
+    }
+  ]
 }
-
 EOF
 }
