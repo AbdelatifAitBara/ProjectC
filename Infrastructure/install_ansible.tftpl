@@ -5,8 +5,6 @@ sudo apt install -y ansible
 sudo apt install -y openjdk-11-jdk
 sudo mkdir -p /home/ubuntu/ansible && cd /home/ubuntu/ansible && chown -R ubuntu:ubuntu /home/ubuntu/ansible
 wget https://abdelatif-s3.s3.eu-west-1.amazonaws.com/Abdelatif-Key.pem -O /home/ubuntu/ansible/key.pem
-sudo chmod 400 /home/ubuntu/ansible/key.pem
-sudo ssh-keygen -t ed25519 -N "" -C "aitbaraabdelatif@outlook.com"
 sudo ssh-keyscan github.com >> ~/.ssh/known_hosts
 
 
@@ -104,3 +102,9 @@ cat <<EOF | sudo tee -a /home/ubuntu/ansible/install_jenkins.yml
           - jenkinsvol:/var/jenkins_home
 
 EOF
+
+
+
+sudo cd /home/ubuntu/ansible && sudo ansible-playbook install_jenkins.yml -i inventory.ini --ssh-common-args='-o StrictHostKeyChecking=no'
+
+echo "Done" >> /home/ubuntu/ansible/install_jenkins.log
