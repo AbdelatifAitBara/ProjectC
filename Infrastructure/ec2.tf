@@ -7,23 +7,6 @@ resource "aws_instance" "ec2_jenkins" {
   subnet_id              = aws_subnet.PublicSubnet01.id
   key_name               = aws_key_pair.Abdelatif-KeyPair-AWS.key_name
 
-
-  provisioner "remote-exec" {
-    inline = ["echo 'Wait until SSH is ready'"]
-
-
-    connection {
-      type        = "ssh"
-      user        = "ubuntu"
-      private_key = local_file.Abdealtif-KeyPair-Local.content
-      host        = self.public_ip
-    }
-  }
-
-  provisioner "local-exec" {
-    command = "cd /home/ubuntu/ansible && sudo ansible-playbook install_jenkins.yml -i inventory.ini --ssh-common-args='-o StrictHostKeyChecking=no'"
-  }
-
   tags = {
     Name     = "Abdelatif-EC2-01"
     owner    = local.tags.owner
@@ -53,6 +36,22 @@ resource "aws_instance" "ec2_ansible" {
 
   depends_on = [ aws_instance.ec2_jenkins, aws_instance.ec2_vault, aws_instance.ec2-bm ]
 
+  provisioner "remote-exec" {
+    inline = ["echo 'Wait until SSH is ready'"]
+
+
+    connection {
+      type        = "ssh"
+      user        = "ubuntu"
+      private_key = local_file.Abdealtif-KeyPair-Local.content
+      host        = self.public_ip
+    }
+  }
+
+  provisioner "local-exec" {
+    command = "cd /home/ubuntu/ansible && sudo ansible-playbook install_jenkins.yml -i inventory.ini --ssh-common-args='-o StrictHostKeyChecking=no'"
+  }
+
 
   tags = {
     Name     = "Abdelatif-EC2-02"
@@ -68,8 +67,6 @@ resource "aws_instance" "ec2_ansible" {
     entity   = local.tags.entity
   }
 }
-
-
 
 
 
