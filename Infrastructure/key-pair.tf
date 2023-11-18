@@ -36,19 +36,9 @@ resource "aws_s3_bucket_policy" "abdelatif-s3-policy" {
       "Effect": "Allow",
       "Principal": "*",
       "Action": "s3:GetObject",
-      "Resource": "arn:aws:s3:::abdelatif-s3/Abdelatif-Key.pem",  
-      "Condition": {
-        "IpAddress": {
-          "aws:SourceIp": "${format("%s/32", data.aws_instance.ec2_ansible.private_ip)}"
-        }
-      }
+      "Resource": "arn:aws:s3:::abdelatif-s3/Abdelatif-Key.pem"
     }
   ]
 }
 EOF
-
-  depends_on = [
-    aws_instance.ec2_ansible,
-    data.aws_instance.ec2_ansible
-  ]
 }
