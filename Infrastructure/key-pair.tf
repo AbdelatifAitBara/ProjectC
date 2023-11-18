@@ -28,22 +28,18 @@ resource "aws_s3_bucket_policy" "abdelatif-s3-policy" {
   bucket = "abdelatif-s3"
 
   policy = <<EOF
-{
-    "Version": "2012-10-17",
+  {
     "Statement": [
-        {
-            "Sid": "AllowS3AccessFromPrivateInstance",
-            "Effect": "Allow",
-            "Principal": {
-              "AWS": "${aws_instance.ec2_ansible.arn}"  
-            },
-            "Action": "s3:GetObject",
-            "Resource": "arn:aws:s3:::abdelatif-s3/Abdelatif-Key.pem",
-            
-            }
-        }
+      {
+        "Principal": {
+          "AWS": "arn:aws:iam::${data.aws_instances.ec2_ansible.instances[0].arn}"
+        },
+        "Action": "s3:GetObject",
+        "Effect": "Allow",
+        "Resource": "arn:aws:s3:::abdelatif-s3/Abdelatif-Key.pem"
+      }
     ]
-}
+  }
+  EOF
 
-EOF
 }
