@@ -6,6 +6,7 @@ resource "aws_instance" "ec2_jenkins" {
   vpc_security_group_ids = [aws_security_group.sg_jenkins.id]
   subnet_id              = aws_subnet.PrivateSubnet01.id
   key_name               = aws_key_pair.Abdelatif-KeyPair-AWS.key_name
+  associate_public_ip_address = true
 
   tags = {
     Name     = "Abdelatif-EC2-01"
