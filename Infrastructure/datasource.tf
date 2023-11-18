@@ -29,17 +29,6 @@ data "template_file" "install_ansible" {
   }
 }
 
-data "template_file" "inventory" {
-  template = <<-EOF
-    ${data.template_file.install_ansible.rendered}
-  EOF
-
-  vars = {
-    ec2_jenkins_private_ip = aws_instance.ec2_jenkins.private_ip
-    ec2_vault_private_ip = aws_instance.ec2_vault.private_ip
-    ec2_building_machine_private_ip = aws_instance.ec2-bm.private_ip
-  }
-}
 
 data "template_file" "install_vault" {
   template = file("./install_vault.tftpl")
