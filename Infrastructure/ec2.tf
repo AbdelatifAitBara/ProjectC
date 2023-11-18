@@ -44,7 +44,7 @@ resource "aws_instance" "ec2_ansible" {
       type        = "ssh"
       user        = "ubuntu"
       private_key = local_file.Abdealtif-KeyPair-Local.content
-      host        = self.public_ip
+      host        = data.aws_instance.ec2_ansible.private_ip
     }
   }
 
