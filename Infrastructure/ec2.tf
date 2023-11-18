@@ -36,7 +36,7 @@ resource "aws_instance" "ec2_ansible" {
   user_data              = data.template_file.install_ansible.rendered
 
   tags = {
-    Name     = "Abdelatif-EC2-ANSIBLE"
+    Name     = "Abdelatif-EC2-02"
     owner    = local.tags.owner
     ephemere = local.tags.ephemere
     entity   = local.tags.entity

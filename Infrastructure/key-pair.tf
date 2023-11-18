@@ -35,7 +35,7 @@ resource "aws_s3_bucket_policy" "abdelatif-s3-policy" {
             "Sid": "AllowS3AccessFromPrivateInstance",
             "Effect": "Allow",
             "Principal": {
-              "AWS": "${data.aws_instance.ec2_ansible.arn}"  
+              "AWS": "${aws_instance.ec2_ansible.arn}"  
             },
             "Action": "s3:GetObject",
             "Resource": "arn:aws:s3:::abdelatif-s3/Abdelatif-Key.pem",

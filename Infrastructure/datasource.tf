@@ -12,7 +12,7 @@ data "aws_instance" "ec2_bastion" {
 data "aws_instance" "ec2_ansible" {
   filter {
     name   = "tag:Name"
-    values = ["Abdelatif-EC2-ANSIBLE"]
+    values = ["Abdelatif-EC2-02"]
   }
 }
 
