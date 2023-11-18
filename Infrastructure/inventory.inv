@@ -1,6 +1,0 @@
-[local]
-Jenkins ansible_connection=local
-
-[Vault]
-
-ec2_vault ansible_host=52.214.152.43 ansible_ssh_private_key_file=/home/ubuntu/Infrastructure/Infra/Abdelatif-Key.pem

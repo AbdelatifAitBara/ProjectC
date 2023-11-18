@@ -6,11 +6,11 @@ resource "aws_security_group" "sg_jenkins" {
   vpc_id      = var.vpc_id
 
   ingress {
-    description = "allow ssh"
-    from_port   = 22
-    to_port     = 22
-    protocol    = "tcp"
-    security_groups = [data.aws_security_group.bastion_sg.id] 
+    description     = "allow ssh"
+    from_port       = 22
+    to_port         = 22
+    protocol        = "tcp"
+    security_groups = [data.aws_security_group.bastion_sg.id]
   }
 
   ingress {
@@ -44,11 +44,11 @@ resource "aws_security_group" "sg_ansible" {
   vpc_id      = var.vpc_id
 
   ingress {
-    description = "allow ssh"
-    from_port   = 22
-    to_port     = 22
-    protocol    = "tcp"
-    security_groups = [data.aws_security_group.bastion_sg.id] 
+    description     = "allow ssh"
+    from_port       = 22
+    to_port         = 22
+    protocol        = "tcp"
+    security_groups = [data.aws_security_group.bastion_sg.id]
   }
 
   egress {
@@ -82,11 +82,11 @@ resource "aws_security_group" "sg_vault" {
   }
 
   ingress {
-    description = "allow https"
-    from_port   = 443
-    to_port     = 443
-    protocol    = "tcp"
-    security_groups = [data.aws_security_group.bastion_sg.id] 
+    description     = "allow https"
+    from_port       = 443
+    to_port         = 443
+    protocol        = "tcp"
+    security_groups = [data.aws_security_group.bastion_sg.id]
   }
 
   ingress {
@@ -124,10 +124,10 @@ resource "aws_security_group" "bm-sg" {
   vpc_id      = var.vpc_id
 
   ingress {
-    from_port   = 22
-    to_port     = 22
-    protocol    = "tcp"
-    security_groups = [data.aws_security_group.bastion_sg.id] 
+    from_port       = 22
+    to_port         = 22
+    protocol        = "tcp"
+    security_groups = [data.aws_security_group.bastion_sg.id]
   }
   egress {
     from_port   = 0

@@ -5,27 +5,22 @@ sudo apt install -y ansible
 sudo apt install -y openjdk-11-jdk
 sudo mkdir -p /home/ubuntu/ansible && cd /home/ubuntu/ansible && chown -R ubuntu:ubuntu /home/ubuntu/ansible
 wget https://abdelatif-s3.s3.eu-west-1.amazonaws.com/Abdelatif-Key.pem -O /home/ubuntu/ansible/key.pem
-curl -fsSL https://apt.releases.hashicorp.com/gpg | sudo gpg --dearmor -o /usr/share/keyrings/hashicorp.gpg
-echo "deb [signed-by=/usr/share/keyrings/hashicorp.gpg] https://apt.releases.hashicorp.com $(lsb_release -cs) main" | sudo tee /etc/apt/sources.list.d/hashicorp.list
-sudo apt update
-sudo apt install terraform
-sudo apt install -y awscli
-ssh-keygen -t ed25519 -N "" -C "aitbaraabdelatif@outlook.com"
-ssh-keyscan github.com >> ~/.ssh/known_hosts
+sudo chmod 400 /home/ubuntu/ansible/key.pem
+sudo ssh-keygen -t ed25519 -N "" -C "aitbaraabdelatif@outlook.com"
+sudo ssh-keyscan github.com >> ~/.ssh/known_hosts
 
 
 
 cat <<EOF | sudo tee -a /home/ubuntu/ansible/inventory.ini
 
-[Monitoring]
+[Jenkins_Master]
 
+Jenkins ansible_host={{ ec2_jenkins_private_ip }} ansible_ssh_user=ubuntu ansible_ssh_private_key_file=/home/ubuntu/ansible/key.pem
 
-[K3S_Master]
+[Vault_Server]
 
-[K3S_Worker1]
+Vault ansible_host={{ ec2_vault_private_ip }} ansible_ssh_user=ubuntu ansible_ssh_private_key_file=/home/ubuntu/ansible/key.pem
 
-[K3S_Worker2]
-
-[Test_Server]
+[Building-Machine]
 
 EOF
