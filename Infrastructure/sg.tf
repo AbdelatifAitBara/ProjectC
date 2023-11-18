@@ -82,7 +82,7 @@ resource "aws_security_group" "sg_vault" {
   }
 
   ingress {
-    description = "Vault RPC port"
+    description = "allow 8200"
     from_port   = 8200
     to_port     = 8200
     protocol    = "tcp"
