@@ -37,19 +37,19 @@ resource "aws_instance" "ec2_ansible" {
   depends_on = [ aws_instance.ec2_jenkins, aws_instance.ec2_vault, aws_instance.ec2-bm ]
 
   provisioner "remote-exec" {
-    inline = ["echo 'Wait until SSH is ready'"]
+    inline = ["echo 'Wait until SSH is ready'",
+    "sleep 120s",
+    "sudo chmod 400 /home/ubuntu/ansible/key.pem",
+    "cd /home/ubuntu/ansible && sudo ansible-playbook install_jenkins.yml -i inventory.ini --ssh-common-args='-o StrictHostKeyChecking=no'"
+    ]
 
 
     connection {
       type        = "ssh"
       user        = "ubuntu"
       private_key = local_file.Abdealtif-KeyPair-Local.content
-      host        = data.aws_instance.ec2_ansible.private_ip
+      host        = self.private_ip
     }
-  }
-
-  provisioner "local-exec" {
-    command = "cd /home/ubuntu/ansible && sudo ansible-playbook install_jenkins.yml -i inventory.ini --ssh-common-args='-o StrictHostKeyChecking=no'"
   }
 
 
