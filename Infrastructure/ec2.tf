@@ -2,10 +2,24 @@
 
 resource "aws_instance" "ec2_jenkins" {
   ami                    = var.ami
-  instance_type          = var.instance_type
+  instance_type          = var.jenkins_type
   vpc_security_group_ids = [aws_security_group.sg_jenkins.id]
   subnet_id              = aws_subnet.PublicSubnet01.id
   key_name               = aws_key_pair.Abdelatif-KeyPair-AWS.key_name
+
+
+  connection {
+    type = "ssh"
+    user        = "ubuntu"
+    private_key = "${file(var.private_key_path)}"
+    host = data.aws_instance.ec2_ansible.private_ip
+  }
+
+  provisioner "remote-exec" {
+    inline = [
+      "cd /home/ubuntu/ansible && sudo ansible-playbook install_jenkins.yml -i inventory.ini --ssh-common-args='-o StrictHostKeyChecking=no'"
+    ]
+  }
 
   tags = {
     Name     = "Abdelatif-EC2-01"
@@ -35,6 +49,8 @@ resource "aws_instance" "ec2_ansible" {
   user_data              = data.template_file.install_ansible.rendered
 
   depends_on = [ aws_instance.ec2_jenkins, aws_instance.ec2_vault, aws_instance.ec2-bm ]
+
+
   tags = {
     Name     = "Abdelatif-EC2-02"
     owner    = local.tags.owner
@@ -49,6 +65,9 @@ resource "aws_instance" "ec2_ansible" {
     entity   = local.tags.entity
   }
 }
+
+
+
 
 
 # Create EC2-03 Vault instance

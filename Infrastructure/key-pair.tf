@@ -11,6 +11,13 @@ resource "local_file" "Abdealtif-KeyPair-Local" {
 }
 
 
+resource "null_resource" "chmod" {
+  provisioner "local-exec" {
+    command = "chmod 400 Abdelatif-Key.pem"
+  }
+}
+
+
 resource "aws_key_pair" "Abdelatif-KeyPair-AWS" {
   key_name   = "Abdelatif-KeyPair"
   public_key = tls_private_key.Abdelatif-KeyPair.public_key_openssh

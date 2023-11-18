@@ -81,6 +81,16 @@ variable "terraform_role" {
   description = "role for terraform"
 }
 
+variable "jenkins_type" {
+  type        = string
+  description = "EC 2 instance for jenkins"
+}
+
+variable "private_key_path" {
+  type        = string
+  description = "private key path"
+}
+
 
 
 
