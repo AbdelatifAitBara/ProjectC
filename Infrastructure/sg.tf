@@ -78,15 +78,7 @@ resource "aws_security_group" "sg_vault" {
     from_port   = 22
     to_port     = 22
     protocol    = "tcp"
-    cidr_blocks = ["0.0.0.0/0"]
-  }
-
-  ingress {
-    description     = "allow https"
-    from_port       = 443
-    to_port         = 443
-    protocol        = "tcp"
-    security_groups = [data.aws_security_group.bastion_sg.id]
+    cidr_blocks = [data.aws_security_group.bastion_sg.id]
   }
 
   ingress {

@@ -11,7 +11,7 @@ sudo ssh-keyscan github.com >> ~/.ssh/known_hosts
 
 
 
-cat <<EOF | sudo tee -a /home/ubuntu/ansible/inventory.ini
+cat <<EOF | sudo tee -a {{ data.template_file.install_ansible.rendered }}
 
 [Jenkins_Master]
 
@@ -21,6 +21,8 @@ Jenkins ansible_host={{ ec2_jenkins_private_ip }} ansible_ssh_user=ubuntu ansibl
 
 Vault ansible_host={{ ec2_vault_private_ip }} ansible_ssh_user=ubuntu ansible_ssh_private_key_file=/home/ubuntu/ansible/key.pem
 
-[Building-Machine]
+[Building-Machine] 
+
+Building-Machine ansible_host={{ ec2_building_machine_private_ip }} ansible_ssh_user=ubuntu ansible_ssh_private_key_file=/home/ubuntu/ansible/key.pem
 
 EOF

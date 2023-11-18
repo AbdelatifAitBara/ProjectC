@@ -27,8 +27,6 @@ data "template_file" "install_ansible" {
     ec2_vault_private_ip            = aws_instance.ec2_vault.private_ip
     ec2_building_machine_private_ip = aws_instance.ec2-bm.private_ip
   }
-
-
 }
 
 data "template_file" "install_vault" {
