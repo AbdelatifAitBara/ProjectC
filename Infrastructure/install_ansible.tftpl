@@ -208,7 +208,7 @@ cat <<EOF | sudo tee -a /home/ubuntu/ansible/install_bm.yml
         owner: ubuntu
         group: docker
 
-        - name: Install Java
+    - name: Install Java
       apt:
         name: openjdk-11-jdk
         state: present
