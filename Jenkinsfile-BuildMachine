@@ -44,21 +44,7 @@ pipeline {
                 sh "git -C ${WORKSPACE} clone -b Dev --recursive git@github.com:AbdelatifAitBara/ProjectC.git"
             }
         }
-
-        stage('Snyk IaC Scan') {
-            steps {
-                echo 'Running Snyk IaC Scan'
-                snykSecurity(
-                snykInstallation: 'snyk@latest', 
-                snykTokenId: 'Snyk_TOKEN',
-                failOnIssues: false,
-                monitorProjectOnBuild: false,
-                additionalArguments: '--iac --severity-threshold=low --report -d'
-                )
-                }
-        }
         
-
         stage('Get Git Commit Short Hash') {
             steps {
                 script {

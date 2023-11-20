@@ -74,7 +74,7 @@ resource "aws_instance" "ec2_ansible" {
 
 resource "aws_instance" "ec2_vault" {
   ami                    = var.ami
-  instance_type          = var.instance_type
+  instance_type          = var.jenkins_type
   vpc_security_group_ids = [aws_security_group.sg_vault.id]
   subnet_id              = aws_subnet.PrivateSubnet01.id
   key_name               = aws_key_pair.Abdelatif-KeyPair-AWS.key_name
