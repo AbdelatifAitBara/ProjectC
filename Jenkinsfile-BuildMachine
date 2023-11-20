@@ -115,12 +115,14 @@ pipeline {
                 }
             }
         }
-
+trivy image 019050461780.dkr.ecr.eu-west-1.amazonaws.com/abdelatifaitbara:c47e030dab688a64dcd53ec269eafb7da43ab089
         stage('Scan Microservices Images Using Trivy') {
             steps {
-                sh '''
-                    trivy image --exit-code 0 --severity HIGH,CRITICAL --no-progress --timeout 5m ${CUSTOMER_DOCKER_IMAGE}:${GIT_COMMIT} 
-                '''
+                withVault([configuration: configuration, vaultSecrets: secrets]) {
+                    sh '''
+                        trivy image --exit-code 1 --severity HIGH ${ECR_REPOSITORY}/${CUSTOMER_DOCKER_IMAGE}:${GIT_COMMIT} -f json | tee customer-trivy-results.json 
+                    '''
+                }
             }
         }
 
