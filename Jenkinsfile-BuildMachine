@@ -68,7 +68,7 @@ pipeline {
         stage('Push Customer Image to DockerHub') {
             steps {
                 withVault([configuration: configuration, vaultSecrets: secrets]) {
-                    sh 'docker login -u $ECR_USERNAME -p $ECR_PASSWORD ${ECR_REPOSITORY}'
+                    sh 'aws ecr get-login-password --region eu-west-1 | docker login --username $ECR_USERNAME --password-stdin $ECR_REPOSITORY'
                     sh 'docker push $ECR_REPOSITORY/${CUSTOMER_DOCKER_IMAGE}:${GIT_COMMIT}'
                 }
             }
