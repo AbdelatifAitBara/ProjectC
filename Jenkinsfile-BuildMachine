@@ -59,18 +59,17 @@ pipeline {
             steps {
                 withVault([configuration: configuration, vaultSecrets: secrets]) {
                     dir("${PROJECT_DIR}/Microservices/Customer") {
-                        sh 'docker build --build-arg MYSQL_DATABASE_USER=$MYSQL_DATABASE_USER --build-arg MYSQL_DATABASE_PASSWORD=$MYSQL_DATABASE_PASSWORD --build-arg MYSQL_DATABASE_DB=$MYSQL_DATABASE_DB --build-arg MYSQL_DATABASE_HOST=$MYSQL_DATABASE_HOST --build-arg CUSTOMER_API_URL=$CUSTOMER_API_URL --build-arg SECRET_KEY=$SECRET_KEY --build-arg CONSUMER_KEY=$CONSUMER_KEY --build-arg CONSUMER_SECRET=$CONSUMER_SECRET -t ${ECR_REPOSITORY}/${CUSTOMER_DOCKER_IMAGE}:${GIT_COMMIT} .'
+                        sh 'docker build --build-arg MYSQL_DATABASE_USER=$MYSQL_DATABASE_USER --build-arg MYSQL_DATABASE_PASSWORD=$MYSQL_DATABASE_PASSWORD --build-arg MYSQL_DATABASE_DB=$MYSQL_DATABASE_DB --build-arg MYSQL_DATABASE_HOST=$MYSQL_DATABASE_HOST --build-arg CUSTOMER_API_URL=$CUSTOMER_API_URL --build-arg SECRET_KEY=$SECRET_KEY --build-arg CONSUMER_KEY=$CONSUMER_KEY --build-arg CONSUMER_SECRET=$CONSUMER_SECRET -t $ECR_REPOSITORY/${CUSTOMER_DOCKER_IMAGE}:${GIT_COMMIT} .'
                     }
                 }
             }
         }
 
-
         stage('Push Customer Image to DockerHub') {
             steps {
                 withVault([configuration: configuration, vaultSecrets: secrets]) {
-                    sh 'docker login --username ${ECR_USERNAME} --password ${ECR_PASSWORD} ${ECR_REPOSITORY}'
-                    sh 'docker push ${ECR_REPOSITORY}/${CUSTOMER_DOCKER_IMAGE}:${GIT_COMMIT}'
+                    sh 'docker login -u $ECR_USERNAME -p $ECR_PASSWORD ${ECR_REPOSITORY}'
+                    sh 'docker push $ECR_REPOSITORY/${CUSTOMER_DOCKER_IMAGE}:${GIT_COMMIT}'
                 }
             }
         }
