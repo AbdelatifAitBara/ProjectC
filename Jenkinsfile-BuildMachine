@@ -119,9 +119,7 @@ pipeline {
         stage('Scan Microservices Images Using Trivy') {
             steps {
                 sh '''
-                    trivy image docker.io/${CUSTOMER_DOCKER_IMAGE}:${GIT_COMMIT}
-                    trivy image docker.io/${PRODUCT_DOCKER_IMAGE}:${GIT_COMMIT}
-                    trivy image docker.io/${ORDER_DOCKER_IMAGE}:${GIT_COMMIT}
+                    trivy image \
                 '''
             }
         }
