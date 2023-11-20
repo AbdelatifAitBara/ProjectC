@@ -33,7 +33,6 @@ pipeline {
             }
         }
 
-
         stage('Replace Image Tag') {
             steps {
                 script {
