@@ -31,7 +31,7 @@ pipeline {
         WORKSPACE = '/home/ubuntu/'
         PROJECT_DIR = '/home/ubuntu/ProjectC'
         PRODUCT_FOLDER = '/home/ubuntu/ProjectC/Microservices/Product'
-        ECR_CUSOMER= 'abdelatif-ecr-customer'
+        ECR_CUSTOMER= 'abdelatif-ecr-customer'
         ECR_ORDER= 'abdelatif-ecr-order'
         ECR_PRODUCT= 'abdelatif-ecr-product'
     }   
@@ -58,7 +58,7 @@ pipeline {
             steps {
                 withVault([configuration: configuration, vaultSecrets: secrets]) {
                     dir("${PROJECT_DIR}/Microservices/Customer") {
-                        sh 'docker build --build-arg MYSQL_DATABASE_USER=$MYSQL_DATABASE_USER --build-arg MYSQL_DATABASE_PASSWORD=$MYSQL_DATABASE_PASSWORD --build-arg MYSQL_DATABASE_DB=$MYSQL_DATABASE_DB --build-arg MYSQL_DATABASE_HOST=$MYSQL_DATABASE_HOST --build-arg CUSTOMER_API_URL=$CUSTOMER_API_URL --build-arg SECRET_KEY=$SECRET_KEY --build-arg CONSUMER_KEY=$CONSUMER_KEY --build-arg CONSUMER_SECRET=$CONSUMER_SECRET -t $ECR_REPOSITORY/${ECR_CUSOMER}:${GIT_COMMIT} .'
+                        sh 'docker build --build-arg MYSQL_DATABASE_USER=$MYSQL_DATABASE_USER --build-arg MYSQL_DATABASE_PASSWORD=$MYSQL_DATABASE_PASSWORD --build-arg MYSQL_DATABASE_DB=$MYSQL_DATABASE_DB --build-arg MYSQL_DATABASE_HOST=$MYSQL_DATABASE_HOST --build-arg CUSTOMER_API_URL=$CUSTOMER_API_URL --build-arg SECRET_KEY=$SECRET_KEY --build-arg CONSUMER_KEY=$CONSUMER_KEY --build-arg CONSUMER_SECRET=$CONSUMER_SECRET -t $ECR_REPOSITORY/${ECR_CUSTOMER}:${GIT_COMMIT} .'
                     }
                 }
             }
@@ -68,7 +68,7 @@ pipeline {
             steps {
                 withVault([configuration: configuration, vaultSecrets: secrets]) {
                     sh 'aws ecr get-login-password --region eu-west-1 | docker login --username $ECR_USERNAME --password-stdin $ECR_REPOSITORY'
-                    sh 'docker push $ECR_REPOSITORY/${ECR_CUSOMER}:${GIT_COMMIT}'
+                    sh 'docker push $ECR_REPOSITORY/${ECR_CUSTOMER}:${GIT_COMMIT}'
                 }
             }
         }
@@ -119,7 +119,7 @@ pipeline {
             steps {
                 withVault([configuration: configuration, vaultSecrets: secrets]) {
                     sh '''
-                        trivy $ECR_REPOSITORY/${ECR_CUSOMER}:${GIT_COMMIT} | grep -c "Severity: HIGH" && exit 1 || exit 0
+                        trivy $ECR_REPOSITORY/${ECR_CUSTOMER}:${GIT_COMMIT} | grep -c "Severity: HIGH" && exit 1 || exit 0
                         trivy $ECR_REPOSITORY/${ECR_PRODUCT}:${GIT_COMMIT} | grep -c "Severity: HIGH" && exit 1 || exit 0
                         trivy $ECR_REPOSITORY/${ECR_ORDER}:${GIT_COMMIT} | grep -c "Severity: HIGH" && exit 1 || exit 0
                     '''
