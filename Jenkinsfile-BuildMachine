@@ -11,7 +11,10 @@ def secrets = [
         [envVar: 'CUSTOMER_API_URL', vaultKey: 'customerapiurl'],
         [envVar: 'SECRET_KEY', vaultKey: 'secretkey'],
         [envVar: 'CONSUMER_KEY', vaultKey: 'consumerkey'],
-        [envVar: 'CONSUMER_SECRET', vaultKey: 'consumersecret']
+        [envVar: 'CONSUMER_SECRET', vaultKey: 'consumersecret'],
+        [envVar: 'ECR_USERNAME', vaultKey: 'ecr-username'],
+        [envVar: 'ECR_PASSWORD', vaultKey: 'ecr-password'],
+        [envVar: 'ECR_REPOSITORY', vaultKey: 'ecr-repository'],
     ]]
 ]
 
@@ -31,10 +34,10 @@ pipeline {
         PRODUCT_FOLDER = '/home/ubuntu/ProjectC/Microservices/Product'
         PRODUCT_DOCKER_IMAGE = 'abdelatifaitbara/product'
         ORDER_DOCKER_IMAGE = 'abdelatifaitbara/order'
-        CUSTOMER_DOCKER_IMAGE = 'abdelatifaitbara/customer'
+        CUSTOMER_DOCKER_IMAGE = 'abdelatifaitbara'
     }   
 
-
+019050461780.dkr.ecr.eu-west-1.amazonaws.com/abdelatifaitbara:latest
 
     stages {
 
@@ -53,21 +56,23 @@ pipeline {
             }
         }
 
+
         stage('Build Customer Image') {
             steps {
                 withVault([configuration: configuration, vaultSecrets: secrets]) {
                     dir("${PROJECT_DIR}/Microservices/Customer") {
-                        sh 'docker build --build-arg MYSQL_DATABASE_USER=$MYSQL_DATABASE_USER --build-arg MYSQL_DATABASE_PASSWORD=$MYSQL_DATABASE_PASSWORD --build-arg MYSQL_DATABASE_DB=$MYSQL_DATABASE_DB --build-arg MYSQL_DATABASE_HOST=$MYSQL_DATABASE_HOST --build-arg CUSTOMER_API_URL=$CUSTOMER_API_URL --build-arg SECRET_KEY=$SECRET_KEY --build-arg CONSUMER_KEY=$CONSUMER_KEY --build-arg CONSUMER_SECRET=$CONSUMER_SECRET -t ${CUSTOMER_DOCKER_IMAGE}:${GIT_COMMIT} .'
+                        sh 'docker build --build-arg MYSQL_DATABASE_USER=$MYSQL_DATABASE_USER --build-arg MYSQL_DATABASE_PASSWORD=$MYSQL_DATABASE_PASSWORD --build-arg MYSQL_DATABASE_DB=$MYSQL_DATABASE_DB --build-arg MYSQL_DATABASE_HOST=$MYSQL_DATABASE_HOST --build-arg CUSTOMER_API_URL=$CUSTOMER_API_URL --build-arg SECRET_KEY=$SECRET_KEY --build-arg CONSUMER_KEY=$CONSUMER_KEY --build-arg CONSUMER_SECRET=$CONSUMER_SECRET -t ${ECR_REPOSITORY}/${CUSTOMER_DOCKER_IMAGE}:${GIT_COMMIT} .'
                     }
                 }
             }
         }
 
+
         stage('Push Customer Image to DockerHub') {
             steps {
                 withVault([configuration: configuration, vaultSecrets: secrets]) {
-                    sh 'docker login -u $DOCKER_USERNAME -p $DOCKER_TOKEN'
-                    sh 'docker push docker.io/${CUSTOMER_DOCKER_IMAGE}:${GIT_COMMIT}'
+                    sh 'docker login --username '${ECR_USERNAME}' --password '${ECR_PASSWORD}' '${ECR_REPOSITORY}' '
+                    sh 'docker push ${ECR_REPOSITORY}/${CUSTOMER_DOCKER_IMAGE}:${GIT_COMMIT}'
                 }
             }
         }
