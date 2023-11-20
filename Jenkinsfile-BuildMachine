@@ -119,7 +119,7 @@ pipeline {
         stage('Scan Microservices Images Using Trivy') {
             steps {
                 sh '''
-                    trivy image \
+                    trivy image --exit-code 0 --severity HIGH,CRITICAL $ECR_REPOSITORY/${CUSTOMER_DOCKER_IMAGE}:${GIT_COMMIT} 
                 '''
             }
         }
