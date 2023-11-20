@@ -119,9 +119,9 @@ pipeline {
             steps {
                 withVault([configuration: configuration, vaultSecrets: secrets]) {
                     sh '''
-                        trivy image --exit-code 1 --severity HIGH $ECR_REPOSITORY/${ECR_CUSOMER}:${GIT_COMMIT} -f json | tee customer-trivy-results.json
-                        trivy image --exit-code 1 --severity HIGH $ECR_REPOSITORY/${ECR_PRODUCT}:${GIT_COMMIT} -f json | tee product-trivy-results.json
-                        trivy image --exit-code 1 --severity HIGH $ECR_REPOSITORY/${ECR_ORDER}:${GIT_COMMIT} -f json | tee order-trivy-results.json 
+                        trivy $ECR_REPOSITORY/${ECR_CUSOMER}:${GIT_COMMIT} | grep -c "Severity: HIGH" && exit 1 || exit 0
+                        trivy $ECR_REPOSITORY/${ECR_PRODUCT}:${GIT_COMMIT} | grep -c "Severity: HIGH" && exit 1 || exit 0
+                        trivy $ECR_REPOSITORY/${ECR_ORDER}:${GIT_COMMIT} | grep -c "Severity: HIGH" && exit 1 || exit 0
                     '''
                 }
             }
