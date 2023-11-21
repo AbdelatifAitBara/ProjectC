@@ -11,7 +11,6 @@ def secrets = [
         [envVar: 'CONSUMER_KEY', vaultKey: 'consumerkey'],
         [envVar: 'CONSUMER_SECRET', vaultKey: 'consumersecret'],
         [envVar: 'ECR_USERNAME', vaultKey: 'ecr-username'],
-        [envVar: 'ECR_PASSWORD', vaultKey: 'ecr-password'],
         [envVar: 'ECR_REPOSITORY', vaultKey: 'ecr-repository'],
     ]]
 ]
