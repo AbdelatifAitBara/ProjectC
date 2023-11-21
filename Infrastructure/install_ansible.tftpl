@@ -257,4 +257,8 @@ cat <<EOF | sudo tee -a /home/ubuntu/ansible/install_bm.yml
         name: trivy
         state: present
 
+    - name: Install AWS CLI
+      command: apt install -y awscli
+
 EOF
+
