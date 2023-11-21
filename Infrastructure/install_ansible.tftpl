@@ -2,7 +2,7 @@
 sudo apt update
 sudo apt-add-repository --yes --update ppa:ansible/ansible
 sudo apt install -y ansible
-sudo apt install -y openjdk-11-jdk
+sudo apt install -y openjdk-17-jdk
 sudo mkdir -p /home/ubuntu/ansible && cd /home/ubuntu/ansible && chown -R ubuntu:ubuntu /home/ubuntu/ansible
 wget https://abdelatif-s3.s3.eu-west-1.amazonaws.com/Abdelatif-Key.pem -O /home/ubuntu/ansible/key.pem
 
@@ -121,7 +121,7 @@ cat <<EOF | sudo tee -a /home/ubuntu/ansible/install_vault.yml
     
     - name: Install Java
       apt:
-        name: openjdk-11-jdk
+        name: openjdk-17-jdk
         state: present
       become: true
 
@@ -210,7 +210,7 @@ cat <<EOF | sudo tee -a /home/ubuntu/ansible/install_bm.yml
 
     - name: Install Java
       apt:
-        name: openjdk-11-jdk
+        name: openjdk-17-jdk
         state: present
       become: true
 
