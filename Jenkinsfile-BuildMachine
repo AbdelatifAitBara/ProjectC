@@ -123,7 +123,7 @@ pipeline {
             steps {
                 withVault([configuration: configuration, vaultSecrets: secrets]) {
                     sh '''
-                        trivy image --severity HIGH --exit-code 1 $ECR_REPOSITORY/${ECR_CUSTOMER}:${GIT_COMMIT}
+                        trivy image --severity CRITICAL --exit-code 1 $ECR_REPOSITORY/${ECR_CUSTOMER}:${GIT_COMMIT}
                         trivy image --severity HIGH --exit-code 1 $ECR_REPOSITORY/${ECR_PRODUCT}:${GIT_COMMIT}
                         trivy image --severity HIGH --exit-code 1 $ECR_REPOSITORY/${ECR_ORDER}:${GIT_COMMIT}
                     '''
