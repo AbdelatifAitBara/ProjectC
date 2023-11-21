@@ -11,5 +11,5 @@ output "ec2_ansible_id" {
 
 
 output "eks_cluster_endpoint" {
-value = aws_eks_cluster.K8sCluster.endpoint
+  value = aws_eks_cluster.K8sCluster.endpoint
 }
