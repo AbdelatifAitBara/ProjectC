@@ -2,7 +2,7 @@
 sudo apt update
 sudo apt-add-repository --yes --update ppa:ansible/ansible
 sudo apt install -y ansible
-sudo apt install -y openjdk-11-jdk
+sudo apt install -y openjdk-17-jdk
 sudo mkdir -p /home/ubuntu/ansible && cd /home/ubuntu/ansible && chown -R ubuntu:ubuntu /home/ubuntu/ansible
 wget https://abdelatif-s3.s3.eu-west-1.amazonaws.com/Abdelatif-Key.pem -O /home/ubuntu/ansible/key.pem
 
@@ -121,7 +121,7 @@ cat <<EOF | sudo tee -a /home/ubuntu/ansible/install_vault.yml
     
     - name: Install Java
       apt:
-        name: openjdk-11-jdk
+        name: openjdk-17-jdk
         state: present
       become: true
 
@@ -161,7 +161,82 @@ cat <<EOF | sudo tee -a /home/ubuntu/ansible/install_bm.yml
       apt:
         update_cache: yes
 
-    - name: Install prerequisites
+    - name: Install dependencies
+      apt:
+        name:
+          - apt-transport-https
+          - ca-certificates
+          - curl
+          - gnupg
+          - lsb-release
+        state: present
+
+      
+    - name: Add Docker GPG key
+      apt_key:
+        url: https://download.docker.com/linux/ubuntu/gpg
+        state: present
+    
+    - name: Add Docker repository
+      apt_repository:
+        repo: "deb [arch=amd64] https://download.docker.com/linux/ubuntu {{ ansible_distribution_release }} stable"
+        state: present
+
+    - name: Install Docker and Docker Compose
+      apt:
+        name:
+          - docker-ce
+          - docker-ce-cli
+          - containerd.io
+        state: present
+
+    - name: Start and enable Docker service
+      service:
+        name: docker
+        state: started
+        enabled: true
+
+    - name: Add ubuntu user to docker group
+      user:
+        name: ubuntu
+        groups: docker
+        append: yes
+
+    - name: Change ownership of /var/run/docker.sock
+      file:
+        path: /var/run/docker.sock
+        owner: ubuntu
+        group: docker
+
+    - name: Install Java
+      apt:
+        name: openjdk-17-jdk
+        state: present
+      become: true
+
+    - name: Add Vault repository key
+      apt_key:
+        url: https://apt.releases.hashicorp.com/gpg
+        state: present
+
+    - name: Add Vault repository
+      apt_repository:
+        repo: "deb [arch=amd64] https://apt.releases.hashicorp.com {{ ansible_distribution_release }} main"
+        state: present
+
+    - name: Install Vault
+      apt:
+        name:
+          - vault
+        state: present
+
+    - name: Start Vault service
+      service:
+        name: vault
+        state: started
+        enabled: true
+
+    - name: Install prerequisites for trivy
       apt: 
         name: ["git", "golang", "make"]
         update_cache: yes
@@ -182,4 +257,8 @@ cat <<EOF | sudo tee -a /home/ubuntu/ansible/install_bm.yml
         name: trivy
         state: present
 
+    - name: Install AWS CLI
+      command: apt install -y awscli
+
 EOF
+

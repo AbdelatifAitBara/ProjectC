@@ -1,7 +1,5 @@
 def secrets = [
     [path: 'secrets/creds/microservices', engineVersion: 1, secretValues: [
-        [envVar: 'DOCKER_TOKEN', vaultKey: 'dockertoken'],
-        [envVar: 'DOCKER_USERNAME', vaultKey: 'dockeruser'],
         [envVar: 'MYSQL_DATABASE_USER', vaultKey: 'MYSQL_DATABASE_USER'],
         [envVar: 'MYSQL_DATABASE_PASSWORD', vaultKey: 'MYSQL_DATABASE_PASSWORD'],
         [envVar: 'MYSQL_DATABASE_DB', vaultKey: 'MYSQL_DATABASE_DB'],
@@ -11,11 +9,13 @@ def secrets = [
         [envVar: 'CUSTOMER_API_URL', vaultKey: 'customerapiurl'],
         [envVar: 'SECRET_KEY', vaultKey: 'secretkey'],
         [envVar: 'CONSUMER_KEY', vaultKey: 'consumerkey'],
-        [envVar: 'CONSUMER_SECRET', vaultKey: 'consumersecret']
+        [envVar: 'CONSUMER_SECRET', vaultKey: 'consumersecret'],
+        [envVar: 'ECR_USERNAME', vaultKey: 'ecr-username'],
+        [envVar: 'ECR_REPOSITORY', vaultKey: 'ecr-repository'],
     ]]
 ]
 
-def configuration = [vaultUrl: 'http://10.0.3.159:8200',  vaultCredentialId: 'Vault_Credentials', engineVersion: 1]
+def configuration = [vaultUrl: 'http://10.0.112.134:8200',  vaultCredentialId: 'Vault_Credentials', engineVersion: 1]
 
 
 
@@ -24,20 +24,14 @@ pipeline {
 
     agent { label 'Building_Machine' }
 
-
     environment {
-        CUSTOMER_TAG = 'v1.0.2'
-        PRODUCT_TAG = 'v1.0.2'
-        ORDER_TAG = 'v1.0.2'
         WORKSPACE = '/home/ubuntu/'
         PROJECT_DIR = '/home/ubuntu/ProjectC'
         PRODUCT_FOLDER = '/home/ubuntu/ProjectC/Microservices/Product'
-        PRODUCT_DOCKER_IMAGE = 'abdelatifaitbara/product'
-        ORDER_DOCKER_IMAGE = 'abdelatifaitbara/order'
-        CUSTOMER_DOCKER_IMAGE = 'abdelatifaitbara/customer'
+        ECR_CUSTOMER= 'abdelatif-ecr-customer'
+        ECR_ORDER= 'abdelatif-ecr-order'
+        ECR_PRODUCT= 'abdelatif-ecr-product'
     }   
-
-
 
     stages {
 
@@ -47,13 +41,21 @@ pipeline {
                 sh "git -C ${WORKSPACE} clone -b Dev --recursive git@github.com:AbdelatifAitBara/ProjectC.git"
             }
         }
+        
+        stage('Get Git Commit Short Hash') {
+            steps {
+                script {
+                    env.GIT_COMMIT = sh(returnStdout: true, script: 'git --git-dir=${PROJECT_DIR}/.git rev-parse --short HEAD').trim()
+                }
+            }
+        }
 
-        stage('Snyk Scan Python Code') {
+                stage('Snyk Scan Python Code') {
             steps {
                 echo 'Code Scanning...'
                 snykSecurity(
                 snykInstallation: 'snyk@latest',
-                snykTokenId: 'Snyk_TOKEN',
+                snykTokenId: 'Snyk_Token',
                 failOnIssues: 'false',
                 monitorProjectOnBuild: 'false',
                 additionalArguments: '--code -debug'
@@ -66,28 +68,27 @@ pipeline {
                 echo 'Running Snyk IaC Scan'
                 snykSecurity(
                 snykInstallation: 'snyk@latest', 
-                snykTokenId: 'Snyk_TOKEN',
+                snykTokenId: 'Snyk_Token',
                 failOnIssues: false,
                 monitorProjectOnBuild: false,
                 additionalArguments: '--iac --severity-threshold=low --report -d'
                 )
                 }
         }
-        
 
-        stage('Get Git Commit Short Hash') {
-            steps {
-                script {
-                    env.GIT_COMMIT = sh(returnStdout: true, script: 'git --git-dir=${PROJECT_DIR}/.git rev-parse --short HEAD').trim()
-                }
-            }
-        }
+        //stage('OWASP FS SCAN') {
+        //    steps {
+        //        dependencyCheck additionalArguments: '--scan ./ --disableYarnAudit --disableNodeAudit', odcInstallation: 'OWASP'
+        //        dependencyCheckPublisher pattern: '**/dependency-check-report.xml'
+        //    }
+        //}
+
 
         stage('Build Customer Image') {
             steps {
                 withVault([configuration: configuration, vaultSecrets: secrets]) {
                     dir("${PROJECT_DIR}/Microservices/Customer") {
-                        sh 'docker build --build-arg MYSQL_DATABASE_USER=$MYSQL_DATABASE_USER --build-arg MYSQL_DATABASE_PASSWORD=$MYSQL_DATABASE_PASSWORD --build-arg MYSQL_DATABASE_DB=$MYSQL_DATABASE_DB --build-arg MYSQL_DATABASE_HOST=$MYSQL_DATABASE_HOST --build-arg CUSTOMER_API_URL=$CUSTOMER_API_URL --build-arg SECRET_KEY=$SECRET_KEY --build-arg CONSUMER_KEY=$CONSUMER_KEY --build-arg CONSUMER_SECRET=$CONSUMER_SECRET -t ${CUSTOMER_DOCKER_IMAGE}:${GIT_COMMIT} .'
+                        sh 'docker build --build-arg MYSQL_DATABASE_USER=$MYSQL_DATABASE_USER --build-arg MYSQL_DATABASE_PASSWORD=$MYSQL_DATABASE_PASSWORD --build-arg MYSQL_DATABASE_DB=$MYSQL_DATABASE_DB --build-arg MYSQL_DATABASE_HOST=$MYSQL_DATABASE_HOST --build-arg CUSTOMER_API_URL=$CUSTOMER_API_URL --build-arg SECRET_KEY=$SECRET_KEY --build-arg CONSUMER_KEY=$CONSUMER_KEY --build-arg CONSUMER_SECRET=$CONSUMER_SECRET -t $ECR_REPOSITORY/${ECR_CUSTOMER}:${GIT_COMMIT} .'
                     }
                 }
             }
@@ -96,8 +97,8 @@ pipeline {
         stage('Push Customer Image to DockerHub') {
             steps {
                 withVault([configuration: configuration, vaultSecrets: secrets]) {
-                    sh 'docker login -u $DOCKER_USERNAME -p $DOCKER_TOKEN'
-                    sh 'docker push docker.io/${CUSTOMER_DOCKER_IMAGE}:${GIT_COMMIT}'
+                    sh 'aws ecr get-login-password --region eu-west-1 | docker login --username $ECR_USERNAME --password-stdin $ECR_REPOSITORY'
+                    sh 'docker push $ECR_REPOSITORY/${ECR_CUSTOMER}:${GIT_COMMIT}'
                 }
             }
         }
@@ -107,7 +108,7 @@ pipeline {
             steps {
                 withVault([configuration: configuration, vaultSecrets: secrets]) {
                         dir("${PRODUCT_FOLDER}") {
-                            sh 'docker build --build-arg MYSQL_DATABASE_USER=$MYSQL_DATABASE_USER --build-arg MYSQL_DATABASE_PASSWORD=$MYSQL_DATABASE_PASSWORD --build-arg MYSQL_DATABASE_DB=$MYSQL_DATABASE_DB --build-arg MYSQL_DATABASE_HOST=$MYSQL_DATABASE_HOST --build-arg PRODUCT_API_URL=$PRODUCT_API_URL --build-arg SECRET_KEY=$SECRET_KEY --build-arg CONSUMER_KEY=$CONSUMER_KEY --build-arg CONSUMER_SECRET=$CONSUMER_SECRET -t ${PRODUCT_DOCKER_IMAGE}:${GIT_COMMIT} .'
+                            sh 'docker build --build-arg MYSQL_DATABASE_USER=$MYSQL_DATABASE_USER --build-arg MYSQL_DATABASE_PASSWORD=$MYSQL_DATABASE_PASSWORD --build-arg MYSQL_DATABASE_DB=$MYSQL_DATABASE_DB --build-arg MYSQL_DATABASE_HOST=$MYSQL_DATABASE_HOST --build-arg PRODUCT_API_URL=$PRODUCT_API_URL --build-arg SECRET_KEY=$SECRET_KEY --build-arg CONSUMER_KEY=$CONSUMER_KEY --build-arg CONSUMER_SECRET=$CONSUMER_SECRET -t $ECR_REPOSITORY/${ECR_PRODUCT}:${GIT_COMMIT} .'
                     }
                     
                 }
@@ -118,8 +119,8 @@ pipeline {
         stage('Push Product Image to DockerHub') {
             steps {
                     withVault([configuration: configuration, vaultSecrets: secrets]) {
-                        sh 'docker login -u $DOCKER_USERNAME -p $DOCKER_TOKEN'
-                        sh 'docker push docker.io/${PRODUCT_DOCKER_IMAGE}:${GIT_COMMIT}'
+                        sh 'aws ecr get-login-password --region eu-west-1 | docker login --username $ECR_USERNAME --password-stdin $ECR_REPOSITORY'
+                        sh 'docker push $ECR_REPOSITORY/${ECR_PRODUCT}:${GIT_COMMIT}'
                     }
             }  
         }
@@ -128,7 +129,7 @@ pipeline {
             steps {
                 withVault([configuration: configuration, vaultSecrets: secrets]) {
                     dir("${PROJECT_DIR}/Microservices/Order") {
-                        sh 'docker build --build-arg MYSQL_DATABASE_USER=$MYSQL_DATABASE_USER --build-arg MYSQL_DATABASE_PASSWORD=$MYSQL_DATABASE_PASSWORD --build-arg MYSQL_DATABASE_DB=$MYSQL_DATABASE_DB --build-arg MYSQL_DATABASE_HOST=$MYSQL_DATABASE_HOST --build-arg ORDER_API_URL=$ORDER_API_URL --build-arg SECRET_KEY=$SECRET_KEY --build-arg CONSUMER_KEY=$CONSUMER_KEY --build-arg CONSUMER_SECRET=$CONSUMER_SECRET -t ${ORDER_DOCKER_IMAGE}:${GIT_COMMIT} .'
+                        sh 'docker build --build-arg MYSQL_DATABASE_USER=$MYSQL_DATABASE_USER --build-arg MYSQL_DATABASE_PASSWORD=$MYSQL_DATABASE_PASSWORD --build-arg MYSQL_DATABASE_DB=$MYSQL_DATABASE_DB --build-arg MYSQL_DATABASE_HOST=$MYSQL_DATABASE_HOST --build-arg ORDER_API_URL=$ORDER_API_URL --build-arg SECRET_KEY=$SECRET_KEY --build-arg CONSUMER_KEY=$CONSUMER_KEY --build-arg CONSUMER_SECRET=$CONSUMER_SECRET -t $ECR_REPOSITORY/${ECR_ORDER}:${GIT_COMMIT} .'
                     }
                 }
 
@@ -138,19 +139,21 @@ pipeline {
         stage('Push Order Image to DockerHub') {
             steps {
                 withVault([configuration: configuration, vaultSecrets: secrets]) {
-                    sh 'docker login -u $DOCKER_USERNAME -p $DOCKER_TOKEN'
-                    sh 'docker push docker.io/${ORDER_DOCKER_IMAGE}:${GIT_COMMIT}'
+                    sh 'aws ecr get-login-password --region eu-west-1 | docker login --username $ECR_USERNAME --password-stdin $ECR_REPOSITORY'
+                    sh 'docker push $ECR_REPOSITORY/${ECR_ORDER}:${GIT_COMMIT}'
                 }
             }
         }
 
         stage('Scan Microservices Images Using Trivy') {
             steps {
-                sh '''
-                    trivy image docker.io/${CUSTOMER_DOCKER_IMAGE}:${GIT_COMMIT}
-                    trivy image docker.io/${PRODUCT_DOCKER_IMAGE}:${GIT_COMMIT}
-                    trivy image docker.io/${ORDER_DOCKER_IMAGE}:${GIT_COMMIT}
-                '''
+                withVault([configuration: configuration, vaultSecrets: secrets]) {
+                    sh '''
+                        trivy image --severity CRITICAL --exit-code 1 $ECR_REPOSITORY/${ECR_CUSTOMER}:${GIT_COMMIT}
+                        trivy image --severity CRITICAL --exit-code 1 $ECR_REPOSITORY/${ECR_PRODUCT}:${GIT_COMMIT}
+                        trivy image --severity CRITICAL --exit-code 1 $ECR_REPOSITORY/${ECR_ORDER}:${GIT_COMMIT}
+                    '''
+                }
             }
         }
 

@@ -15,12 +15,6 @@ data "aws_instance" "ec2_bastion" {
 }
 
 
-
-
-data "template_file" "install_jenkins" {
-  template = file("./install_jenkins.tftpl")
-}
-
 data "template_file" "install_ansible" {
   template = file("./install_ansible.tftpl")
 
@@ -29,13 +23,4 @@ data "template_file" "install_ansible" {
     ec2_vault_private_ip = aws_instance.ec2_vault.private_ip 
     ec2_building_machine_private_ip = aws_instance.ec2-bm.private_ip
   }
-}
-
-
-data "template_file" "install_vault" {
-  template = file("./install_vault.tftpl")
-}
-
-data "template_file" "bm_user_data" {
-  template = file("./bm_user_data.tftpl")
 }

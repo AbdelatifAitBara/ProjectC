@@ -36,9 +36,9 @@ pipeline {
         stage('Replace Image Tag') {
             steps {
                 script {
-                    sh "sed -i 's@\\/customer:\\(.*\\)@\\/customer:${env.COMMIT}@' ${env.MICROSERVICES_DIR}/customer.yaml" 
-                    sh "sed -i 's@\\/order:\\(.*\\)@\\/order:${env.COMMIT}@' ${env.MICROSERVICES_DIR}/order.yaml"
-                    sh "sed -i 's@\\/product:\\(.*\\)@\\/product:${env.COMMIT}@' ${env.MICROSERVICES_DIR}/product.yaml"
+                    sh "sed -i 's@\\/abdelatif-ecr-customer:\\(.*\\)@\\/abdelatif-ecr-customer:${env.COMMIT}@' ${env.MICROSERVICES_DIR}/customer.yaml" 
+                    sh "sed -i 's@\\/abdelatif-ecr-order:\\(.*\\)@\\/abdelatif-ecr-order:${env.COMMIT}@' ${env.MICROSERVICES_DIR}/order.yaml"
+                    sh "sed -i 's@\\/abdelatif-ecr-product:\\(.*\\)@\\/abdelatif-ecr-product:${env.COMMIT}@' ${env.MICROSERVICES_DIR}/product.yaml"
                 }
             }
         }
