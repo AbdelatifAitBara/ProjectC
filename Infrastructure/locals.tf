@@ -4,4 +4,5 @@ locals {
     ephemere = "non"
     entity   = "numfactory"
   }
+  eks_endpoint = output.eks_cluster_endpoint.value
 }
