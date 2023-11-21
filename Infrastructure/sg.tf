@@ -194,3 +194,14 @@ resource "aws_security_group_rule" "allow_alb_to_eks" {
   security_group_id        = aws_eks_cluster.K8sCluster.vpc_config[0].cluster_security_group_id
 }
 
+
+# Allow HTTPS from bastion_sg to eks_sg:
+
+resource "aws_security_group_rule" "bastion_to_eks" {
+  type                     = "ingress"
+  from_port                = 443
+  to_port                  = 443
+  protocol                 = "tcp"
+  source_security_group_id = data.aws_security_group.bastion_sg.id
+  security_group_id        = aws_eks_cluster.K8sCluster.vpc_config[0].cluster_security_group_id
+}
