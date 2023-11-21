@@ -8,7 +8,7 @@ resource "aws_eks_cluster" "K8sCluster" {
       aws_subnet.PublicSubnet02.id
     ]
     endpoint_private_access = true
-    endpoint_public_access  = false
+    public_access_cidrs = data.aws_instance.ec2_bastion.public_ip
   }
   tags = {
     Name     = "Abdelatif-K8sCluster"
