@@ -51,30 +51,11 @@ pipeline {
             }
         }
 
-        stage('Snyk Scan Python Code') {
+        stage('OWASP FS SCAN') {
             steps {
-                echo 'Code Scanning...'
-                snykSecurity(
-                snykInstallation: 'snyk@latest',
-                snykTokenId: 'Snyk_TOKEN',
-                failOnIssues: 'false',
-                monitorProjectOnBuild: 'false',
-                additionalArguments: '--code -debug'
-                )
+                dependencyCheck additionalArguments: '--scan ./ --disableYarnAudit --disableNodeAudit', odcInstallation: 'OWASP'
+                dependencyCheckPublisher pattern: '**/dependency-check-report.xml'
             }
-        }
-
-        stage('Snyk IaC Scan') {
-            steps {
-                echo 'Running Snyk IaC Scan'
-                snykSecurity(
-                snykInstallation: 'snyk@latest', 
-                snykTokenId: 'Snyk_TOKEN',
-                failOnIssues: false,
-                monitorProjectOnBuild: false,
-                additionalArguments: '--iac --severity-threshold=low --report -d'
-                )
-                }
         }
 
 
