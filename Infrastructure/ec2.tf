@@ -38,7 +38,7 @@ resource "aws_instance" "ec2_ansible" {
 
   provisioner "remote-exec" {
     inline = ["echo 'Wait until SSH is ready'",
-    "sleep 120s",#I puted this sleep to wait the status check 2/2 on aws before provisioning my ec2 instances
+    "sleep 200s",#I puted this sleep to wait the status check 2/2 on aws before provisioning my ec2 instances
     "sudo chmod 400 /home/ubuntu/ansible/key.pem",
     "cd /home/ubuntu/ansible && sudo ansible-playbook install_jenkins.yml install_vault.yml install_bm.yml -i inventory.ini --ssh-common-args='-o StrictHostKeyChecking=no'"
     ]
@@ -50,6 +50,7 @@ resource "aws_instance" "ec2_ansible" {
       private_key = local_file.Abdealtif-KeyPair-Local.content
       host        = self.private_ip
     }
+    
   }
 
 
