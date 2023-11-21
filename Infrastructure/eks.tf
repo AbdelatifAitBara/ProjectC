@@ -7,11 +7,10 @@ resource "aws_eks_cluster" "K8sCluster" {
       aws_subnet.PublicSubnet01.id,
       aws_subnet.PublicSubnet02.id
     ]
-    public_access_cidrs = false
+
+    endpoint_private_access = true
+    endpoint_public_access  = false
   }
-
-  enabled_cluster_log_types = ["api", "audit", "authenticator", "controllerManager", "scheduler"]
-
   tags = {
     Name     = "Abdelatif-K8sCluster"
     owner    = local.tags.owner
