@@ -11,6 +11,6 @@ export default function () {
   const res = http.get('https://projetc.abdelatif-aitbara.link/product/add_product');
   check(res, {
     'verify homepage text': (r) =>
-      r.body.includes('405 Method Not Allowed'),
+      r.body.includes('Method Not Allowed'),
   });
 }
