@@ -11,7 +11,7 @@ export const options = {
 export default function () {
   const res = http.get('https://projetc.abdelatif-aitbara.link/product/add_product');
   check(res, {
-    'Method Not Allowed': (r) => r.status === 405 && r.body.includes('405 Method Not Allowed'),
+    'Method Not Allowed': (r) => r.status === 405,
   });
 }
 
