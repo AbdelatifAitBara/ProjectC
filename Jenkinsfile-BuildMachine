@@ -187,7 +187,7 @@ pipeline {
                 withVault([configuration: configuration, vaultSecrets: secrets]) {
                     sh'''
                     k6 login cloud --token $K6_TOKEN
-                    k6 cloud /home/ubuntu/workspace/ProjectC/Loading&Performance/smoke-test-wp.js --insecure-skip-tls-verify
+                    k6 cloud /home/ubuntu/ProjectC/Loading&Performance/smoke-test-wp.js --insecure-skip-tls-verify
                     '''
                 }
             }
@@ -203,4 +203,5 @@ pipeline {
         }
     }
 
+    }
 }
