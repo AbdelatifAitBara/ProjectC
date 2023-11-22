@@ -213,10 +213,10 @@ pipeline {
                     k6 cloud /home/ubuntu/ProjectC/LoadingPerformanceTests/microservices/order/delete-order-test.js --insecure-skip-tls-verify;
                     }
                     {
-                    k6 cloud /home/ubuntu/ProjectC/LoadingPerformanceTests/microservices/order/get-order-test.js --insecure-skip-tls-verify;
+                    k6 cloud /home/ubuntu/ProjectC/LoadingPerformanceTests/microservices/order/get-token-test.js --insecure-skip-tls-verify;
                     }
                     {
-                    k6 cloud /home/ubuntu/ProjectC/LoadingPerformanceTests/microservices/order/get-orders-test.js --insecure-skip-tls-verify;
+                    k6 cloud /home/ubuntu/ProjectC/LoadingPerformanceTests/microservices/order/update-order-test.js --insecure-skip-tls-verify;
                     }
                 
                     echo "Customer Performance & Loading Tests"
@@ -228,10 +228,10 @@ pipeline {
                     k6 cloud /home/ubuntu/ProjectC/LoadingPerformanceTests/microservices/customer/delete-customer-test.js --insecure-skip-tls-verify;
                     }
                     {
-                    k6 cloud /home/ubuntu/ProjectC/LoadingPerformanceTests/microservices/customer/get-customer-test.js --insecure-skip-tls-verify;
+                    k6 cloud /home/ubuntu/ProjectC/LoadingPerformanceTests/microservices/customer/get-token-test.js --insecure-skip-tls-verify;
                     }
                     {
-                    k6 cloud /home/ubuntu/ProjectC/LoadingPerformanceTests/microservices/customer/get-customers-test.js --insecure-skip-tls-verify;
+                    k6 cloud /home/ubuntu/ProjectC/LoadingPerformanceTests/microservices/customer/update-customer-test.js --insecure-skip-tls-verify;
                     }
 
                     echo 'Completed Running Microservices K6 performance tests!'
