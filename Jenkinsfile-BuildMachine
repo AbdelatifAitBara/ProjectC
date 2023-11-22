@@ -182,16 +182,19 @@ pipeline {
 
         }
 
+
         stage('Performance & Loading Tests using K6') {
             steps {
                 withVault([configuration: configuration, vaultSecrets: secrets]) {
-                    sh'''
-                    k6 login cloud --token $K6_TOKEN
-                    k6 cloud /home/ubuntu/ProjectC/Loading&Performance/smoke-test-wp.js --insecure-skip-tls-verify
+                    sh '''
+                        k6 login cloud --token $K6_TOKEN
+                        k6 cloud /home/ubuntu/ProjectC/Loading&Performance/smoke-test-wp.js --insecure-skip-tls-verify
                     '''
                 }
             }
         }
+
+    }
 
 
     post {
@@ -203,5 +206,4 @@ pipeline {
         }
     }
 
-    }
 }
