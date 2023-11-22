@@ -190,7 +190,7 @@ pipeline {
                 sh '''
                     echo "Product Performance & Loading Tests"
 
-                    k6 login cloud --token "caf957099fe929b1f3aceed8b4655f908f17fe3de5158a1dee3ce227cafad558s";
+                    k6 login cloud --token $K6_TOKEN;
                     {
                     k6 cloud /home/ubuntu/ProjectC/LoadingPerformanceTests/microservices/product/add-product-test.js --insecure-skip-tls-verify;
                     }
