@@ -186,18 +186,22 @@ pipeline {
         stage('Performance & Loading Tests using K6') {
             steps {
                 withVault([configuration: configuration, vaultSecrets: secrets]) {
-                    sh '''
-                        echo'The stage curently is on sleep, waiting for the sync of ArgoCD'
-                        sleep 250s
-                        k6 login cloud --token $K6_TOKEN
-                        k6 cloud /home/ubuntu/ProjectC/LoadingPerformanceTests/smoke-test-wp.js --insecure-skip-tls-verify
-                        k6 cloud /home/ubuntu/ProjectC/LoadingPerformanceTests/load-test-wp.js --insecure-skip-tls-verify
-                        k6 cloud /home/ubuntu/ProjectC/LoadingPerformanceTests/stream-test-wp.js --insecure-skip-tls-verify
-                        k6 cloud /home/ubuntu/ProjectC/LoadingPerformanceTests/soak-test-wp.js --insecure-skip-tls-verify
-                        k6 cloud /home/ubuntu/ProjectC/LoadingPerformanceTests/breakpoint-test-wp.js --insecure-skip-tls-verify
-                        k6 cloud /home/ubuntu/ProjectC/LoadingPerformanceTests/spike-test-wp.js --insecure-skip-tls-verify
-
-                    '''
+                sh '''
+                    echo "The stage curently is on sleep, waiting for the sync of ArgoCD"
+                    sleep 250s
+                    
+                    k6 login cloud --token $K6_TOKEN;
+                    {
+                    k6 cloud /home/ubuntu/ProjectC/LoadingPerformanceTests/smoke-test-wp.js --insecure-skip-tls-verify;
+                    }
+                    {  
+                    k6 cloud /home/ubuntu/ProjectC/LoadingPerformanceTests/load-test-wp.js --insecure-skip-tls-verify;
+                    }
+                    k6 cloud /home/ubuntu/ProjectC/LoadingPerformanceTests/stream-test-wp.js --insecure-skip-tls-verify;
+                    k6 cloud /home/ubuntu/ProjectC/LoadingPerformanceTests/soak-test-wp.js --insecure-skip-tls-verify;
+                    k6 cloud /home/ubuntu/ProjectC/LoadingPerformanceTests/breakpoint-test-wp.js --insecure-skip-tls-verify;
+                    k6 cloud /home/ubuntu/ProjectC/LoadingPerformanceTests/spike-test-wp.js --insecure-skip-tls-verify;
+                '''
                 }
             }
         }
