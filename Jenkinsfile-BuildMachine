@@ -1,5 +1,5 @@
 def secrets = [
-    [path: 'secrets/creds/microservices', engineVersion: 1, secretValues: [
+    [path: 'secrets/creds/projetc', engineVersion: 1, secretValues: [
         [envVar: 'MYSQL_DATABASE_USER', vaultKey: 'MYSQL_DATABASE_USER'],
         [envVar: 'MYSQL_DATABASE_PASSWORD', vaultKey: 'MYSQL_DATABASE_PASSWORD'],
         [envVar: 'MYSQL_DATABASE_DB', vaultKey: 'MYSQL_DATABASE_DB'],
@@ -12,6 +12,7 @@ def secrets = [
         [envVar: 'CONSUMER_SECRET', vaultKey: 'consumersecret'],
         [envVar: 'ECR_USERNAME', vaultKey: 'ecr-username'],
         [envVar: 'ECR_REPOSITORY', vaultKey: 'ecr-repository'],
+        [envVar: 'K6_TOKEN', vaultKey: 'k6token'],
     ]]
 ]
 
@@ -180,7 +181,17 @@ pipeline {
             }
 
         }
-    }
+
+        stage('Performance & Loading Tests using K6') {
+            steps {
+                withVault([configuration: configuration, vaultSecrets: secrets]) {
+                    sh'''
+                    k6 login cloud --token $K6_TOKEN
+                    k6 cloud /home/ubuntu/workspace/ProjectC/Loading&Performance/smoke-test-wp.js --insecure-skip-tls-verify
+                    '''
+                }
+            }
+        }
 
 
     post {
