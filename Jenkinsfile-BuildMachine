@@ -188,7 +188,7 @@ pipeline {
             steps {
                 withVault([configuration: configuration, vaultSecrets: secrets]) {
                 sh '''
-                    echo "Product Performance & Loading Tests"
+                    echo "Product Performance & Loading Tests !"
 
                     k6 login cloud --token $K6_TOKEN;
                     {
