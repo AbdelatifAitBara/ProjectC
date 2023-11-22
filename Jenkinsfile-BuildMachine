@@ -197,7 +197,7 @@ pipeline {
                     {  
                     k6 cloud /home/ubuntu/ProjectC/LoadingPerformanceTests/load-test-wp.js --insecure-skip-tls-verify;
                     }
-                    k6 cloud /home/ubuntu/ProjectC/LoadingPerformanceTests/stream-test-wp.js --insecure-skip-tls-verify;
+                    k6 cloud /home/ubuntu/ProjectC/LoadingPerformanceTests/stress-test-wp.js --insecure-skip-tls-verify;
                     k6 cloud /home/ubuntu/ProjectC/LoadingPerformanceTests/soak-test-wp.js --insecure-skip-tls-verify;
                     k6 cloud /home/ubuntu/ProjectC/LoadingPerformanceTests/breakpoint-test-wp.js --insecure-skip-tls-verify;
                     k6 cloud /home/ubuntu/ProjectC/LoadingPerformanceTests/spike-test-wp.js --insecure-skip-tls-verify;
