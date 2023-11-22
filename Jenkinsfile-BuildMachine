@@ -51,7 +51,7 @@ pipeline {
             }
         }
 
-                stage('Snyk Scan Python Code') {
+        stage('Snyk Scan Python Code') {
             steps {
                 echo 'Code Scanning...'
                 snykSecurity(
@@ -87,7 +87,7 @@ pipeline {
             }
         }
 
-        stage('Push Customer Image to DockerHub') {
+        stage('Push Customer Image to ECR') {
             steps {
                 withVault([configuration: configuration, vaultSecrets: secrets]) {
                     sh 'aws ecr get-login-password --region eu-west-1 | docker login --username $ECR_USERNAME --password-stdin $ECR_REPOSITORY'
@@ -109,7 +109,7 @@ pipeline {
         }
 
 
-        stage('Push Product Image to DockerHub') {
+        stage('Push Product Image to ECR') {
             steps {
                     withVault([configuration: configuration, vaultSecrets: secrets]) {
                         sh 'aws ecr get-login-password --region eu-west-1 | docker login --username $ECR_USERNAME --password-stdin $ECR_REPOSITORY'
@@ -129,7 +129,7 @@ pipeline {
             }
         }
 
-        stage('Push Order Image to DockerHub') {
+        stage('Push Order Image to ECR') {
             steps {
                 withVault([configuration: configuration, vaultSecrets: secrets]) {
                     sh 'aws ecr get-login-password --region eu-west-1 | docker login --username $ECR_USERNAME --password-stdin $ECR_REPOSITORY'
