@@ -4,10 +4,12 @@ import {sleep} from 'k6';
 export const options = {
   // Key configurations for avg load test in this section
   stages: [
-    { duration: '5m', target: 100 }, // traffic ramp-up from 1 to 100 users over 5 minutes.
-    { duration: '30m', target: 100 }, // stay at 100 users for 30 minutes
-    { duration: '5m', target: 0 }, // ramp-down to 0 users
+    { duration: '5m', target: 20 }, 
+    { duration: '10m', target: 50 }, 
+    { duration: '5m', target: 0 }, 
   ],
+  thresholds: {
+    http_req_failed: ['rate<0.01'], // http errors should be less than 1%  },
 };
 
 export default () => {
