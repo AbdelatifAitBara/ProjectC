@@ -50,7 +50,7 @@ resource "aws_security_group" "sg_ansible" {
     from_port       = 22
     to_port         = 22
     protocol        = "tcp"
-    cidr_blocks = ["0.0.0.0/0"]
+    security_groups = [data.aws_security_group.bastion_sg.id]
   }
 
   ingress {
@@ -89,7 +89,7 @@ resource "aws_security_group" "sg_vault" {
     from_port   = 22
     to_port     = 22
     protocol    = "tcp"
-    cidr_blocks = ["0.0.0.0/0"]
+    cidr_blocks = [data.aws_security_group.bastion_sg.id, aws_security_group.sg_ansible.id]
   }
 
   ingress {
@@ -130,7 +130,7 @@ resource "aws_security_group" "bm-sg" {
     from_port       = 22
     to_port         = 22
     protocol        = "tcp"
-    cidr_blocks = ["0.0.0.0/0"]
+    cidr_blocks = [data.aws_security_group.bastion_sg.id, aws_security_group.sg_ansible.id]
   }
   egress {
     from_port   = 0

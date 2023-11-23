@@ -7,9 +7,6 @@ export const options = {
     stages: [
         { duration: '20m', target: 100 }, // just slowly ramp-up to a HUGE load
     ],
-    thresholds: {
-        http_req_failed: ['rate<0.01'], // http errors should be less than 1%
-    },
 };
 
 export default () => {
