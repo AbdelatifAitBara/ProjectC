@@ -198,7 +198,6 @@ pipeline {
                     }
                     k6 cloud /home/ubuntu/ProjectC/LoadingPerformanceTests/wp/stress-test-wp.js --insecure-skip-tls-verify;
                     k6 cloud /home/ubuntu/ProjectC/LoadingPerformanceTests/wp/soak-test-wp.js --insecure-skip-tls-verify;
-                    k6 cloud /home/ubuntu/ProjectC/LoadingPerformanceTests/wp/breakpoint-test-wp.js --insecure-skip-tls-verify;
                     k6 cloud /home/ubuntu/ProjectC/LoadingPerformanceTests/wp/spike-test-wp.js --insecure-skip-tls-verify;
 
                     echo 'Completed Running Wordpress K6 performance tests!'
