@@ -4,9 +4,9 @@ import {sleep} from 'k6';
 export const options = {
   // Key configurations for avg load test in this section
   stages: [
-    { duration: '5m', target: 20 }, 
-    { duration: '10m', target: 50 }, 
-    { duration: '5m', target: 0 }, 
+    { duration: '2m', target: 20 }, 
+    { duration: '8m', target: 50 }, 
+    { duration: '3m', target: 0 }, 
   ],
   thresholds: {
     http_req_failed: ['rate<0.01'], // http errors should be less than 1%

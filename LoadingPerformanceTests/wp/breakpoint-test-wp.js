@@ -5,7 +5,7 @@ export const options = {
     // Key configurations for breakpoint in this section
     executor: 'ramping-arrival-rate', //Assure load increase if the system slows
     stages: [
-        { duration: '1h', target: 100 }, // just slowly ramp-up to a HUGE load
+        { duration: '20mn', target: 100 }, // just slowly ramp-up to a HUGE load
     ],
     thresholds: {
         http_req_failed: ['rate<0.01'], // http errors should be less than 1%

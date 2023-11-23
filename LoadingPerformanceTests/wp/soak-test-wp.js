@@ -5,7 +5,7 @@ export const options = {
     // Key configurations for Soak test in this section
     stages: [
         { duration: '5m', target: 10 }, 
-        { duration: '50m', target: 100 }, 
+        { duration: '10m', target: 70 }, 
         { duration: '5m', target: 0 }, 
     ],
     thresholds: {

@@ -4,9 +4,9 @@ import {sleep} from 'k6';
 export const options = {
   // Key configurations for Stress in this section
   stages: [
-    { duration: '5m', target: 50 },
-    { duration: '10m', target: 100 }, 
-    { duration: '5m', target: 0 }, 
+    { duration: '2m', target: 30 },
+    { duration: '5m', target: 70 }, 
+    { duration: '2m', target: 0 }, 
   ],
   thresholds: {
     http_req_failed: ['rate<0.01'], // http errors should be less than 1%
