@@ -182,6 +182,34 @@ pipeline {
 
         }
 
+        
+        stage('WP Performance & Loading Tests using K6') {
+            steps {
+                withVault([configuration: configuration, vaultSecrets: secrets]) {
+                sh '''
+                    echo "The stage curently is on sleep, waiting for the sync of ArgoCD"
+                    sleep 250s
+
+                    {
+                    k6 cloud /home/ubuntu/ProjectC/LoadingPerformanceTests/wp/smoke-test-wp.js --insecure-skip-tls-verify;
+                    }
+                    {  
+                    k6 cloud /home/ubuntu/ProjectC/LoadingPerformanceTests/wp/load-test-wp.js --insecure-skip-tls-verify;
+                    }
+                    k6 cloud /home/ubuntu/ProjectC/LoadingPerformanceTests/wp/stress-test-wp.js --insecure-skip-tls-verify;
+                    k6 cloud /home/ubuntu/ProjectC/LoadingPerformanceTests/wp/soak-test-wp.js --insecure-skip-tls-verify;
+                    k6 cloud /home/ubuntu/ProjectC/LoadingPerformanceTests/wp/breakpoint-test-wp.js --insecure-skip-tls-verify;
+                    k6 cloud /home/ubuntu/ProjectC/LoadingPerformanceTests/wp/spike-test-wp.js --insecure-skip-tls-verify;
+
+                    echo 'Completed Running Wordpress K6 performance tests!'
+                '''
+                }
+            }
+        }
+
+
+
+
                 
                 
         stage('Microservices Performance & Loading Tests using K6') {
@@ -238,33 +266,6 @@ pipeline {
                 }
             }
         }
-
-
-        stage('WP Performance & Loading Tests using K6') {
-            steps {
-                withVault([configuration: configuration, vaultSecrets: secrets]) {
-                sh '''
-                    echo "The stage curently is on sleep, waiting for the sync of ArgoCD"
-                    sleep 250s
-                    
-                    k6 login cloud --token $K6_TOKEN;
-                    {
-                    k6 cloud /home/ubuntu/ProjectC/LoadingPerformanceTests/wp/smoke-test-wp.js --insecure-skip-tls-verify;
-                    }
-                    {  
-                    k6 cloud /home/ubuntu/ProjectC/LoadingPerformanceTests/wp/load-test-wp.js --insecure-skip-tls-verify;
-                    }
-                    k6 cloud /home/ubuntu/ProjectC/LoadingPerformanceTests/wp/stress-test-wp.js --insecure-skip-tls-verify;
-                    k6 cloud /home/ubuntu/ProjectC/LoadingPerformanceTests/wp/soak-test-wp.js --insecure-skip-tls-verify;
-                    k6 cloud /home/ubuntu/ProjectC/LoadingPerformanceTests/wp/breakpoint-test-wp.js --insecure-skip-tls-verify;
-                    k6 cloud /home/ubuntu/ProjectC/LoadingPerformanceTests/wp/spike-test-wp.js --insecure-skip-tls-verify;
-
-                    echo 'Completed Running Wordpress K6 performance tests!'
-                '''
-                }
-            }
-        }
-
 
 
     }
