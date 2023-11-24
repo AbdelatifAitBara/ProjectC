@@ -260,23 +260,22 @@ cat <<EOF | sudo tee -a /home/ubuntu/ansible/install_bm.yml
     - name: Install AWS CLI
       command: apt install -y awscli
 
-    - name: Import public key for k6 repo
-      gpg:
-        keyserver: hkp://keyserver.ubuntu.com:80
-        state: present 
-        key: C5AD17C747E3415A3642D57D77C6C491D6AC1D69
+    - name: Add k6 apt key
+      apt_key:
+        url: hkp://keyserver.ubuntu.com:80
+        id: C5AD17C747E3415A3642D57D77C6C491D6AC1D69
 
-    - name: Add k6 repo 
+    - name: Add k6 apt repository 
       lineinfile:
-        path: /etc/apt/sources.list.d/k6.list
-        line: "deb [signed-by=/usr/share/keyrings/k6-archive-keyring.gpg] https://dl.k6.io/deb stable main"
+        path: /etc/apt/sources.list.d/k6.list 
+        line: "deb https://dl.k6.io/deb stable main"
 
-    - name: Update apt cache   
+    - name: Update apt cache
       apt:
         update_cache: yes
 
     - name: Install k6
-      apt: 
+      apt:
         name: k6
         state: present
 
