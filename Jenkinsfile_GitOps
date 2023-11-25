@@ -6,8 +6,8 @@ pipeline {
     environment {
         WORKSPACE = '/home/ubuntu/'
         PROJECT_DIR = '/home/ubuntu/ProjectC-GitOps'
-        MICROSERVICES_DIR = '/home/ubuntu/ProjectC-GitOps/microservices'
-
+        MICROSERVICES_DIR1 = '/home/ubuntu/ProjectC-GitOps/Microservices-Blue'
+        MICROSERVICES_DIR2 = '/home/ubuntu/ProjectC-GitOps/Microservices-Green'
     }   
 
     parameters {
@@ -33,12 +33,22 @@ pipeline {
             }
         }
 
-        stage('Replace Image Tag') {
+        stage('Replace Image Tag For Microservices-Blue') {
             steps {
                 script {
-                    sh "sed -i 's@\\/abdelatif-ecr-customer:\\(.*\\)@\\/abdelatif-ecr-customer:${env.COMMIT}@' ${env.MICROSERVICES_DIR}/customer.yaml" 
-                    sh "sed -i 's@\\/abdelatif-ecr-order:\\(.*\\)@\\/abdelatif-ecr-order:${env.COMMIT}@' ${env.MICROSERVICES_DIR}/order.yaml"
-                    sh "sed -i 's@\\/abdelatif-ecr-product:\\(.*\\)@\\/abdelatif-ecr-product:${env.COMMIT}@' ${env.MICROSERVICES_DIR}/product.yaml"
+                    sh "sed -i 's@\\/abdelatif-ecr-customer:\\(.*\\)@\\/abdelatif-ecr-customer:${env.COMMIT}@' ${env.MICROSERVICES_DIR1}/customer.yaml" 
+                    sh "sed -i 's@\\/abdelatif-ecr-order:\\(.*\\)@\\/abdelatif-ecr-order:${env.COMMIT}@' ${env.MICROSERVICES_DIR1}/order.yaml"
+                    sh "sed -i 's@\\/abdelatif-ecr-product:\\(.*\\)@\\/abdelatif-ecr-product:${env.COMMIT}@' ${env.MICROSERVICES_DIR1}/product.yaml"
+                }
+            }
+        }
+
+        stage('Replace Image Tag For Microservices-Green') {
+            steps {
+                script {
+                    sh "sed -i 's@\\/abdelatif-ecr-customer:\\(.*\\)@\\/abdelatif-ecr-customer:${env.COMMIT}@' ${env.MICROSERVICES_DIR2}/customer.yaml" 
+                    sh "sed -i 's@\\/abdelatif-ecr-order:\\(.*\\)@\\/abdelatif-ecr-order:${env.COMMIT}@' ${env.MICROSERVICES_DIR2}/order.yaml"
+                    sh "sed -i 's@\\/abdelatif-ecr-product:\\(.*\\)@\\/abdelatif-ecr-product:${env.COMMIT}@' ${env.MICROSERVICES_DIR2}/product.yaml"
                 }
             }
         }
@@ -71,7 +81,4 @@ pipeline {
             echo "Build succeeded: ${currentBuild.result}"
         }
     }
-
-
-
 }
