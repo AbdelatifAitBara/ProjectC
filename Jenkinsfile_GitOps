@@ -14,8 +14,6 @@ pipeline {
         string(name: 'COMMIT', defaultValue: env.GIT_COMMIT, description: 'Docker Image Tag')
     }
 
-
-
     stages {
 
 
@@ -53,7 +51,7 @@ pipeline {
             }
         }
 
-        stage('Commit Changes') {
+        stage('Commit Changes For Microservices-Blue') {
             steps {
                 dir("${MICROSERVICES_DIR1}") {
                     sh "git add ."
@@ -64,7 +62,7 @@ pipeline {
             }
         }
 
-        stage('Commit Changes') {
+        stage('Commit Changes For Microservices-Green') {
             steps {
                 dir("${MICROSERVICES_DIR2}") {
                     sh "git add ."
