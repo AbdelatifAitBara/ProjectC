@@ -53,9 +53,20 @@ pipeline {
             }
         }
 
-        stage('Commit Changes') {
+        stage('Commit Blue Deployment Changes') {
             steps {
-                dir("${MICROSERVICES_DIR}") {
+                dir("${MICROSERVICES_DIR_1}") {
+                    sh "git add ."
+                    sh "git config --global user.email 'support@abdelatif-aitbara.link'"
+                    sh "git config --global user.name 'AbdelatifAitBara'"
+                    sh "git commit -m 'Update Image Tag to ${env.COMMIT}'"
+                }
+            }
+        }
+
+        stage('Commit Green Deployment Changes') {
+            steps {
+                dir("${MICROSERVICES_DIR_2"}") {
                     sh "git add ."
                     sh "git config --global user.email 'support@abdelatif-aitbara.link'"
                     sh "git config --global user.name 'AbdelatifAitBara'"
