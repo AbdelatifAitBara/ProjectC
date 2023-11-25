@@ -53,9 +53,9 @@ pipeline {
             }
         }
 
-        stage('Commit Blue Deployment Changes') {
+        stage('Commit Changes') {
             steps {
-                dir("${MICROSERVICES_DIR_1}") {
+                dir("${MICROSERVICES_DIR1}") {
                     sh "git add ."
                     sh "git config --global user.email 'support@abdelatif-aitbara.link'"
                     sh "git config --global user.name 'AbdelatifAitBara'"
@@ -64,9 +64,9 @@ pipeline {
             }
         }
 
-        stage('Commit Green Deployment Changes') {
+        stage('Commit Changes') {
             steps {
-                dir("${MICROSERVICES_DIR_2}") {
+                dir("${MICROSERVICES_DIR2}") {
                     sh "git add ."
                     sh "git config --global user.email 'support@abdelatif-aitbara.link'"
                     sh "git config --global user.name 'AbdelatifAitBara'"
