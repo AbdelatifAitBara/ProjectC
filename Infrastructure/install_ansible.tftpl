@@ -261,23 +261,17 @@ cat <<EOF | sudo tee -a /home/ubuntu/ansible/install_bm.yml
       command: apt install -y awscli
 
     - name: Add k6 apt key
-      apt_key:
-        url: hkp://keyserver.ubuntu.com:80
-        id: C5AD17C747E3415A3642D57D77C6C491D6AC1D69
+      command: sudo gpg --no-default-keyring --keyring /usr/share/keyrings/k6-archive-keyring.gpg --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys C5AD17C747E3415A3642D57D77C6C491D6AC1D69
 
     - name: Add k6 apt repository 
-      lineinfile:
-        path: /etc/apt/sources.list.d/k6.list 
-        line: "deb https://dl.k6.io/deb stable main"
+      command: echo "deb [signed-by=/usr/share/keyrings/k6-archive-keyring.gpg] https://dl.k6.io/deb stable main" | sudo tee /etc/apt/sources.list.d/k6.list
 
     - name: Update apt cache
       apt:
         update_cache: yes
 
     - name: Install k6
-      apt:
-        name: k6
-        state: present
+      command: sudo snap install k6
 
 EOF
 

@@ -9,8 +9,13 @@ data "aws_instance" "ec2_ansible" {
 
 data "aws_instance" "ec2_bastion" {
   filter {
-    name   = "tag:Name"
-    values = ["Abdelatif-EC2-00"] #  That's a literal, match the correct EC2 instance on that tag value
+    name = "tag:Name"
+    values = ["Abdelatif-EC2-00"]
+  }
+
+  filter {
+    name = "instance-state-name"
+    values = ["running"]
   }
 }
 
