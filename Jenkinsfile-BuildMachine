@@ -215,11 +215,6 @@ pipeline {
             }
         }
 
-
-
-
-                
-                
         stage('Microservices Performance & Loading Tests using K6') {
             when {
                 expression { currentBuild.resultIsBetterOrEqualTo('SUCCESS') }
