@@ -1,5 +1,5 @@
 def secrets = [
-    [path: 'secrets/creds/projetc', engineVersion: 1, secretValues: [
+    [path: 'secrets/creds/microservices', engineVersion: 1, secretValues: [
         [envVar: 'MYSQL_DATABASE_USER', vaultKey: 'MYSQL_DATABASE_USER'],
         [envVar: 'MYSQL_DATABASE_PASSWORD', vaultKey: 'MYSQL_DATABASE_PASSWORD'],
         [envVar: 'MYSQL_DATABASE_DB', vaultKey: 'MYSQL_DATABASE_DB'],
