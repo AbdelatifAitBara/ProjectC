@@ -175,7 +175,7 @@ pipeline {
                 ]  
             }
             post {
-                failure {
+                success {
                     echo "Deployment Skipped"
                 }
             }
