@@ -9,4 +9,5 @@
 - 💥EC2-04 Building Machine = ✔
 - 💥Integrated Ansible With Terraform = ✔
 - 💥Provision All EC2 Using Ansible = ✔
-- 💥 Test K6
+- 💥Test K6 = ✔
+- 💥Test Pipeline Trigger, Microservices, Vault On BM..🔴

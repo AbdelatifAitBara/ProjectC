@@ -16,7 +16,7 @@ def secrets = [
     ]]
 ]
 
-def configuration = [vaultUrl: 'http://10.0.112.134:8200',  vaultCredentialId: 'Vault_Credentials', engineVersion: 1]
+def configuration = [vaultUrl: 'http://10.0.112.251:8200',  vaultCredentialId: 'Vault_Credentials', engineVersion: 1]
 
 
 
@@ -184,7 +184,11 @@ pipeline {
 
         
         stage('WP Performance & Loading Tests using K6') {
+            when {
+                expression { currentBuild.resultIsBetterOrEqualTo('SUCCESS') }
+            }
             steps {
+                input message: 'Do You Would To Launch WP Performance Tests?', ok: 'Accept'
                 withVault([configuration: configuration, vaultSecrets: secrets]) {
                 sh '''
                     echo "The stage curently is on sleep, waiting for the sync of ArgoCD"
@@ -204,6 +208,11 @@ pipeline {
                 '''
                 }
             }
+            post {
+                success {
+                    echo "Wordpress Performance Tests Skipped"
+                }
+            }
         }
 
 
@@ -212,7 +221,11 @@ pipeline {
                 
                 
         stage('Microservices Performance & Loading Tests using K6') {
+            when {
+                expression { currentBuild.resultIsBetterOrEqualTo('SUCCESS') }
+            }
             steps {
+                input message: 'Do You Would To Launch Microservices Performance Tests?', ok: 'Accept'
                 withVault([configuration: configuration, vaultSecrets: secrets]) {
                 sh '''
                     echo "Product Performance & Loading Tests !"
@@ -262,6 +275,11 @@ pipeline {
 
                     echo 'Completed Running Microservices K6 performance tests!'
                 '''
+                }
+            }
+            post {
+                success {
+                    echo "Microservices Performance Tests Skipped"
                 }
             }
         }
