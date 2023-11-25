@@ -282,7 +282,6 @@ pipeline {
 
     }
 
-
     post {
         failure {
             echo "Build failed: ${currentBuild.result}"
