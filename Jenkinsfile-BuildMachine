@@ -16,7 +16,7 @@ def secrets = [
     ]]
 ]
 
-def configuration = [vaultUrl: 'http://10.0.112.251:8200',  vaultCredentialId: 'Vault_Credentials', engineVersion: 1]
+def configuration = [vaultUrl: 'http://10.0.112.251:8200',  vaultCredentialId: 'Vault_App_Role_Credentials', engineVersion: 1]
 
 
 
