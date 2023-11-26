@@ -14,30 +14,6 @@ resource "aws_lb" "abdelatif-alb" {
   }
 }
 
-resource "aws_lb_target_group" "abdelatif-tg-HTTP" {
-  name        = "Abdelatif-TG-HTTP"
-  target_type = "instance"
-  port        = 32000
-  protocol    = "HTTP"
-  vpc_id      = var.vpc_id
-
-  health_check {
-    path                = "/healthz"
-    protocol            = "HTTP"
-    matcher             = "200"
-    interval            = 15
-    timeout             = 5
-    healthy_threshold   = 2
-    unhealthy_threshold = 3
-  }
-
-  tags = {
-    Name     = "Abdelatif-TG-HTTP"
-    owner    = local.tags.owner
-    ephemere = local.tags.ephemere
-    entity   = local.tags.entity
-  }
-}
 
 # Create TG with HTTPS
 
@@ -66,14 +42,6 @@ resource "aws_lb_target_group" "abdelatif-tg-HTTPS" {
   }
 }
 
-resource "aws_autoscaling_attachment" "asg_attachment1" {
-  autoscaling_group_name = aws_eks_node_group.private-nodes.resources[0].autoscaling_groups[0].name
-  lb_target_group_arn    = aws_lb_target_group.abdelatif-tg-HTTP.arn
-
-  depends_on = [
-    aws_eks_node_group.private-nodes
-  ]
-}
 
 resource "aws_autoscaling_attachment" "asg_attachment2" {
   autoscaling_group_name = aws_eks_node_group.private-nodes.resources[0].autoscaling_groups[0].name
@@ -84,24 +52,6 @@ resource "aws_autoscaling_attachment" "asg_attachment2" {
   ]
 }
 
-
-resource "aws_lb_listener" "abdelatif-lb-listener-http" {
-  load_balancer_arn = aws_lb.abdelatif-alb.arn
-  port              = "80"
-  protocol          = "HTTP"
-
-  default_action {
-    type             = "forward"
-    target_group_arn = aws_lb_target_group.abdelatif-tg-HTTP.arn
-  }
-
-  tags = {
-    Name     = "abdelatif-lb-listener-http"
-    owner    = local.tags.owner
-    ephemere = local.tags.ephemere
-    entity   = local.tags.entity
-  }
-}
 
 resource "aws_lb_listener" "abdelatif-lb-listener-https" {
   load_balancer_arn = aws_lb.abdelatif-alb.arn
