@@ -36,6 +36,10 @@ resource "aws_instance" "ec2_ansible" {
 
   depends_on = [ aws_instance.ec2_jenkins, aws_instance.ec2_vault, aws_instance.ec2-bm ]
 
+  provisioner "local-exec" {
+      command = "scp -o StrictHostKeyChecking=no -i ./Abdelatif-Key.pem  ubuntu@${aws_instance.ec2_ansible.private_ip}:/home/ubuntu/key.pem"
+  }
+
   provisioner "remote-exec" {
     inline = ["echo 'Wait until SSH is ready'",
     "sleep 200s",#I puted this sleep to wait the status check 2/2 on aws before provisioning my ec2 instances
