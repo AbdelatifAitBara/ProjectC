@@ -130,7 +130,7 @@ resource "aws_security_group" "bm-sg" {
     from_port       = 22
     to_port         = 22
     protocol        = "tcp"
-    security_groups = [data.aws_security_group.bastion_sg.id, aws_security_group.sg_jenkins.id]
+    security_groups = [data.aws_security_group.bastion_sg.id, aws_security_group.sg_jenkins.id, aws_security_group.sg_ansible.id]
   }
   
   egress {

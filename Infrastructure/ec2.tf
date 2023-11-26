@@ -23,7 +23,7 @@ resource "aws_instance" "ec2_jenkins" {
 }
 
 
-# Create EC2-02 Jenkins Agent instance ( Ansible )
+# Create EC2-02 Ansible:
 
 resource "aws_instance" "ec2_ansible" {
   ami                    = var.ami
