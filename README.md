@@ -11,3 +11,4 @@
 - 💥Provision All EC2 Using Ansible = ✔
 - 💥Test K6 = ✔
 - 💥Test Pipeline Trigger, Microservices, Vault On BM..🔴🔴
+- Test ArgoCD
