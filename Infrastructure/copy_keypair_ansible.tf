@@ -3,15 +3,8 @@
 resource "null_resource" "copy_key_pair" {
     depends_on = [ aws_instance.ec2_ansible ]
 
-    provisioner "file" {
-        source      = "Abdelatif-Key.pem"
-        destination = "/home/ubuntu/ansible/key.pem"
-
-        connection {
-            type        = "ssh"
-            user        = "ubuntu"
-            private_key = local_file.Abdealtif-KeyPair-Local.content
-            host        = data.aws_instance.ec2_ansible.private_ip
-        }
+    provisioner "local-exec" {
+    command = "chmod 400 ./Abdelatif-Key.pem && scp -o StrictHostKeyChecking=no -i ./Abdelatif-Key.pem ubuntu@${aws_instance.ec2_ansible.private_ip}:/home/ubuntu/ansible/key.pem ./key.pem"
     }
+
 }
