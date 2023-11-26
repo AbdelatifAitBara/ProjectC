@@ -17,12 +17,6 @@ data "aws_instance" "ec2_ansible" {
   instance_id = aws_instance.ec2_ansible.id 
 }
 
-data "aws_instance" "ec2_jenkins" {
-  instance_id = aws_instance.ec2_jenkins.id
-}
-
-
-
 
 data "template_file" "install_ansible" {
   template = file("./install_ansible.tftpl")
