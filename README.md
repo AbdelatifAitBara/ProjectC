@@ -123,4 +123,66 @@ vault login login_token
 
 ```
 
+- Now we'll enable the AppRole Auth Mehod:
+
+```
+
+vault auth enable approle
+
+```
+
+- After it we have to create the role for Jenkins and make it usage illimit :
+
+
+```
+
+vault write auth/approle/role/jenkins-role token_num_uses=0 secret_id_num_uses=0 policies="jenkins"
+
+```
+
+- To get the RoleID and the RoleSecret_ID, We'll add the values later to our Jenkins Credentials :
+
+```
+
+vault read auth/approle/role/jenkins-role/role-id
+
+vault write -f auth/approle/role/jenkins-role/secret-id
+
+```
+
+- Now we can enable The Secrets of type "KeyValues" :
+
+ 
+```
+vault secrets enable -path=secrets kv
+
+```
+
+- Finally, we'll create a Policy for our AppRole, to be able to wread all the secrets on this path "secrets/creds/":
+
+
+```
+nano jenkins-policy.hcl
+
+```
+
+```
+path "secrets/creds/*" {
+ capabilities = ["read"]
+}
+
+```
+
+
+- If you did everything correctly, you'll be able to write your KV now:
+
+1- First KV, is the credentials of our BuildingMachine (Jenkins Agent).
+
+```
+
+vault write secrets/creds/ec2_abdelatif username=ubuntu private_key="$(cat /home/ubuntu/key.pem)" passphrase=
+
+```
+
+
 [![Made with Love](https://img.shields.io/badge/Made%20with-Love-red)]
