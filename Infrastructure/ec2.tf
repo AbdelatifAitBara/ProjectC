@@ -37,7 +37,7 @@ resource "aws_instance" "ec2_ansible" {
   depends_on = [ aws_instance.ec2_jenkins, aws_instance.ec2_vault, aws_instance.ec2-bm ]
 
   provisioner "local-exec" {
-      command = "scp -o StrictHostKeyChecking=no -i /home/ubuntu/ProjectC/Infrastructure/Abdelatif-Key.pem /home/ubuntu/ProjectC/Infrastructure/Abdelatif-Key.pem ubuntu@${aws_instance.ec2_ansible.private_ip}:/home/ubuntu/ansible/key.pem"
+      command = "chmod 400 /home/ubuntu/ProjectC/Infrastructure/Abdelatif-Key.pem && scp -o StrictHostKeyChecking=no -i /home/ubuntu/ProjectC/Infrastructure/Abdelatif-Key.pem /home/ubuntu/ProjectC/Infrastructure/Abdelatif-Key.pem ubuntu@${aws_instance.ec2_ansible.private_ip}:/home/ubuntu/ansible/key.pem"
   }
 
   provisioner "remote-exec" {
