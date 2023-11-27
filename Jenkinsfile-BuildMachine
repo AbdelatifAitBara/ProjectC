@@ -205,7 +205,11 @@ pipeline {
                     k6 cloud /home/ubuntu/ProjectC/LoadingPerformanceTests/wp/spike-test-wp.js --insecure-skip-tls-verify;
 
                     echo 'Completed Running Wordpress K6 performance tests!'
+                
                 '''
+                success {
+                    echo "Wordpress Performance Skipped"
+                }
                 }
             }
             post {
