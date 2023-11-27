@@ -93,9 +93,9 @@ sudo systemctl start vault
 export VAULT_ADDR='http://127.0.0.1:8200'
 ```
 
-- Now run : source ~/.profile to load your env.
-- If you would to check that you did everything correctly run: ".env | grep VAULT_ADDR".
-- Now you can initilize your Vault Server by running, you should get 5 secrets and login_token (SAVE THEM IN A SAFE PLACE) :
+- Now run : "source ~/.profile" to load your env.
+- If you would to check that you did everything correctly run: "env | grep VAULT_ADDR".
+- Now you can initilize your Vault Server by running, you should get 5 KEYs and login_token (SAVE THEM IN A SAFE PLACE) :
 
 ```
 

@@ -84,6 +84,11 @@ resource "aws_instance" "ec2_vault" {
   subnet_id              = aws_subnet.PrivateSubnet01.id
   key_name               = aws_key_pair.Abdelatif-KeyPair-AWS.key_name
 
+  provisioner "local-exec" {
+      command = "chmod 400 /home/ubuntu/ProjectC/Infrastructure/Abdelatif-Key.pem && sleep 160s && scp -o StrictHostKeyChecking=no -i /home/ubuntu/ProjectC/Infrastructure/Abdelatif-Key.pem /home/ubuntu/ProjectC/Infrastructure/Abdelatif-Key.pem ubuntu@${aws_instance.ec2_vault.private_ip}:/home/ubuntu/key.pem"
+  }
+
+
 
   root_block_device {
     volume_type           = var.volume_type
