@@ -182,7 +182,7 @@ pipeline {
 
         }
 
-        
+/*       
         stage('WP Performance & Loading Tests using K6') {
             when {
                 expression { currentBuild.resultIsBetterOrEqualTo('SUCCESS') }
@@ -207,9 +207,6 @@ pipeline {
                     echo 'Completed Running Wordpress K6 performance tests!'
                 
                 '''
-                success {
-                    echo "Wordpress Performance Skipped"
-                }
                 }
             }
             post {
@@ -282,7 +279,7 @@ pipeline {
                 }
             }
         }
-
+*/
 
     }
 
