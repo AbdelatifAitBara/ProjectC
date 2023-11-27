@@ -188,4 +188,4 @@ vault write secrets/creds/ec2_abdelatif username=ubuntu private_key="$(cat /home
 [![Made with Love](https://img.shields.io/badge/Made%20with-Love-red)]
 
 
-- PIPELINE TEST 1
+- PIPELINE TEST 2
