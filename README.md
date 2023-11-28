@@ -189,4 +189,4 @@ vault write secrets/creds/ec2_abdelatif username=ubuntu private_key="$(cat /home
 
 
 
-PIPELINE TEST
+TEST 
