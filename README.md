@@ -181,12 +181,16 @@ path "secrets/creds/*" {
 ```
 
 vault write secrets/creds/ec2_abdelatif username=ubuntu private_key="$(cat /home/ubuntu/key.pem)" passphrase=
-
 ```
 
+
+2- The Second KV, will be the microservices Secrets:
+
+```
+vault write secrets/creds/microservices MYSQL_DATABASE_USER=<value> MYSQL_DATABASE_PASSWORD="<value>" MYSQL_DATABASE_DB=<value> dbport="<value>" productapiurl="https://projetc.abdelatif-aitbara.link/wp-json/wc/v3/products" orderapiurl="https://projetc.abdelatif-aitbara.link/wp-json/wc/v3/orders" customerapiurl="https://projetc.abdelatif-aitbara.link/wp-json/wc/v3/customers" MYSQL_DATABASE_HOST=<value> secretkey="<value>" consumerkey=<value> consumersecret=<value> ecr-username="AWS" ecr-repository="<value>" k6token="<value>"
+
+```
 
 [![Made with Love](https://img.shields.io/badge/Made%20with-Love-red)]
 
 
-
-TEST 
