@@ -13,12 +13,23 @@
 
 
 
+### Project Infrastructure :
+
+![Alt text](Documentation/Infra_Architecture.png)
+
 # How To Deploy This Solution:
 
 
-### 01- Clone the repository on your Bastion Machine.
-### 02- Run Terraform Code.
-### 03- Deploy APPS Using ArgoCD in the bellow order:
+### **<span style="font-weight:bold; color:#00b050">01- Clone The Repository On Your Bastion Machine :</span>**
+
+### **<span style="font-weight:bold; color:#00b050">02- Run Terraform Apply Inside ProjectC/Infra</span>**
+
+### **<span style="font-weight:bold; color:#00b050">03- Deploy Apps Using ArgoCD In The Bellow Order :</span>**
+
+### ArgoCD Workflow:
+
+
+![Alt text](Documentation/CI_Workflow.png)
 
 
 - Wordpress Blue/Green
@@ -38,7 +49,12 @@ kubectl -n argocd get secret argocd-initial-admin-secret -o jsonpath="{.data.pas
 kubectl port-forward svc/argocd-server -n argocd 4001:443 --address 0.0.0.0
 ```
 
-### 04- Configure Vault Server :
+### **<span style="font-weight:bold; color:#00b050">04- Vault Server Configuration :</span>**
+
+### Vault Architecture:
+
+![Alt text](Documentation/Vault_Architecture.png)
+
 
 - Connect to your Vault Server via SSH.
 
@@ -114,7 +130,16 @@ vault operator unseal
 
 
 - After checking that the SEAL is FALSE.
+
+### Vault Sealed Mode=TRUE:
+
+![Alt text](Documentation/Vault01.png)
   
+
+### Vault Sealed Mode=FALSE:
+
+![Alt text](Documentation/Vault02.png)
+
 - We Can Login Now:
 
 ```
@@ -190,6 +215,73 @@ vault write secrets/creds/ec2_abdelatif username=ubuntu private_key="$(cat /home
 vault write secrets/creds/microservices MYSQL_DATABASE_USER=<value> MYSQL_DATABASE_PASSWORD="<value>" MYSQL_DATABASE_DB=<value> dbport="<value>" productapiurl="https://projetc.abdelatif-aitbara.link/wp-json/wc/v3/products" orderapiurl="https://projetc.abdelatif-aitbara.link/wp-json/wc/v3/orders" customerapiurl="https://projetc.abdelatif-aitbara.link/wp-json/wc/v3/customers" MYSQL_DATABASE_HOST=<value> secretkey="<value>" consumerkey=<value> consumersecret=<value> ecr-username="AWS" ecr-repository="<value>" k6token="<value>"
 
 ```
+
+
+
+### **<span style="font-weight:bold; color:#00b050">05- Jenkins Configuration :</span>**
+
+
+### CI/CD Overview:
+
+![Alt text](Documentation/OverView-CD-CD.png)
+
+### CI Workflow:
+
+![Alt text](Documentation/CI_Workflow.png)
+
+0- Install plugins : 
+
+
+```
+Vault
+Snyk
+Blueocean
+```
+
+
+2- **<span style="font-weight:bold; color:#ff0000">Add JavaPath to JDK TOOLS</span>**:   /usr/bin/java
+
+2- Configure VAULT SERVER, Add Vault Credentials, VAULT APP ROLE.
+
+3- Add Agents Credentials ( user, pairkey, passphrase )
+
+4- Configure Agents ( You have to add the keypair in your Vault before )
+
+5- Add SSH-Public Key OF JENKINS CONTAINER to GitHub And Add IT TO BM :
+
+```
+ssh-keygen -t ed25519 -C "your_email"
+
+ssh-keyscan github.com >> ~/.ssh/known_hosts
+
+
+```
+
+6- Configure Snyk Installation ( TOOLS ) and  add a new TOKEN (Credentials), 
+
+7- Change the IP OF OUR VAULT ON Jenkinsfile
+
+8- Add EC2 Jenkins Public Dns To Your GitHub Webhook.
+
+9- Create "Microservices" and "GitOps" Pipelines.
+
+
+### **<span style="font-weight:bold; color:#00b050">07- Add Let's Encrypt Certificate To ACM :</span>**
+
+
+
+```
+
+1- Export Normal tls.crt and tls.key ( this issuer key)
+2- Make a combination between them on : tls-combinated.crt 
+
+- At the beginning put the key part (goted from issuer ) and after the cert part
+- after it convert it to .pem
+
+3- openssl x509 -in tls.crt -out cert.pem
+
+```
+
 
 [![Made with Love](https://img.shields.io/badge/Made%20with-Love-red)]
 
