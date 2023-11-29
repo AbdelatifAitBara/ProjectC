@@ -182,7 +182,6 @@ pipeline {
 
         }
 
-/*       
         stage('WP Performance & Loading Tests using K6') {
             when {
                 expression { currentBuild.resultIsBetterOrEqualTo('SUCCESS') }
@@ -193,7 +192,7 @@ pipeline {
                 sh '''
                     echo "The stage curently is on sleep, waiting for the sync of ArgoCD"
                     sleep 250s
-
+                    k6 login --insecure-skip-tls-verify --token $K6_TOKEN
                     {
                     k6 cloud /home/ubuntu/ProjectC/LoadingPerformanceTests/wp/smoke-test-wp.js --insecure-skip-tls-verify;
                     }
@@ -215,7 +214,7 @@ pipeline {
                 }
             }
         }
-
+/*
         stage('Microservices Performance & Loading Tests using K6') {
             when {
                 expression { currentBuild.resultIsBetterOrEqualTo('SUCCESS') }
