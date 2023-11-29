@@ -32,6 +32,9 @@
 ![Alt text](Documentation/CI_Workflow.png)
 
 
+GitOps Repository Link: https://github.com/AbdelatifAitBara/ProjectC-GitOps
+
+
 - Wordpress Blue/Green
 - Nginx Ingress Controller
 - Microservices Blue/Green

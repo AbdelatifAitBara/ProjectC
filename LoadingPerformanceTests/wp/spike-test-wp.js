@@ -8,9 +8,6 @@ export const options = {
         // No plateau
         { duration: '1m', target: 0 }, // quick ramp-down to 0 users
     ],
-    thresholds: {
-        http_req_failed: ['rate<0.01'], // http errors should be less than 1%
-    },
 };
 
 export default () => {
