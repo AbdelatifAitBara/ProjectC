@@ -26,19 +26,9 @@
 
 ### **<span style="font-weight:bold; color:#00b050">03- Deploy Apps Using ArgoCD In The Bellow Order :</span>**
 
-### ArgoCD Workflow:
-
-
-![Alt text](Documentation/CI_Workflow.png)
-
-
-GitOps Repository Link: https://github.com/AbdelatifAitBara/ProjectC-GitOps
-
-
 - Wordpress Blue/Green
 - Nginx Ingress Controller
 - Microservices Blue/Green
-
 
 - To get ArgoCD Secret:
   
@@ -51,6 +41,18 @@ kubectl -n argocd get secret argocd-initial-admin-secret -o jsonpath="{.data.pas
 ```
 kubectl port-forward svc/argocd-server -n argocd 4001:443 --address 0.0.0.0
 ```
+
+### ArgoCD Workflow:
+
+
+
+GitOps Repository Link: https://github.com/AbdelatifAitBara/ProjectC-GitOps
+
+
+
+
+
+
 
 ### **<span style="font-weight:bold; color:#00b050">04- Vault Server Configuration :</span>**
 
@@ -268,6 +270,10 @@ ssh-keyscan github.com >> ~/.ssh/known_hosts
 
 9- Create "Microservices" and "GitOps" Pipelines.
 
+### ArgoCD WorkFlow:
+
+![Alt text](Documentation/ArgoCD._Workflow.png)
+
 
 ### **<span style="font-weight:bold; color:#00b050">07- Add Let's Encrypt Certificate To ACM :</span>**
 
@@ -287,6 +293,3 @@ ssh-keyscan github.com >> ~/.ssh/known_hosts
 
 
 [![Made with Love](https://img.shields.io/badge/Made%20with-Love-red)]
-
-
-Test ITS
